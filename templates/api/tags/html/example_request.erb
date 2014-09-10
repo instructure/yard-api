@@ -7,13 +7,7 @@
     <% end %>
 
     <% object.tags(:example_request).each do |tag| %>
-      <% title = tag.text.lines[0].strip =~ /^\/\/(.*)$/ && $1 %>
-      <% text = tag.text %>
-      <% if title %>
-        <header class="example-title"><%= title.strip %></header>
-        <% text = tag.text.lines.to_a[1..-1].join %>
-      <% end %>
-      <pre class="example code brush:js"><%= html_syntax_highlight(text, :plain) %></pre>
+      <%= tag_partial '_example_code_block', tag %>
     <% end %>
   </div>
 <% end %>

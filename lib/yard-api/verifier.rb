@@ -1,11 +1,22 @@
 module YARD
   module APIPlugin
     class Verifier < ::YARD::Verifier
+      def initialize(verbose=false)
+        @verbose = verbose
+        super()
+      end
+
       def run(list)
-        puts "Filtering #{list.length} objects:"
-        filtered = list.select { |o| relevant_object?(o) }
-        puts "\t#{filtered.length} relevant objects found."
-        filtered
+        relevant = list.select { |o| relevant_object?(o) }
+
+        if @verbose && relevant.any?
+          puts "#{relevant.length}/#{list.length} objects are relevant:"
+          relevant.each do |object|
+            puts "\t- #{object.path}"
+          end
+        end
+
+        relevant
       end
 
       def relevant_object?(object)

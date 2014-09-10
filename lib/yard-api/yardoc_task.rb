@@ -12,12 +12,15 @@ module YARD::APIPlugin
       @config = load_config
       t = self
 
-      t.verifier = YARD::APIPlugin::Verifier.new
+      YARD::APIPlugin.options.update(@config)
+
+      t.verifier = YARD::APIPlugin::Verifier.new(config['verbose'])
       t.before = proc { FileUtils.rm_rf(config['output']) }
       t.files = config['files']
 
       set_option('template', 'api')
       set_option('no-yardopts')
+      set_option('no-document')
       set_option('title', config['title'])
       set_option('output-dir', config['output'])
       set_option('readme', config['readme']) if File.exists?(config['readme'])

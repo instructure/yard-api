@@ -1,15 +1,29 @@
 <nav>
-  <h1>Pibi API 2.0.0</h1>
-  <h2 class='first'>Basics</h2>
-  <a href="<%= url_for("index.html") %>" class="<%= 'current' if options[:object] == 'index.html' %>">Home</a>
-  <a href="<%= url_for("file.authentication.html") %>" class="<%= 'current' if options[:object] == 'file.authentication.html' %>">Authentication</a>
-  <a href="<%= url_for("file.pagination.html") %>" class="<%= 'current' if options[:object] == 'file.pagination.html' %>">Pagination</a>
-  <a href="<%= url_for("file.errors.html") %>" class="<%= 'current' if options[:object] == 'file.errors.html' %>">Errors</a>
+  <h1>
+    <%= api_config['title'] %>
+    <%= api_config['version'] %>
+  </h1>
+
+  <h2 class='first'>Pages</h2>
+  <a
+    href="<%= url_for("index.html") %>"
+    class="<%= 'current' if options[:object] == 'index.html' %>">Home
+  </a>
+
+  <% static_pages.each do |page| %>
+    <a  href="<%= url_for(page[:filename]) %>"
+        class="<%= 'current' if options[:object] == page[:filename] %>">
+      <%= page[:title] %>
+    </a>
+  <% end %>
+
   <h2>Resources</h2>
   <% options[:resources].each_with_index do |(resource, controllers), i| %>
-    <% link = url_for("#{topicize resource}.html")
-       klass = []
-       klass << "current" if resource == options[:object] %>
+    <%
+      link = url_for("#{topicize resource}.html")
+      klass = []
+      klass << "current" if resource == options[:object]
+    %>
     <a class="<%= klass.join(' ') %>" href="<%= link %>"><%= resource %></a>
   <% end %>
 </nav>

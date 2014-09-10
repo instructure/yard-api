@@ -1,9 +1,14 @@
 <% if object.has_tag?(:example_response) %>
+  <% tags = object.tags(:example_response) %>
   <div class="examples example_response">
-    <h4>Example Response:</h4>
-    <% object.tags(:example_response).each do |tag| %>
-      <h4><%= html_markup_markdown(tag.name) %></h4>
-      <pre class="example code brush:js"><%= html_syntax_highlight(tag.text, :plain) %></pre>
+    <% if tags.length > 1 %>
+      <h4>Example Responses:</h4>
+    <% else %>
+      <h4>Example Response:</h4>
+    <% end %>
+
+    <% tags.each do |tag| %>
+      <%= tag_partial '_example_code_block', tag %>
     <% end %>
   </div>
 <% end %>

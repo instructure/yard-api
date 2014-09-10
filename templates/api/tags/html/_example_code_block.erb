@@ -1,0 +1,8 @@
+<% tag = options[:tag] %>
+<% title = tag.name %>
+
+<% if title && !title.empty? %>
+  <header class="example-title"><%= title.strip %></header>
+<% end %>
+
+<pre class="example code brush:js"><%= html_syntax_highlight(tag.text, :plain) %></pre>
