@@ -10,11 +10,11 @@ Gem::Specification.new do |s|
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.authors     = ["Ahmad Amireh"]
   s.email       = 'ahmad@instructure.com'
-  s.homepage    = 'https://github.com/amireh/yard-api-plugin'
+  s.homepage    = 'https://github.com/amireh/yard-api'
   s.files       = Dir.glob("{lib,spec,templates,tasks}/**/*.{rb,erb,rake}") +
                   ['LICENSE', 'README.md', '.rspec', __FILE__]
   s.has_rdoc    = 'yard'
-  s.license     = 'MIT'
+  s.license     = 'AGPL3'
   s.add_dependency 'yard', '0.8.7'
   s.add_dependency 'yard-appendix', '>=0.1.8'
   s.add_development_dependency 'rspec'

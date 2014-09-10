@@ -1,4 +1,4 @@
-# yard-api-plugin - a YARD plugin for generating API documentation in Rails.
+# yard-api - a YARD plugin for generating API documentation in Rails.
 #
 # Copyright (C) 2014 Ahmad Amireh <ahmad@instructure.com>
 # Copyright (C) 2011 Instructure, Inc.
