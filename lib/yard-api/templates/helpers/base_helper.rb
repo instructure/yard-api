@@ -1,7 +1,7 @@
 require 'yard/templates/helpers/base_helper'
 
 module YARD::Templates::Helpers::BaseHelper
-  def api_config()
+  def api_options()
     YARD::APIPlugin.options
   end
 

@@ -13,7 +13,6 @@ module YARD::Templates::Helpers
       @routes ||= self.routes_for('/')
       controller_path = [ YARD::APIPlugin.options.route_namespace, controller ].join('/')
       controller_path.gsub!(/^\/|_controller$/, '')
-      puts "Looking for controller: #{controller_path} and action #{action}"
       @routes.find_all { |r| matches_controller_and_action?(r, controller_path, action) }
     end
   end

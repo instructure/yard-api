@@ -15,9 +15,6 @@
       <% if text && !text.empty? %>
         <%= html_markup_markdown(text) %>
       <% end %>
-      <% if @name =~ /argument/ %>
-        <% puts "@argument tag: #{name} => '#{text}'" %>
-      <% end %>
     </li>
   <% end %>
 </ul>

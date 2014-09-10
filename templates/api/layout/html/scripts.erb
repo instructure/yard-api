@@ -1,0 +1,35 @@
+<script type="text/javascript">
+  $('h2.api_method_name').each(function(i, el) {
+    var subtopic = $(el).data('subtopic');
+    var $a = $(el).find('a');
+    var anchorText = $.trim($a[0].innerHTML);
+
+    if (anchorText === '') {
+      return;
+    }
+
+    var $row = $('#quicklinks');
+    var $link = $('<a/>', {
+      href: '#'+$(el).attr('name')
+    }).html(anchorText);
+
+    $('<li>').append($link).appendTo($row);
+  });
+
+  $('#content pre.code').each(function(i, block) {
+    var code;
+    var $block = $(block);
+    var $codeEl = $block.find('> code');
+
+    // RedCarpet markdown renderer will convert fenced code blocks into
+    // <pre><code>...</code></pre> and we want to remove that <code /> el and
+    // use a plain <pre /> instead:
+    if ($block.children().length === 1 && $codeEl.length) {
+      code = $codeEl.text();
+      $codeEl.remove();
+      $block.html(code);
+    }
+
+    hljs.highlightBlock(block);
+  });
+</script>

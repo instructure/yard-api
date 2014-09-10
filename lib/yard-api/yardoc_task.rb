@@ -18,9 +18,20 @@ module YARD::APIPlugin
       t.before = proc { FileUtils.rm_rf(config['output']) }
       t.files = config['files']
 
+      config['debug'] ||= ENV['DEBUG']
+      config['verbose'] ||= ENV['VERBOSE']
+
       set_option('template', 'api')
       set_option('no-yardopts')
       set_option('no-document')
+
+      set_option('markup', config['markup']) if config['markup']
+      set_option('markup-provider', config['markup_provider']) if config['markup_provider']
+
+      if config['markup_provider'] == 'redcarpet'
+        require 'yard-api/markup/redcarpet'
+      end
+
       set_option('title', config['title'])
       set_option('output-dir', config['output'])
       set_option('readme', config['readme']) if File.exists?(config['readme'])
@@ -38,6 +49,10 @@ module YARD::APIPlugin
             "#{asset_path}", but they are not.
           Error
         end
+      end
+
+      if config['debug']
+        puts "Invoking YARD with options: #{self.options.to_json}"
       end
     end
 

@@ -3,6 +3,7 @@
   <head>
     <%= erb(:headers) %>
   </head>
+
   <body>
     <div id="sidebar">
       <%= erb(:sidebar) %>
@@ -11,5 +12,6 @@
     <div id="content"><%= yieldall %></div>
 
     <%= erb(:footer) %>
+    <%= erb(:scripts) %>
   </body>
 </html>

@@ -7,6 +7,8 @@ title: Rails API Project
 verbose: true
 debug: false
 strict: false
+markup:
+markup_provider:
 files:
   - app/controllers/**/*.rb
 assets:

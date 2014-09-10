@@ -8,8 +8,6 @@ def init
     group_by { |o| o.tags('API').first.text }.
     sort_by  { |o| o.first }
 
-  # options[:page_title] = "Pibi API Documentation"
-
   build_json_objects_map
   generate_assets
   serialize_index
@@ -39,7 +37,7 @@ def serialize_resource(resource, controllers)
 end
 
 def serialize_index
-  options[:file] = api_config['readme']
+  options[:file] = api_options['readme']
   serialize('index.html')
   options.delete(:file)
 end

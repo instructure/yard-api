@@ -1,27 +1,11 @@
-<script type="text/javascript">
-  $('h2.api_method_name').each(function(i, el) {
-    var subtopic = $(el).data('subtopic');
-    var $a = $(el).find('a');
-    if ($.trim($a[0].innerHTML) == '')
-      return;
-    var $row = $('#quicklinks');
-    var $link = $('<a/>').attr('href', '#'+$(el).attr('name')).append($.trim($a[0].innerHTML));
-    $('<li>').append($link).appendTo($row);
-  });
-
-  SyntaxHighlighter.defaults['gutter'] = false;
-  SyntaxHighlighter.defaults['toolbar'] = false;
-  SyntaxHighlighter.defaults['auto-links'] = false;
-
-  $('#content pre.code.javascript code').each(function(i, el) {
-    $(el).parent().addClass('brush: js');
-    $(el).replaceWith(el.innerHTML);
-  });
-
-  SyntaxHighlighter.all();
-</script>
 <div id="footer">
-  <p>&copy; 2014 Ahmad Amireh. Generated on <%= Time.now.strftime("%c") %></p>
-  <p>This documentation is generated directly from the Pibi API source code,
-  available <a href="https://github.com/amireh/pibi">on Github</a>.</p>
+  <p>
+    <% if api_options['footer_copyright'] %>
+      <%= api_options['footer_copyright'] %>
+    <% end %>
+
+    Generated on <%= Time.now.strftime("%c") %>
+  </p>
+
+  <%= api_options['footer_note'].to_s %>
 </div>

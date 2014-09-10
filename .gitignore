@@ -1,9 +1,9 @@
-[transients]
-doc/
+[env]
 .yardoc/
-
-[auto]
 .yardopts
+
+[assets]
+*.zip
 
 [build]
 *.gem

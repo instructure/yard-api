@@ -32,6 +32,4 @@ def get_routes
     @controller_path = "app/controllers/#{@route.requirements[:controller]}_controller.rb"
     @controller_path = nil unless File.file?(Rails.root+@controller_path)
   end
-
-  puts "Routes: #{@routes}"
 end
