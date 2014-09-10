@@ -1,0 +1,1 @@
+require 'yard/templates/helpers/base_helper'

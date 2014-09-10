@@ -1,0 +1,6 @@
+<% if object.has_tag?(:note) %>
+  <blockquote class="note">
+    <p><strong>Heads up!</strong></p>
+    <%= html_markup_markdown object.tag(:note).text %>
+  </blockquote>
+<% end %>

@@ -1,0 +1,49 @@
+<h4>Possible Errors:</h4>
+<p>
+  Your request may be rejected with a <code>400 Bad Request</code> HTTP status
+  code and an error from the following set:
+</p>
+
+<table class="endpoint-errors">
+  <thead>
+    <tr>
+      <!-- <th>Error</th> -->
+      <th>Code</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @error_tags.each do |tag| %>
+      <%
+        tag.text ||= ''
+        error = {}
+        buf = tag.text.strip.sub(/^\[([^\]]+)\]/, '').strip
+        error[:status] = $1
+        buf = buf.sub(/"\[([^\]]+)\]([^"]+)"/, '').strip
+        error[:code] = $1.strip
+        error[:message] = $2
+        error[:cause] = buf.strip
+      %>
+      <tr>
+        <% if false %>
+          <td>
+            <%= error[:status] %>
+            <%= Rack::Utils::HTTP_STATUS_CODES[error[:status].to_i] %>
+          </td>
+        <% end %>
+        <td>
+          <code><%= error[:code] %></code>
+        </td>
+        <td>
+          <%= error[:message] %>
+          <% unless error[:cause].empty? %>
+            <hr />
+            <strong>Cause:</strong>
+            <%= error[:cause].sub(/^because /i, '').capitalize %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

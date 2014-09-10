@@ -1,0 +1,6 @@
+<% if object.has_tag?(:warning) %>
+  <blockquote class="warning">
+    <p><strong>Warning</strong></p>
+    <%= html_markup_markdown object.tag(:warning).text %>
+  </blockquote>
+<% end %>

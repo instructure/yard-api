@@ -1,0 +1,283 @@
+body {
+  font-family: "Open Sans", Calibri, Candara, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  color: #333;
+}
+a, #sidebar a:visited {
+  color: #4183c4;
+}
+a:visited {
+  color: #8B3377;
+}
+a:hover,
+a:focus,
+#sidebar nav > a.current,
+#sidebar nav > a:hover,
+#sidebar nav > a:focus {
+  color: #99173C;
+}
+
+#content {
+  margin: 0 0 0 200px;
+}
+
+p, h4 {
+  margin: 0.8em 0;
+}
+
+code {
+  margin: 0 2px;
+  padding: 0px 5px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 1.6em;
+  padding: 0.6em 0;
+  margin: 10px 0;
+}
+#content h1 {
+  border-bottom: 1px solid #ddd;
+}
+
+h2 {
+  border-bottom: 1px #ddd solid;
+  padding: 0 0 3px;
+  font-size: 1.4em;
+  margin-top: 30px;
+}
+h3.beta {
+  border: 1px solid black;
+  background-color: #E5E8FF;
+  text-align: center;
+  padding: 6px;
+  font-weight: bold;
+}
+#sidebar {
+  position: fixed;
+  overflow: auto;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 50%;
+  margin-right: 320px;
+  text-align: right;
+  padding-right: 20px;
+  background: #f8f8f8;
+  border-right: 1px solid #ddd;
+}
+#sidebar h1 {
+  margin-bottom: 0;
+  margin-left: 20px;
+  border-bottom: 1px solid #ddd;
+}
+#sidebar nav > a,
+#sidebar h2 {
+  display:block;
+  border: none;
+  font-size: 1.1em;
+}
+#sidebar h2 {
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: normal;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 white;
+  margin: 0;
+}
+#sidebar h2.first {
+  border-top:none;
+}
+#sidebar nav > h2,
+#sidebar nav > a {
+  border-right: 5px solid transparent;
+}
+#sidebar nav > a {
+  padding: 5px 0;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+#content a[name^="method."] {
+  outline: none;
+}
+.method_details_list h2 {
+}
+
+
+.method_details h3.endpoint {
+  font-size: 14px;
+  font-weight: normal;
+  font-family: Monaco, Consolas, Courier, monospace;
+  padding: 6px 10px;
+  margin-top: 18px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+
+.method_details .verb {
+  font-weight: bold;
+}
+.method_details .id-fragment {
+  color: #CC0000;
+}
+
+h2 .defined-in {
+  float:right;
+  font-size:10px;
+  padding-top:10px;
+  opacity:0.7;
+}
+
+/* Footer */
+#footer {
+  margin-top: 20px;
+  margin-left: 180px;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  color: #999;
+}
+
+#footer a {
+  color: #999;
+}
+
+pre.code,
+div.syntaxhighlighter {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-family: Monaco, Consolas, Courier, monospace;
+}
+
+.syntaxhighlighter .line code,
+pre.code code,
+.endpoint-errors code {
+  white-space: nowrap;
+  background: none;
+  border: none;
+  font-weight: normal;
+  margin: auto;
+  padding: 0;
+  border-radius: 0;
+}
+.syntaxhighlighter {
+  overflow: auto;
+}
+
+td.code textarea { display: none; }
+
+table#quicklinks {
+  width: 100%;
+}
+table#quicklinks tr {
+  border: 1px solid black;
+}
+table#quicklinks td a {
+  padding: 6px;
+}
+table#quicklinks th {
+  font-weight: bold;
+  padding: 12px;
+}
+
+h2.api_method_name a {
+  text-decoration: none;
+  color: black;
+}
+
+div.appendix img {
+  max-width: 100%;
+}
+
+.argument-required {
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: bold;
+  color: #CC0000;
+}
+
+.example-title {
+  padding: 5px 0;
+  font-size: 11px;
+  font-weight: bold;
+  color: #777;
+}
+
+.fade {
+  color: #777;
+}
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+  margin: 15px 0;
+}
+
+blockquote.warning {
+  border-color: orange;
+}
+
+table.endpoint-errors {
+  border-collapse: collapse;
+  width: 100%;
+  background: #fff;
+  font-size: 12px;
+}
+
+.endpoint-errors tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.endpoint-errors tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+  transition: all .125s ease-in-out;
+}
+.endpoint-errors thead {
+  background: #f5f5f5;
+}
+
+.endpoint-errors th {
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.endpoint-errors td, .endpoint-errors th {
+  vertical-align: top;
+  text-align: left;
+  padding: 5px;
+}
+
+.endpoint-errors th:first-of-type,
+.endpoint-errors td:first-of-type {
+  width: 160px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.emits-tag {
+}

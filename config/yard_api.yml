@@ -1,0 +1,14 @@
+---
+# config/yard_api.yml
+output: public/doc/api
+source: doc/api
+readme: doc/api/README.md
+title: Rails API Project
+verbose: true
+debug: false
+strict: false
+files:
+  - app/controllers/**/*.rb
+assets:
+  images: images
+  examples: examples

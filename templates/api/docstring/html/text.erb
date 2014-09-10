@@ -1,0 +1,6 @@
+<% untagged = object.tags.reject { |tag| tag.tag_name == 'API' }.empty? %>
+
+<% text = object.docstring.strip %>
+<% text = '*No documentation available yet.*' if text.empty? && untagged %>
+
+<%= html_markup_markdown(text) %>

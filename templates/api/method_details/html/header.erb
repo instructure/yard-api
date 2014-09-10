@@ -1,0 +1,12 @@
+<div class="method_details <%= @index == 0 ? 'first' : '' %>">
+  <h2 class='api_method_name' name='<%= @method_link %>' data-subtopic='<%= @subtopic %>'>
+    <a name='<%= @method_link %>' href='#<%= @method_link %>'>
+      <%= object.tag("API").try(:text) %>
+    </a>
+
+    <% if @controller_path %>
+      <span class='defined-in'><a href="https://github.com/amireh/pibi/blob/master/<%= @controller_path %>"><%= "#{@route.requirements[:controller].camelize}Controller\##{@route.requirements[:action]}" %></a></span>
+    <% end %>
+  </h2>
+  <%= yieldall %>
+</div>

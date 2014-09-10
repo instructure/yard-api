@@ -1,0 +1,10 @@
+<p class="returns-tag">
+  <% if @is_list %>
+    Returns a list of
+  <% else %>
+    Returns <%= %w[a e i o u].include?(@resource_name[0]) ? 'an' : 'a' %>
+  <% end %>
+  <a href='<%= @resource_name %>.html#<%= @object_name %>'>
+    <%= @is_list ? @object_name.pluralize : @object_name %>
+  </a>
+</p>

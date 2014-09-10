@@ -1,0 +1,7 @@
+<% if object.tag('emits').try(:text) %>
+  <p class="emits-tag">
+    <h4>Realtime</h4>
+
+    This endpoint emits: <code><%= @emits[0].text.constantize %></code>
+  </p>
+<% end %>
