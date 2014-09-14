@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
   s.license     = 'AGPL3'
   s.add_dependency 'yard', '0.8.7'
   s.add_dependency 'yard-appendix', '~> 0.1.8'
-  s.add_development_dependency 'rspec', '~> 0'
-  s.add_development_dependency 'gem-release', '~> 0'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'gem-release'
 end
