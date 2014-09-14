@@ -3,14 +3,44 @@
 output: public/doc/api
 source: doc/api
 readme: doc/api/README.md
+
+# Title of the project. This will be displayed in the browser title bar as well
+# as in the layout as the primary heading.
 title: Rails API Project
-verbose: true
-debug: false
-strict: false
+
+# The resource index is a mega-index page that contains all the API resources.
+resource_index: true
+
+# Generate a single page that contains all the static pages and API resources.
+# The output will be a single file.
+#
+# Implies "resource_index" is true.
+one_file: false
+
+# YARD options.
 markup:
 markup_provider:
+
+# The API files to extract the docs from.
 files:
   - app/controllers/**/*.rb
+
+# YARD assets that you want to reference from your docs. The key is the
+# reference key you use in the docs, while the value is the path to where
+# the assets are located relative to the doc source.
+#
+# These folders will be copied to the output directory.
+#
+# See "source" and "output".
 assets:
   images: images
   examples: examples
+
+# Debug option. YARD and YARD-API verbosity option.
+verbose: true
+
+# Debug option.
+debug: false
+
+# Don't tolerate any errors such as bad asset paths.
+strict: false

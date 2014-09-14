@@ -84,4 +84,31 @@ module YARD::Templates::Helpers::HtmlHelper
     bookmark = "#{appendix.name.to_s.gsub(' ', '+')}-appendix"
     link_url("#{html_file}##{bookmark}", appendix.title)
   end
+
+  def sidebar_link(title, href)
+    <<-HTML
+      <a href="#{url_for(href)}">#{title}</a>
+    HTML
+  end
+
+  # Turns text into HTML using +markup+ style formatting.
+  #
+  # @override Syntax highlighting is not performed on the HTML block.
+  # @param [String] text the text to format
+  # @param [Symbol] markup examples are +:markdown+, +:textile+, +:rdoc+.
+  #   To add a custom markup type, see {MarkupHelper}
+  # @return [String] the HTML
+  def htmlify(text, markup = options.markup)
+    markup_meth = "html_markup_#{markup}"
+    return text unless respond_to?(markup_meth)
+    return "" unless text
+    return text unless markup
+    html = send(markup_meth, text)
+    if html.respond_to?(:encode)
+      html = html.force_encoding(text.encoding) # for libs that mess with encoding
+      html = html.encode(:invalid => :replace, :replace => '?')
+    end
+    html = resolve_links(html)
+    html
+  end
 end

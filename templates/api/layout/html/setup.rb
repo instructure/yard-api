@@ -1,20 +1,15 @@
 include Helpers::FilterHelper
 
 def init
-  @breadcrumb = []
-
   @page_title = options[:title]
 
-  if @file
-    if @file.is_a?(String)
-      @contents = File.read(@file)
-      @file = File.basename(@file)
-    else
-      @contents = @file.contents
-      @file = File.basename(@file.path)
-    end
-    def @object.source_type; nil; end
+  if options[:inline_file]
+    @contents = File.read(options[:file])
+    sections :diskfile
+  elsif @file
     sections :layout, [:diskfile]
+  elsif options[:all_resources]
+    sections :layout, [T('topic'), T('appendix')]
   elsif options[:controllers]
     sections :layout, [T('topic'), T('appendix')]
   else
@@ -34,9 +29,19 @@ def index
   erb(:index)
 end
 
-def diskfile
+def diskfile(filename=@file)
+  if filename.is_a?(String)
+    @contents = File.read(filename)
+    filename = File.basename(filename)
+  elsif filename.is_a?(File)
+    @contents = filename.contents
+    filename = File.basename(filename.path)
+  end
+
+  extension = (File.extname(filename)[1..-1] || '').downcase
+
   content = "<div id='filecontents'>" +
-  case (File.extname(@file)[1..-1] || '').downcase
+  case extension
   when 'htm', 'html'
     @contents
   when 'txt'

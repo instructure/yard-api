@@ -34,6 +34,7 @@ module YARD::APIPlugin
 
       set_option('title', config['title'])
       set_option('output-dir', config['output'])
+      set_option('one-file') if config['one_file']
       set_option('readme', config['readme']) if File.exists?(config['readme'])
       set_option('verbose') if config['verbose']
       set_option('debug') if config['debug']

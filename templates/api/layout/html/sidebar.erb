@@ -5,25 +5,19 @@
   </h1>
 
   <h2 class='first'>Pages</h2>
-  <a
-    href="<%= url_for("index.html") %>"
-    class="<%= 'current' if options[:object] == 'index.html' %>">Home
-  </a>
+
+  <%= sidebar_link('Home', 'index.html') %>
 
   <% static_pages.each do |page| %>
-    <a  href="<%= url_for(page[:filename]) %>"
-        class="<%= 'current' if options[:object] == page[:filename] %>">
-      <%= page[:title] %>
-    </a>
+    <%= sidebar_link(page[:title], page[:filename]) %>
   <% end %>
 
   <h2>Resources</h2>
-  <% options[:resources].each_with_index do |(resource, controllers), i| %>
-    <%
-      link = url_for("#{topicize resource}.html")
-      klass = []
-      klass << "current" if resource == options[:object]
-    %>
-    <a class="<%= klass.join(' ') %>" href="<%= link %>"><%= resource %></a>
+  <% if api_options['resource_index'] %>
+    <%= sidebar_link('All Resources', 'all_resources.html') %>
+  <% end %>
+
+  <% options[:resources].each do |resource, controllers| %>
+    <%= sidebar_link resource, "#{topicize(resource)}.html" %>
   <% end %>
 </nav>

@@ -14,6 +14,11 @@ TODO
 
 ## Changelog
 
+**14/9/2014**
+
+- Support for single-page output through the `one_file` option
+- Support for resource index generation ("All Resources") through the `resource_index` option
+
 **10/9/2014**
 
 - Support for github-flavored markdown when you're using Markdown as a markup, and `redcarpet` as the provider

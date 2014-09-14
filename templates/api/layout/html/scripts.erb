@@ -16,6 +16,18 @@
     $('<li>').append($link).appendTo($row);
   });
 
+  // Highlight the current page in the sidebar
+  $(function() {
+    var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
+    var $page = $('#sidebar [href="' + currentPage + '"]');
+    if ($page.length === 0) {
+      $page = $('#sidebar a[href=""]');
+    }
+
+    $page.addClass('current');
+    console.log('Highlighting current page:', $page, currentPage);
+  });
+
   $('#content pre.code').each(function(i, block) {
     var code;
     var $block = $(block);

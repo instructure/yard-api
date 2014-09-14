@@ -9,7 +9,21 @@
       <%= erb(:sidebar) %>
     </div>
 
-    <div id="content"><%= yieldall %></div>
+    <% if options[:all_resources] %>
+      <div id="content">
+        <% if api_options['one_file'] %>
+          <% static_pages.each do |page| %>
+            <%= diskfile page[:src] %>
+          <% end %>
+        <% end %>
+
+        <% options[:resources].each do |resource, controllers| %>
+          <%= yieldall object: resource, controllers: controllers %>
+        <% end %>
+      </div>
+    <% else %>
+      <div id="content"><%= yieldall %></div>
+    <% end %>
 
     <%= erb(:footer) %>
     <%= erb(:scripts) %>

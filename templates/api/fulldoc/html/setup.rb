@@ -12,6 +12,7 @@ def init
   generate_assets
   serialize_index
   serialize_static_pages
+  serialize_mega_index if api_options['resource_index']
 
   options.delete(:objects)
 
@@ -40,6 +41,16 @@ def serialize_index
   options[:file] = api_options['readme']
   serialize('index.html')
   options.delete(:file)
+end
+
+def serialize_mega_index
+  options[:all_resources] = true
+
+  Templates::Engine.with_serializer("all_resources.html", options[:serializer]) do
+    T('layout').run(options)
+  end
+
+  options.delete(:all_resources)
 end
 
 def asset(path, content)
