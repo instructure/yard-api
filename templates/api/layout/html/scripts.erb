@@ -28,7 +28,7 @@
     console.log('Highlighting current page:', $page, currentPage);
   });
 
-  $('#content pre.code').each(function(i, block) {
+  $('#content pre').each(function(i, block) {
     var code;
     var $block = $(block);
     var $codeEl = $block.find('> code');

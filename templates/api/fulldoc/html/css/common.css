@@ -16,9 +16,9 @@ a:visited {
 }
 a:hover,
 a:focus,
-#sidebar nav > a.current,
-#sidebar nav > a:hover,
-#sidebar nav > a:focus {
+#sidebar a.current,
+#sidebar a:hover,
+#sidebar a:focus {
   color: #99173C;
 }
 
@@ -80,7 +80,7 @@ h3.beta {
   margin-left: 20px;
   border-bottom: 1px solid #ddd;
 }
-#sidebar nav > a,
+#sidebar a,
 #sidebar h2 {
   display:block;
   border: none;
@@ -97,11 +97,11 @@ h3.beta {
 #sidebar h2.first {
   border-top:none;
 }
-#sidebar nav > h2,
-#sidebar nav > a {
+#sidebar h2,
+#sidebar a {
   border-right: 5px solid transparent;
 }
-#sidebar nav > a {
+#sidebar a {
   padding: 5px 0;
   text-decoration: none;
   font-size: 13px;

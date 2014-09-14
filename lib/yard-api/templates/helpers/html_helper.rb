@@ -35,13 +35,15 @@ module YARD::Templates::Helpers::HtmlHelper
       elsif entry.is_a?(String)
         [ entry ]
       end
-    end.flatten.compact
+    end.flatten.compact.uniq.map { |path| File.join(options.source, path) }
+
+    puts "Static pages: #{paths}" if options.verbose
 
     markdown_exts = YARD::Templates::Helpers::MarkupHelper::MARKUP_EXTENSIONS[:markdown]
     readme_page = options.readme
     pages = Dir.glob(paths)
 
-    if readme_page.present?
+    if readme_page.present? && !options.one_file
       pages.delete_if { |page| page.match(readme_page) }
     end
 
@@ -55,6 +57,10 @@ module YARD::Templates::Helpers::HtmlHelper
       else
         # otherwise we'll just sanitize the file name
         File.basename(page).sub(/\.\w+$/, '').gsub(/\W/, ' ').gsub(/\s+/, ' ').capitalize
+      end
+
+      if options.verbose
+        puts "Serializing static page #{page}"
       end
 
       {
@@ -85,9 +91,9 @@ module YARD::Templates::Helpers::HtmlHelper
     link_url("#{html_file}##{bookmark}", appendix.title)
   end
 
-  def sidebar_link(title, href)
+  def sidebar_link(title, href, options={})
     <<-HTML
-      <a href="#{url_for(href)}">#{title}</a>
+      <a href="#{url_for(href)}" class="#{options[:class_name]}">#{title}</a>
     HTML
   end
 

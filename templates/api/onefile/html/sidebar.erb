@@ -1,0 +1,15 @@
+<div>
+  <h1>
+    <%= sidebar_link("#{api_options.title} #{api_options.version}", 'index.html') %>
+  </h1>
+
+  <nav id="static_pages">
+    <% static_pages.each do |page| %>
+      <%= sidebar_link(page[:title], page[:filename]) %>
+    <% end %>
+
+    <% options[:resources].each do |resource, controllers| %>
+      <%= sidebar_link resource, "#{topicize(resource)}.html", class_name: "api_resource_link" %>
+    <% end %>
+  </nav>
+</div>

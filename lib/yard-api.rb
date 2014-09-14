@@ -45,4 +45,11 @@ module YARD
   module Templates
     Engine.register_template_path YARD::APIPlugin::TEMPLATE_PATH
   end
+
+  module CLI
+    class YardocOptions < Templates::TemplateOptions
+      default_attr :resources, []
+      default_attr :json_objects, []
+    end
+  end
 end

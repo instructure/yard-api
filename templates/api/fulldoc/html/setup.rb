@@ -12,7 +12,7 @@ def init
   generate_assets
   serialize_index
   serialize_static_pages
-  serialize_mega_index if api_options['resource_index']
+  serialize_resource_index if api_options['resource_index']
 
   options.delete(:objects)
 
@@ -38,12 +38,24 @@ def serialize_resource(resource, controllers)
 end
 
 def serialize_index
+  return serialize_onefile_index if api_options.one_file
+
   options[:file] = api_options['readme']
   serialize('index.html')
   options.delete(:file)
 end
 
-def serialize_mega_index
+def serialize_onefile_index
+  options[:all_resources] = true
+
+  Templates::Engine.with_serializer('index.html', options[:serializer]) do
+    T('onefile').run(options)
+  end
+
+  options.delete(:all_resources)
+end
+
+def serialize_resource_index
   options[:all_resources] = true
 
   Templates::Engine.with_serializer("all_resources.html", options[:serializer]) do
@@ -58,9 +70,9 @@ def asset(path, content)
 end
 
 def generate_assets
-  asset_root = Pathname.new(File.dirname(__FILE__))
-  (Dir[asset_root + "css/**/*.css"] + Dir[asset_root + "js/**/*.js"]).each do |file|
-    file = Pathname.new(file).relative_path_from(asset_root).to_s
+  layout = Object.new.extend(T('layout'))
+
+  [].concat(layout.stylesheets).concat(layout.javascripts).uniq.each do |file|
     asset(file, file(file, true))
   end
 end

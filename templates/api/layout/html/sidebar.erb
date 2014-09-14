@@ -1,4 +1,4 @@
-<nav>
+<div>
   <h1>
     <%= api_options['title'] %>
     <%= api_options['version'] %>
@@ -6,18 +6,21 @@
 
   <h2 class='first'>Pages</h2>
 
-  <%= sidebar_link('Home', 'index.html') %>
-
-  <% static_pages.each do |page| %>
-    <%= sidebar_link(page[:title], page[:filename]) %>
-  <% end %>
+  <nav id="static_pages">
+    <%= sidebar_link('Home', 'index.html') %>
+    <% static_pages.each do |page| %>
+      <%= sidebar_link(page[:title], page[:filename]) %>
+    <% end %>
+  </nav>
 
   <h2>Resources</h2>
-  <% if api_options['resource_index'] %>
-    <%= sidebar_link('All Resources', 'all_resources.html') %>
-  <% end %>
+  <nav id="api_resources">
+    <% if api_options['resource_index'] %>
+      <%= sidebar_link('All Resources', 'all_resources.html') %>
+    <% end %>
 
-  <% options[:resources].each do |resource, controllers| %>
-    <%= sidebar_link resource, "#{topicize(resource)}.html" %>
-  <% end %>
-</nav>
+    <% options[:resources].each do |resource, controllers| %>
+      <%= sidebar_link resource, "#{topicize(resource)}.html" %>
+    <% end %>
+  </nav>
+</div>

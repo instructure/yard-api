@@ -4,8 +4,8 @@ module YARD::APIPlugin
   class YardocTask < ::YARD::Rake::YardocTask
     attr_reader :config
 
-    def initialize()
-      super(:yard_api, &:run)
+    def initialize(name=:yard_api)
+      super(name, &:run)
     end
 
     def run

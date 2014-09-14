@@ -17,6 +17,20 @@ def init
   end
 end
 
+def stylesheets
+  %w[
+    css/common.css
+    css/highlight.css
+  ]
+end
+
+def javascripts
+  %w[
+    js/jquery-1.11.1.min.js
+    js/highlight/highlight.pack.js
+  ]
+end
+
 def contents
   @contents
 end
