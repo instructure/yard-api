@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Ahmad Amireh"]
   s.email       = 'ahmad@instructure.com'
   s.homepage    = 'https://github.com/amireh/yard-api'
-  s.files       = Dir.glob("{lib,spec,templates,tasks}/**/*.{rb,erb,rake}") +
+  s.files       = Dir.glob("{config,lib,spec,templates,tasks}/**/*.{yml,rb,erb,rake}") +
                   ['LICENSE', 'README.md', '.rspec', __FILE__]
   s.has_rdoc    = 'yard'
   s.license     = 'AGPL3'
