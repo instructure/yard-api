@@ -10,6 +10,11 @@ def init
 
   build_json_objects_map
   generate_assets
+
+  if api_options.one_file
+    return serialize_onefile_index
+  end
+
   serialize_index
   serialize_static_pages
   serialize_resource_index if api_options['resource_index']
@@ -38,8 +43,6 @@ def serialize_resource(resource, controllers)
 end
 
 def serialize_index
-  return serialize_onefile_index if api_options.one_file
-
   options[:file] = api_options['readme']
   serialize('index.html')
   options.delete(:file)

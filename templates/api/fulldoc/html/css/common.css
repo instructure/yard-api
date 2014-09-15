@@ -206,12 +206,14 @@ div.appendix img {
 }
 
 .argument-required {
+  font-style: normal;
+  color: #CC0000;
+}
+
+li .argument-required {
   font-size: 12px;
   padding: 2px 4px;
-  border-radius: 3px;
-  font-style: normal;
   font-weight: bold;
-  color: #CC0000;
 }
 
 .example-title {

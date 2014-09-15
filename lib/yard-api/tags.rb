@@ -1,5 +1,8 @@
-YARD::Tags::Library.define_tag("API endpiont", :API)
-YARD::Tags::Library.define_tag("API endpiont argument", :argument)
+require 'yard-api/tags/argument_tag'
+
+YARD::Tags::Library.define_tag("API endpoint", :API)
+YARD::Tags::Library.define_tag("API endpoint argument", :argument, YARD::APIPlugin::Tags::ArgumentTag)
+YARD::Tags::Library.define_tag("API endpoint argument scope", :argument_scope)
 YARD::Tags::Library.define_tag("API response field", :request_field)
 YARD::Tags::Library.define_tag("API response field", :response_field)
 YARD::Tags::Library.define_tag("API example request", :example_request, :with_title_and_text)

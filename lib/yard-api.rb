@@ -31,6 +31,19 @@ module YARD
     def self.options
       @@options ||= Options.new
     end
+
+    def self.log(message, level=::Logger::INFO)
+      log = YARD::Logger.instance
+      log.enter_level(level) { log.puts(message) }
+    end
+
+    def self.on_error(message)
+      if self.options.strict
+        raise error
+      else
+        self.log(error, ::Logger::WARN)
+      end
+    end
   end
 
   require 'yard-api/version'

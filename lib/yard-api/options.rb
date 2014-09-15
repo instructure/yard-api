@@ -14,6 +14,9 @@ module YARD::APIPlugin
     default_attr :debug, false
     default_attr :theme, 'default'
 
+    default_attr :tabular_arguments, false
+    default_attr :strict_arguments, false
+
     attr_accessor :readme
   end
 end

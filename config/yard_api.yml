@@ -44,3 +44,6 @@ debug: false
 
 # Don't tolerate any errors such as bad asset paths.
 strict: false
+
+tabular_arguments: false
+strict_arguments: true

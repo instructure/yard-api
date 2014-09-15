@@ -1,0 +1,41 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Accepted Values</th>
+      <th>Required?</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @argument_tags.each do |tag| %>
+      <tr>
+        <td><code class="argument-name"><%= h tag.unscoped_name %></code></td>
+        <td><span class="argument-type"><%= tag.type %></span></td>
+        <td>
+          <ul class="argument-values">
+            <% (tag.accepted_values || []).each do |value| %>
+              <li><%= value %></li>
+            <% end %>
+          </ul>
+        </td>
+
+        <td>
+          <% if tag.is_required %>
+            <em class="argument-required">Yes</em>
+          <% else %>
+            <em class="argument-optional">No</em>
+          <% end %>
+        </td>
+
+        <td>
+          <% if !tag.text.empty? %>
+            <%= html_markup_markdown(tag.text) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
