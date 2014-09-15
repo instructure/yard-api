@@ -12,6 +12,8 @@ module YARD::Templates::Helpers::HtmlHelper
   end
 
   def static_pages()
+    return @static_pages if @static_pages
+
     options = YARD::APIPlugin.options
 
     paths = Array(options.static).map do |entry|
@@ -37,8 +39,6 @@ module YARD::Templates::Helpers::HtmlHelper
       end
     end.flatten.compact.uniq.map { |path| File.join(options.source, path) }
 
-    puts "Static pages: #{paths}" if options.verbose
-
     markdown_exts = YARD::Templates::Helpers::MarkupHelper::MARKUP_EXTENSIONS[:markdown]
     readme_page = options.readme
     pages = Dir.glob(paths)
@@ -47,7 +47,7 @@ module YARD::Templates::Helpers::HtmlHelper
       pages.delete_if { |page| page.match(readme_page) }
     end
 
-    pages.map do |page|
+    @static_pages = pages.map do |page|
       filename = 'file.' + File.split(page).last.sub(/\..*$/, '.html')
 
       # extract page title if it's a markdown document; title is expected to
@@ -73,22 +73,30 @@ module YARD::Templates::Helpers::HtmlHelper
 
   # override yard-appendix link_appendix
   def link_appendix(ref)
-    __errmsg = "unable to locate referenced appendix '#{ref}'"
+    puts "Linking appendix: #{ref}" if api_options.verbose
 
-    puts "looking up appendix: #{ref}"
     unless appendix = lookup_appendix(ref.to_s)
-      raise __errmsg
+      raise "Unable to locate referenced appendix '#{ref}'"
     end
 
-    topic, controller = *lookup_topic(appendix.namespace.to_s)
+    html_file = if options[:all_resources] && api_options.one_file
+      'index.html'
+    elsif options[:all_resources]
+      'all_resources.html'
+    else
+      topic, controller = *lookup_topic(appendix.namespace.to_s)
 
-    unless topic
-      raise __errmsg
+      unless topic
+        raise "Unable to locate topic for appendix: #{ref}"
+      end
+
+      "#{topicize(topic.first)}.html"
     end
 
-    html_file = "#{topicize topic.first}.html"
     bookmark = "#{appendix.name.to_s.gsub(' ', '+')}-appendix"
-    link_url("#{html_file}##{bookmark}", appendix.title)
+    link_url("#{html_file}##{bookmark}", appendix.title).tap do |link|
+      puts "\tAppendix link: #{link}" if api_options.verbose
+    end
   end
 
   def sidebar_link(title, href, options={})

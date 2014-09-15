@@ -1,12 +1,12 @@
 <article>
-  <%= html_markup_markdown(@docstring.strip) %>
+  <%= htmlify(@docstring) %>
 </article>
 
 <% c = options[:controllers].detect { |c| c.has_tag?(:note) } %>
 <% c && c.tags(:note).each do |tag| %>
   <blockquote class="note">
     <p><strong>Note</strong></p>
-    <%= html_markup_markdown tag.text %>
+    <%= htmlify tag.text %>
   </blockquote>
 <% end %>
 

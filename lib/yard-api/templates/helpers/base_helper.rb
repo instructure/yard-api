@@ -71,12 +71,13 @@ module YARD::Templates::Helpers::BaseHelper
 
   def lookup_topic(controller_name)
     controller = nil
-    topic = options[:resources].find { |r,cs|
-      cs.any? { |c|
-        controller = c if c.name.to_s == controller_name
-        !controller.nil?
-      }
-    }
+    topic = options[:resources].find do |resource, controllers|
+      controllers.detect do |_controller|
+        if _controller.path.to_s == controller_name
+          controller = _controller
+        end
+      end
+    end
 
     [ topic, controller ]
   end
@@ -84,7 +85,7 @@ module YARD::Templates::Helpers::BaseHelper
   def lookup_appendix(title)
     appendix = nil
 
-    puts "looking up appendix: #{title}"
+    puts "Looking up appendix: #{title}" if api_options.verbose
 
     if object
       # try in the object scope
