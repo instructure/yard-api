@@ -1,11 +1,9 @@
 <div id="footer">
   <p>
-    <% if api_options['footer_copyright'] %>
-      <%= api_options['footer_copyright'] %>
-    <% end %>
+    <%= api_options.footer_copyright.to_s %>
 
     Generated on <%= Time.now.strftime("%c") %>
   </p>
 
-  <%= api_options['footer_note'].to_s %>
+  <%= api_options.footer_note.to_s %>
 </div>

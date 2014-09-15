@@ -1,0 +1,16 @@
+<style>
+  body {
+    padding-left: <%= api_options.sidebar_width + api_options.spacer %>px;
+    padding-right: <%= api_options.spacer %>px;
+  }
+
+  #sidebar {
+    width: <%= api_options.sidebar_width %>px;
+  }
+
+  <% if api_options.content_width.to_i > 0 %>
+    #content {
+      max-width: <%= api_options.content_width %>px;
+    }
+  <% end %>
+</style>

@@ -2,16 +2,20 @@
 <html>
   <head>
     <%= erb(:headers) %>
+
+    <% inline_stylesheets.each do |style| %>
+      <%= erb(style) %>
+    <% end %>
   </head>
 
-  <body class="theme-<%= api_options.theme %>">
+  <body class="theme-<%= api_options.theme %> <%= 'onefile' if api_options.one_file %>">
     <div id="sidebar">
       <%= erb(:sidebar) %>
     </div>
 
     <% if options[:all_resources] %>
       <div id="content">
-        <% if api_options['one_file'] %>
+        <% if api_options.one_file %>
           <% static_pages.each do |page| %>
             <%= diskfile page[:src] %>
           <% end %>
@@ -27,5 +31,9 @@
 
     <%= erb(:footer) %>
     <%= erb(:scripts) %>
+
+    <% inline_javascripts.each do |script| %>
+      <%= erb(script) %>
+    <% end %>
   </body>
 </html>

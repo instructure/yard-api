@@ -20,11 +20,16 @@
   $(function() {
     var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
     var $page = $('#sidebar [href="' + currentPage + '"]');
-    if ($page.length === 0) {
-      $page = $('#sidebar a[href=""]');
+
+    if (!currentPage) {
+      return;
     }
 
-    $page.addClass('current');
+    // if ($page.length === 0) {
+    //   $page = $('#sidebar a[href=""]');
+    // }
+
+    // $page.addClass('active');
     console.log('Highlighting current page:', $page, currentPage);
   });
 

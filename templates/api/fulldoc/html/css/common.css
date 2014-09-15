@@ -2,8 +2,7 @@ body {
   font-family: "Open Sans", Calibri, Candara, "Helvetica Neue", Arial, sans-serif;
   font-size: 15px;
   line-height: 1.4;
-  width: 960px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   color: #333;
 }
@@ -23,7 +22,7 @@ a:focus,
 }
 
 #content {
-  margin: 0 0 0 200px;
+  margin: 0 auto;
 }
 
 p, h4 {
@@ -68,10 +67,6 @@ h3.beta {
   bottom: 0;
   top: 0;
   left: 0;
-  right: 50%;
-  margin-right: 320px;
-  text-align: right;
-  padding-right: 20px;
   background: #f8f8f8;
   border-right: 1px solid #ddd;
 }

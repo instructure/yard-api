@@ -4,8 +4,9 @@
       <%= object.tag("API").try(:text) %>
     </a>
 
-    <% if @controller_path %>
-      <span class='defined-in'><a href="https://github.com/amireh/pibi/blob/master/<%= @controller_path %>"><%= "#{@route.requirements[:controller].camelize}Controller\##{@route.requirements[:action]}" %></a></span>
+    <% if @controller_path && !api_options.github_url.to_s.empty? %>
+      <span class='defined-in'>
+        <a href="<%= api_options.github_url %>/blob/<%= api_options.github_branch %>/<%= @controller_path %>"><%= "#{@route.requirements[:controller].camelize}Controller\##{@route.requirements[:action]}" %></a></span>
     <% end %>
   </h2>
   <%= yieldall %>

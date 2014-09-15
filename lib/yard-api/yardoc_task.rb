@@ -9,6 +9,8 @@ module YARD::APIPlugin
     end
 
     def run
+      YARD::APIPlugin.options.reset_defaults
+
       @config = load_config
       t = self
 

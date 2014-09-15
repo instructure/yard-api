@@ -92,6 +92,8 @@ module YARD::Templates::Helpers::HtmlHelper
   end
 
   def sidebar_link(title, href, options={})
+    options[:class_name] ||= (object == href ? 'active' : nil)
+
     <<-HTML
       <a href="#{url_for(href)}" class="#{options[:class_name]}">#{title}</a>
     HTML

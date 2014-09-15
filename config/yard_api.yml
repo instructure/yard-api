@@ -17,7 +17,14 @@ resource_index: true
 # Implies "resource_index" is true.
 one_file: false
 
-# YARD options.
+# YARD options passed as-is.
+#
+# If you want to use github-flavored markdown, use "redcparet" as a markup
+# provider, and "markdown" as a markup and add the following gems to your
+# Gemfile *before* yard-api:
+#
+#   - "github-markup"
+#   - "redcarpet"
 markup:
 markup_provider:
 
@@ -39,11 +46,41 @@ assets:
 # Debug option. YARD and YARD-API verbosity option.
 verbose: true
 
-# Debug option.
+# Debug option, will write *a lot* of stuff to STDOUT while generating.
 debug: false
 
-# Don't tolerate any errors such as bad asset paths.
+# Don't tolerate any errors such as bad asset paths, invalid tag properties, etc.
 strict: false
 
+# Each API endpoint details can provide a link to the source code of the
+# controller method if it's available on GitHub.
+#
+# Just specify the url to your repository and the branch the documentation has
+# been generated for and things "should work".
+github_url: https://github.com/amireh/yard-api
+github_branch: master
+
+# Set to true if you want @argument tags to show up in a table instead of a list.
 tabular_arguments: false
+
+# When this option is set, all @argument tags that do not explicitly specify
+# whether they are required or optional will be marked as required. Examples:
+#
+#   - @argument [String] name # assumed to be required
+#   - @argument [Optional, String] name # is now optional
+#   - @argument [Required, String] name # same effect if `strict_arguments` is true
+#
+# Conversely, leaving this to false marks all arguments with no specifier as
+# optional.
 strict_arguments: true
+
+# Width of the sidebar, in pixels.
+sidebar_width: 240
+
+# Width of the content box in pixels, or "fluid" for maximum screen space.
+#
+# Content will never overlap with the sidebar.
+content_width: "fluid"
+
+# Whitespace between the Sidebar and the content, in pixels.
+spacer: 20

@@ -1,7 +1,7 @@
 <meta name="Content-Type" content="text/html;charset=UTF-8">
 <meta charset="UTF-8">
 
-<title><%= api_options['title'] %></title>
+<title><%= api_options.window_title || api_options.title %></title>
 
 <% stylesheets.each do |stylesheet| %>
   <link rel="stylesheet" href="<%= url_for(stylesheet) %>" type="text/css" charset="utf-8" />

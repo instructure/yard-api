@@ -24,11 +24,19 @@ def stylesheets
   ]
 end
 
+def inline_stylesheets
+  [ '_dynamic_styles' ]
+end
+
 def javascripts
   %w[
     js/jquery-1.11.1.min.js
     js/highlight/highlight.pack.js
   ]
+end
+
+def inline_javascripts
+  []
 end
 
 def contents
