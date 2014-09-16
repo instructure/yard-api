@@ -4,6 +4,7 @@ module YARD::APIPlugin::Tags
   class ArgumentTag < YARD::Tags::Tag
     attr_reader :accepted_values, :is_required
 
+    RE_NAME = /^([\S]+)/
     RE_ARRAY_LITERAL = /\[[^\]]+\]/
     RE_ARRAY_TYPE = /^#{RE_ARRAY_LITERAL}$/
     RE_ACCEPTED_VALUES_PREFIXES = /
@@ -16,8 +17,26 @@ module YARD::APIPlugin::Tags
     /mx
 
     def initialize(name, buf)
+      name = nil
+
+      # If the name specifier is written before the types and contains brackets,
+      # YARD will not properly parse the attributes (it doesn't even say that it
+      # supports this syntax so), something like this:
+      #
+      #   @argument shirt[size] [String]
+      #
+      # We convert the name to use underscores instead and YARD does its magic!
+      # Once the tag is parsed, we'll use the original name.
+      #
+      # @since 0.1.7
+      if buf[0] != '[' && YARD::APIPlugin.options.leading_argument_name_fix
+        arg_name = buf.match(RE_NAME).captures.first
+        buf.sub!(arg_name, arg_name.gsub(/\W/, '_'))
+        name = arg_name
+      end
+
       YARD::Tags::Library.instance.tag_create(:attr, buf).tap do |tag|
-        super(:argument, tag.text, tag.types, tag.name)
+        super(:argument, tag.text, tag.types, name || tag.name)
 
         @is_required = parse_is_required(@types)
         @accepted_values = parse_accepted_values(@types, @text)

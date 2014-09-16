@@ -26,6 +26,8 @@ module YARD::APIPlugin
     default_attr :content_width, 'fluid'
     default_attr :spacer, 20
 
+    default_attr :leading_argument_name_fix, false
+
     attr_accessor :readme
   end
 end

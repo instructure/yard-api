@@ -84,3 +84,17 @@ content_width: "fluid"
 
 # Whitespace between the Sidebar and the content, in pixels.
 spacer: 20
+
+# Compatibility option.
+#
+# If your project (mis)uses the @argument tag to specify the name before the
+# types, e.g `@argument name [String]`, then turn this on and yard-api will
+# make these docstrings compliant with YARD's @attr tag (or any tag with a name
+# and a type, really) which is what @argument uses as its back-end tag.
+#
+# The "right" thing to do is to use the correct YARD syntax:
+#
+#   @argument [Type specifier] name_specifier
+#
+# But that may not be viable in very large, existing projects.
+leading_argument_name_fix: false

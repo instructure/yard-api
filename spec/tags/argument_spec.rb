@@ -16,6 +16,7 @@ describe YARD::APIPlugin::Tags::ArgumentTag do
   end
 
   it 'should work like an @attr tag' do
+        ENV['DO'] = '1'
     populate <<-'eof'
       # @argument [String] name
       #   Your full name.
@@ -28,6 +29,46 @@ describe YARD::APIPlugin::Tags::ArgumentTag do
     expect(tag.name).to eq 'name'
     expect(tag.text).to eq 'Your full name.'
     expect(tag.types).to eq ['String']
+  end
+
+  describe 'option: leading_argument_name_fix' do
+    it 'should work with type and name specifiers swapped "@argument name [String]"' do
+      set_option(:leading_argument_name_fix, true)
+
+      populate <<-'eof'
+        # @argument name [String]
+        #   Your full name.
+        #
+        # @argument shirt_size [String, ["S", "M", "L"]]
+        #   Size of the shirt you wear.
+        #
+        # @argument shirt[size] [String, ["S", "M", "L"]]
+        #   Size of the shirt you wear.
+        #
+        def signup
+        end
+      eof
+
+      find_tag(:signup, :argument, 0).tap do |tag|
+        expect(tag.name).to eq 'name'
+        expect(tag.text).to eq 'Your full name.'
+        expect(tag.types).to eq ['String']
+      end
+
+      find_tag(:signup, :argument, 1).tap do |tag|
+        expect(tag.name).to eq 'shirt_size'
+        expect(tag.text).to eq 'Size of the shirt you wear.'
+        expect(tag.types).to eq ['String']
+        expect(tag.accepted_values).to eq %w[ S M L ]
+      end
+
+      find_tag(:signup, :argument, 2).tap do |tag|
+        expect(tag.name).to eq 'shirt[size]'
+        expect(tag.text).to eq 'Size of the shirt you wear.'
+        expect(tag.types).to eq ['String']
+        expect(tag.accepted_values).to eq %w[ S M L ]
+      end
+    end
   end
 
   describe '#is_required' do
@@ -124,6 +165,5 @@ describe YARD::APIPlugin::Tags::ArgumentTag do
 
       expect(find_tag(:order_shirt, :argument).accepted_values).to eq(%w[S M L XL])
     end
-
   end
 end
