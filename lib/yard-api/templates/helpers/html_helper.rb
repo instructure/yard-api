@@ -12,10 +12,12 @@ module YARD::Templates::Helpers::HtmlHelper
   end
 
   def static_pages()
-    return @static_pages if @static_pages
+    @@static_pages ||= begin
+      generate_static_pages(YARD::APIPlugin.options)
+    end
+  end
 
-    options = YARD::APIPlugin.options
-
+  def generate_static_pages(options)
     paths = Array(options.static).map do |entry|
       pages = if entry.is_a?(Hash)
         glob = entry['glob']
@@ -47,7 +49,7 @@ module YARD::Templates::Helpers::HtmlHelper
       pages.delete_if { |page| page.match(readme_page) }
     end
 
-    @static_pages = pages.map do |page|
+    pages.map do |page|
       filename = 'file.' + File.split(page).last.sub(/\..*$/, '.html')
 
       # extract page title if it's a markdown document; title is expected to
@@ -70,6 +72,7 @@ module YARD::Templates::Helpers::HtmlHelper
       }
     end
   end
+  protected :generate_static_pages
 
   # override yard-appendix link_appendix
   def link_appendix(ref)

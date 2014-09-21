@@ -16,7 +16,6 @@ describe YARD::APIPlugin::Tags::ArgumentTag do
   end
 
   it 'should work like an @attr tag' do
-        ENV['DO'] = '1'
     populate <<-'eof'
       # @argument [String] name
       #   Your full name.

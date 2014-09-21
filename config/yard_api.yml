@@ -32,6 +32,8 @@ markup_provider:
 files:
   - app/controllers/**/*.rb
 
+route_namespace:
+
 # YARD assets that you want to reference from your docs. The key is the
 # reference key you use in the docs, while the value is the path to where
 # the assets are located relative to the doc source.
@@ -40,8 +42,8 @@ files:
 #
 # See "source" and "output".
 assets:
-  images: images
-  examples: examples
+  # images: images
+  # examples: examples
 
 # Debug option. YARD and YARD-API verbosity option.
 verbose: true

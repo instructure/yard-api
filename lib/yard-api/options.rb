@@ -15,6 +15,7 @@ module YARD::APIPlugin
     default_attr :footer_note, ''
 
     default_attr :one_file, false
+    default_attr :strict, false
     default_attr :verbose, false
     default_attr :debug, false
     default_attr :theme, 'default'

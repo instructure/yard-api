@@ -1,28 +1,20 @@
 <ul class="argument">
   <% @argument_tags.each do |tag| %>
-    <%
-      tag.text ||= ''
-      desc = tag.text.strip.sub(/^\[([^\]]+)\]/, '').strip
-      type = $1
-      desc = desc.sub(/(\(optional\))/, '').strip
-      is_optional = $1.present?
-      name, desc = desc.split(/\s/, 2).map(&:strip)
-      desc = desc.sub(/[A|a]ccepted values:\s*\[([^\]]+)\]/, '').strip
-      accepted_values = $1
-    %>
     <li>
-      <code class="argument-name"><%= h name %></code>
-      <span class="argument-type"><%= type %></span>
-      <span class="argument-values fade">
-        <em><%= "[#{accepted_values}]" if accepted_values.present? %></em>
-      </span>
+      <code class="argument-name"><%= h tag.unscoped_name %></code>
+      <span class="argument-type"><%= tag.type %></span>
+      <% if (tag.accepted_values || []).any? %>
+        <span class="argument-values fade">
+          <em>[ <%= tag.accepted_values.join(', ') %> ]</em>
+        </span>
+      <% end %>
 
-      <% unless is_optional %>
+      <% if tag.is_required %>
         <em class="argument-required">Required</em>
       <% end %>
 
-      <% if !desc.empty? %>
-        <%= html_markup_markdown(desc) %>
+      <% if !tag.text.empty? %>
+        <%= html_markup_markdown(tag.text) %>
       <% end %>
     </li>
   <% end %>

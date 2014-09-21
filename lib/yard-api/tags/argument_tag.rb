@@ -7,6 +7,7 @@ module YARD::APIPlugin::Tags
     RE_NAME = /^([\S]+)/
     RE_ARRAY_LITERAL = /\[[^\]]+\]/
     RE_ARRAY_TYPE = /^#{RE_ARRAY_LITERAL}$/
+    RE_REQUIRED_OPTIONAL = /required|optional/i
     RE_ACCEPTED_VALUES_PREFIXES = /
       accepted\svalues |
       accepts |
@@ -38,18 +39,19 @@ module YARD::APIPlugin::Tags
       YARD::Tags::Library.instance.tag_create(:attr, buf).tap do |tag|
         super(:argument, tag.text, tag.types, name || tag.name)
 
+        @types ||= []
+        @text ||= ''
+
         @is_required = parse_is_required(@types)
         @accepted_values = parse_accepted_values(@types, @text)
       end
     end
 
     def unscoped_name
-      if scope_tag = @object.tag(:argument_scope)
-        if @name =~ /^#{scope_tag.text}\[([^\]]+)\]$/
-          $1
-        else
-          @name
-        end
+      scope_tag = @object.tag(:argument_scope)
+
+      if scope_tag && @name =~ /^#{scope_tag.text}\[([^\]]+)\]$/
+        $1
       else
         @name
       end
@@ -57,36 +59,51 @@ module YARD::APIPlugin::Tags
 
     private
 
-    def parse_is_required(types)
+    def parse_is_required(types=[])
       strict = !!YARD::APIPlugin.options.strict_arguments
-      specifier = types.detect { |typestr| typestr.match(/optional|required/i) }
+      specifier = types.detect { |typestr| typestr.match(RE_REQUIRED_OPTIONAL) }
 
       if specifier
         types.delete(specifier)
 
-        return true if specifier.downcase == 'required'
-        return false if specifier.downcase == 'optional'
+        if specifier.downcase == 'required'
+          return true
+        elsif specifier.downcase == 'optional'
+          return false
+        end
       end
 
       strict
     end
 
-    def parse_accepted_values(types, text)
-      str = if types.last.match(RE_ARRAY_TYPE)
+    def parse_accepted_values(types=[], text='')
+      # values specified after the type, i.e.:
+      #
+      #   @argument [String, ["S","M","L"]] size
+      #
+      str = if types.any? && types.last.match(RE_ARRAY_TYPE)
         types.pop
+      # otherwise, look for them in the docstring, e.g.:
+      #
+      #   @argument [String] size
+      #    Accepts ["S","M","L"]
+      #
       elsif text.match(RE_ACCEPTED_VALUES_STR)
         $1
       end
 
       if str
         begin
-          YAML.load(str)
+          # some people prefer to use the pipe (|) to separate the values
+          YAML.load(str.to_s.gsub('|', ','))
         rescue Exception => e
           YARD::APIPlugin.on_error <<-Error
             Unable to parse accepted values for @argument tag.
-            Error: #{exception}
+            Error:
+            #{e.class}: #{e.message}
             Offending docstring:
             #{text}
+            Accepted values string: '#{str}'
           Error
 
           return nil

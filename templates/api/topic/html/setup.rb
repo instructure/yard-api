@@ -1,3 +1,5 @@
+require 'json'
+
 def init
   sections :header, [:topic_doc, :method_details_list, [T('method_details')]]
   @resource = object
@@ -19,16 +21,15 @@ def topic_doc
 end
 
 def properties_of_model(json)
-  require 'json'
   JSON::parse(json)['properties']
 rescue JSON::ParserError
   nil
 end
 
 def word_wrap(text, col_width=80)
-   text.gsub!( /(\S{#{col_width}})(?=\S)/, '\1 ' )
-   text.gsub!( /(.{1,#{col_width}})(?:\s+|$)/, "\\1\n" )
-   text
+  text.gsub!( /(\S{#{col_width}})(?=\S)/, '\1 ' )
+  text.gsub!( /(.{1,#{col_width}})(?:\s+|$)/, "\\1\n" )
+  text
 end
 
 def indent(str, amount = 2, char = ' ')
@@ -36,7 +37,7 @@ def indent(str, amount = 2, char = ' ')
 end
 
 def render_comment(string, wrap = 75)
-  indent(word_wrap(string), 2, '/')
+  string ? indent(word_wrap(string), 2, '/') : ''
 end
 
 def render_value(value, type = 'string')

@@ -39,9 +39,9 @@ module YARD
 
     def self.on_error(message)
       if self.options.strict
-        raise error
+        raise message
       else
-        self.log(error, ::Logger::WARN)
+        self.log(message, ::Logger::WARN)
       end
     end
   end

@@ -108,6 +108,7 @@ RSpec.configure do |config|
       @options.send("#{key}=", value)
     end
 
+    @options.reset_defaults
     @overridden_options.clear
   end
 end

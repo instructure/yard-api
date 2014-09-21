@@ -14,7 +14,7 @@ module YARD::APIPlugin
       @config = load_config
       t = self
 
-      YARD::APIPlugin.options.update(@config)
+      api_options = YARD::APIPlugin.options.update(@config)
 
       t.verifier = YARD::APIPlugin::Verifier.new(config['verbose'])
       t.before = proc { FileUtils.rm_rf(config['output']) }

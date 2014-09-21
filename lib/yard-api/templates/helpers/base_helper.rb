@@ -85,7 +85,7 @@ module YARD::Templates::Helpers::BaseHelper
   def lookup_appendix(title)
     appendix = nil
 
-    puts "Looking up appendix: #{title}" if api_options.verbose
+    YARD::APIPlugin.log("Looking up appendix: #{title}") if api_options.verbose
 
     if object
       # try in the object scope
