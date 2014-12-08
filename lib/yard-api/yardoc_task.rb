@@ -62,7 +62,7 @@ module YARD::APIPlugin
     private
 
     def load_config
-      path = Rails.root.join('config', 'yard_api.yml')
+      path = ENV.fetch('YARD_API_CONFIG') { Rails.root.join('config', 'yard_api.yml') }
 
       # load defaults
       config = YAML.load_file(File.join(YARD::APIPlugin::CONFIG_PATH, 'yard_api.yml'))
