@@ -43,7 +43,7 @@ module YARD::Templates::Helpers::HtmlHelper
     readme_page = options.readme
     pages = Dir.glob(paths)
 
-    if readme_page.present? && !options.one_file
+    if readme_page && !options.one_file
       pages.delete_if { |page| page.match(readme_page) }
     end
 
