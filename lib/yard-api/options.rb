@@ -1,6 +1,9 @@
 module YARD::APIPlugin
   # See config/yard_api.yml for documentation for the options.
   class Options < YARD::Options
+    default_attr :format, 'html'
+    default_attr :no_save, false
+
     default_attr :title, 'Rails API Project'
     default_attr :window_title, 'Rails API Project Documentation'
     default_attr :version, ''

@@ -1,5 +1,8 @@
 def init
   super
+
+  puts ">> tags"
+
   sections *[
     :emits,
     :note,

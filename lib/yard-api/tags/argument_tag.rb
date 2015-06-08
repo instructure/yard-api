@@ -40,7 +40,7 @@ module YARD::APIPlugin::Tags
 
     def parse_is_required(types)
       strict = !!YARD::APIPlugin.options.strict_arguments
-      specifier = types.detect { |typestr| typestr.match(/optional|required/i) }
+      specifier = Array(types).detect { |typestr| typestr.match(/optional|required/i) }
 
       if specifier
         types.delete(specifier)
@@ -53,9 +53,9 @@ module YARD::APIPlugin::Tags
     end
 
     def parse_accepted_values(types, text)
-      str = if types.last.match(RE_ARRAY_TYPE)
+      str = if Array(types).any? && types.last.match(RE_ARRAY_TYPE)
         types.pop
-      elsif text.match(RE_ACCEPTED_VALUES_STR)
+      elsif text && text.match(RE_ACCEPTED_VALUES_STR)
         $1
       end
 

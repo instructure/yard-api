@@ -41,6 +41,10 @@ module YARD::APIPlugin
       set_option('verbose') if config['verbose']
       set_option('debug') if config['debug']
 
+      # set_option('no-output')
+      set_option('no-save') if config['no_save']
+      set_option('format', config['format'] || 'html')
+
       get_assets(config).each_pair do |asset_id, rpath|
         asset_path = File.join(config['source'], rpath)
 
