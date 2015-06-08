@@ -1,7 +1,6 @@
 require 'yard-api/tags/argument_tag'
 
 YARD::Tags::Library.define_tag("API endpoint", :API)
-YARD::Tags::Library.define_tag("API Data Model", :model)
 YARD::Tags::Library.define_tag("API endpoint argument", :argument, YARD::APIPlugin::Tags::ArgumentTag)
 YARD::Tags::Library.define_tag("API endpoint argument scope", :argument_scope)
 YARD::Tags::Library.define_tag("API response field", :request_field)
@@ -18,3 +17,4 @@ YARD::Tags::Library.define_tag("API error", :throws)
 YARD::Tags::Library.define_tag("API warning", :warning)
 YARD::Tags::Library.define_tag("API note", :note)
 YARD::Tags::Library.define_tag("API message", :emits)
+YARD::Tags::Library.define_tag("API model", :model)

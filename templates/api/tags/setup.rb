@@ -1,5 +1,6 @@
 def init
   super
+
   sections *[
     :emits,
     :note,

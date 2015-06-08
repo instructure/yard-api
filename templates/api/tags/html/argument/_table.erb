@@ -1,9 +1,11 @@
+<% has_accepted_values = @argument_tags.any? { |e| Array(e.accepted_values).any? } %>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Type</th>
-      <th>Accepted Values</th>
+      <% if has_accepted_values %><th>Accepted Values</th><% end %>
       <th>Required?</th>
       <th>Description</th>
     </tr>
@@ -14,13 +16,16 @@
       <tr>
         <td><code class="argument-name"><%= h tag.unscoped_name %></code></td>
         <td><span class="argument-type"><%= tag.type %></span></td>
-        <td>
-          <ul class="argument-values">
-            <% (tag.accepted_values || []).each do |value| %>
-              <li><%= value %></li>
-            <% end %>
-          </ul>
-        </td>
+        
+        <% if has_accepted_values %>
+          <td>
+            <ul class="argument-values">
+              <% (tag.accepted_values || []).each do |value| %>
+                <li><%= value %></li>
+              <% end %>
+            </ul>
+          </td>
+        <% end %>
 
         <td>
           <% if tag.is_required %>

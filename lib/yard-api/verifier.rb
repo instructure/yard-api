@@ -10,9 +10,10 @@ module YARD
         relevant = list.select { |o| relevant_object?(o) }
 
         if @verbose && relevant.any?
-          puts "#{relevant.length}/#{list.length} objects are relevant:"
+          log "#{relevant.length}/#{list.length} objects are relevant:"
+
           relevant.each do |object|
-            puts "\t- #{object.path}"
+            log "\t- #{object.path}"
           end
         end
 
@@ -24,10 +25,21 @@ module YARD
         when :root, :module, :constant
           false
         when :method, :class
-          !object.tags('API').empty? && object.tags('internal').empty?
+          is_api = !object.tags('API').empty?
+          is_internal = !object.tags('internal').empty?
+
+          if @verbose && !is_api && !is_internal
+            log "Resource #{object} will be ignored as it contains no @API tag."
+          end
+
+          is_api && !is_internal
         else
           object.parent.nil? && relevant_object?(object.parent)
         end
+      end
+
+      def log(*args)
+        ::YARD::APIPlugin.log(*args)
       end
     end
   end

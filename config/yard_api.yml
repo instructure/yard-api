@@ -1,7 +1,6 @@
 ---
 # config/yard_api.yml
 output: public/doc/api
-source: doc/api
 readme: doc/api/README.md
 
 # Title of the project. This will be displayed in the browser title bar as well
@@ -59,7 +58,9 @@ strict: false
 #
 # Just specify the url to your repository and the branch the documentation has
 # been generated for and things "should work".
-github_url: https://github.com/amireh/yard-api
+# 
+# Example: https://github.com/amireh/yard-api
+github_url:
 github_branch: master
 
 # Set to true if you want @argument tags to show up in a table instead of a list.

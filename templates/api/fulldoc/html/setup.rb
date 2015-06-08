@@ -5,7 +5,7 @@ include YARD::Templates::Helpers::FilterHelper
 
 def init
   options[:resources] = options[:objects].
-    group_by { |o| o.tags('API').first.text }.
+    group_by { |o| o.tags('API').first.text.split("\n").first }.
     sort_by  { |o| o.first }
 
   build_json_objects_map

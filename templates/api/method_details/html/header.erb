@@ -1,13 +1,24 @@
-<div class="method_details <%= @index == 0 ? 'first' : '' %>">
-  <h2 class='api_method_name' name='<%= @method_link %>' data-subtopic='<%= @subtopic %>'>
-    <a name='<%= @method_link %>' href='#<%= @method_link %>'>
-      <%= object.tag("API").try(:text) %>
+<div class='method_details'>
+  <h2
+    class='api_method_name'
+    name='<%= @props[:method_link] %>'
+    data-subtopic='<%= @props[:subtopic] %>'
+  >
+    <a
+      name='<%= @props[:method_link] %>'
+      href='#<%= @props[:method_link] %>'
+    >
+      <%= object.tag('API').text %>
     </a>
 
-    <% if @controller_path && !api_options.github_url.to_s.empty? %>
+    <% if @props[:path] && !api_options.github_url.to_s.empty? %>
       <span class='defined-in'>
-        <a href="<%= api_options.github_url %>/blob/<%= api_options.github_branch %>/<%= @controller_path %>"><%= "#{@route.requirements[:controller].camelize}Controller\##{@route.requirements[:action]}" %></a></span>
+        <a href="<%= api_options.github_url %>/blob/<%= api_options.github_branch %>/<%= @props[:path] %>">
+          <%= "#{@props[:controller]}Controller\##{@props[:action]}" %>
+        </a>
+      </span>
     <% end %>
   </h2>
+
   <%= yieldall %>
 </div>

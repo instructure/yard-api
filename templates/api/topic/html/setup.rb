@@ -21,9 +21,11 @@ def topic_doc
 end
 
 def properties_of_model(json)
-  JSON::parse(json)['properties']
-rescue JSON::ParserError
-  nil
+  begin
+    JSON::parse(json || '')['properties']
+  rescue JSON::ParserError
+    nil
+  end
 end
 
 def word_wrap(text, col_width=80)

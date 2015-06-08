@@ -2,7 +2,7 @@ require 'yard/templates/helpers/html_helper'
 
 module YARD::Templates::Helpers::HtmlHelper
   def topicize(str)
-    str.gsub(' ', '_').underscore
+    str.split("\n")[0].gsub(' ', '_').underscore
   end
 
   def url_for_file(filename, anchor = nil)
@@ -13,56 +13,52 @@ module YARD::Templates::Helpers::HtmlHelper
 
   def static_pages()
     @@static_pages ||= begin
-      generate_static_pages(YARD::APIPlugin.options)
+      locate_static_pages(YARD::APIPlugin.options)
     end
   end
 
-  def generate_static_pages(options)
+  def locate_static_pages(options)
+    title_overrides = {}
+
     paths = Array(options.static).map do |entry|
       pages = if entry.is_a?(Hash)
-        glob = entry['glob']
-        blacklist = Array(entry['exclude'])
-
-        unless glob
-          raise "Invalid static page entry, expected Hash to contain a 'glob' parameter: #{entry}"
+        if !entry.has_key?('path')
+          raise "Static page entry must contain a 'path' parameter: #{entry}"
+        elsif !entry.has_key?('title')
+          raise "Static page entry must contain a 'title' parameter: #{entry}"
         end
 
-        pages = Dir.glob(entry['glob'])
+        title_overrides[entry['path']] = entry['title']
 
-        if blacklist.any?
-          pages.delete_if { |p| blacklist.any? { |filter| p.match(filter) } }
-        end
-
-        pages
+        entry['path']
       elsif entry.is_a?(Array)
         entry.map(&:to_s)
       elsif entry.is_a?(String)
-        [ entry ]
+        entry
       end
-    end.flatten.compact.uniq.map { |path| File.join(options.source, path) }
-
-    markdown_exts = YARD::Templates::Helpers::MarkupHelper::MARKUP_EXTENSIONS[:markdown]
-    readme_page = options.readme
-    pages = Dir.glob(paths)
-
-    if readme_page && !options.one_file
-      pages.delete_if { |page| page.match(readme_page) }
     end
 
-    pages.map do |page|
+    pages = Dir.glob(paths.flatten.compact)
+
+    if options.readme && !options.one_file
+      pages.delete_if { |page| page.match(options.readme) }
+    end
+
+    pages.uniq.map do |page|
       filename = 'file.' + File.split(page).last.sub(/\..*$/, '.html')
 
-      # extract page title if it's a markdown document; title is expected to
-      # be an h1 on the very first line:
-      title = if markdown_exts.include?(File.extname(page).sub('.', ''))
-        (File.open(page, &:gets) || '').strip.sub('# ', '')
-      else
-        # otherwise we'll just sanitize the file name
-        File.basename(page).sub(/\.\w+$/, '').gsub(/\W/, ' ').gsub(/\s+/, ' ').capitalize
-      end
+      title = (
+        title_overrides[page] ||
+        File.basename(page)
+          .sub(/\.\w+$/, '')
+          .gsub('_', ' ')
+          .gsub(/\W/, ' ')
+          .gsub(/\s+/, ' ')
+          .capitalize
+      )
 
       if options.verbose
-        puts "Serializing static page #{page}"
+        puts "Serializing static page #{page} (#{title})"
       end
 
       {
@@ -70,9 +66,9 @@ module YARD::Templates::Helpers::HtmlHelper
         filename: filename,
         title: title
       }
-    end
+    end.sort_by { |page| page[:title] }
   end
-  protected :generate_static_pages
+  protected :locate_static_pages
 
   # override yard-appendix link_appendix
   def link_appendix(ref)

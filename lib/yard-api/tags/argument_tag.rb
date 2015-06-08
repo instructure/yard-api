@@ -50,7 +50,7 @@ module YARD::APIPlugin::Tags
     def unscoped_name
       scope_tag = @object.tag(:argument_scope)
 
-      if scope_tag && @name =~ /^#{scope_tag.text}\[([^\]]+)\]$/
+      if scope_tag && @name =~ /^#{scope_tag.text.gsub(/\[\]/, '')}\[([^\]]+)\]$/
         $1
       else
         @name
@@ -61,7 +61,7 @@ module YARD::APIPlugin::Tags
 
     def parse_is_required(types=[])
       strict = !!YARD::APIPlugin.options.strict_arguments
-      specifier = types.detect { |typestr| typestr.match(RE_REQUIRED_OPTIONAL) }
+      specifier = Array(types).detect { |typestr| typestr.match(RE_REQUIRED_OPTIONAL) }
 
       if specifier
         types.delete(specifier)
@@ -81,14 +81,14 @@ module YARD::APIPlugin::Tags
       #
       #   @argument [String, ["S","M","L"]] size
       #
-      str = if types.any? && types.last.match(RE_ARRAY_TYPE)
+      str = if Array(types).any? && types.last.match(RE_ARRAY_TYPE)
         types.pop
       # otherwise, look for them in the docstring, e.g.:
       #
       #   @argument [String] size
       #    Accepts ["S","M","L"]
       #
-      elsif text.match(RE_ACCEPTED_VALUES_STR)
+      elsif text && text.match(RE_ACCEPTED_VALUES_STR)
         $1
       end
 

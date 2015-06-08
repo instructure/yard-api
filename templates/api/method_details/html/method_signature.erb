@@ -1,19 +1,13 @@
-<% @routes.each do |route| %>
-  <% route_path = route.path.spec.to_s.gsub("(.:format)", "")
-     if route.verb.source =~ /\^?(\w*)\$/
-       verb = $1.upcase
-     else
-       verb = route.verb.source
-     end
-   %>
+<% @props[:routes].each do |route| %>
+  <%
+    formatted_route_path = route[:path].split('/').map do |fragment|
+      is_id = fragment =~ /^\:[\w|_]+/
+      "<span #{'class="id-fragment"' if is_id}>#{fragment}</span>"
+    end.join('/')
+  %>
+
   <h3 class='endpoint'>
-    <span class="verb <%= verb.downcase %>"><%= verb %></span>
-    <%
-      formatted_route_path = route_path.split('/').map do |fragment|
-        is_id = fragment =~ /^\:[\w|_]+/
-        "<span #{'class="id-fragment"' if is_id}>#{fragment}</span>"
-      end.join('/')
-    %>
+    <span class="verb <%= route[:verb].downcase %>"><%= route[:verb] %></span>
     <%= formatted_route_path %>
   </h3>
 <% end %>
