@@ -3,7 +3,7 @@ PATH
   specs:
     yard-api (0.2.2)
       yard (= 0.8.7)
-      yard-appendix (~> 0.1.8)
+      yard-appendix
 
 GEM
   remote: https://rubygems.org/

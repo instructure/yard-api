@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'json'
+require 'yaml'
+
+class Generator
+	ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+	def run(config)
+		output_dir = File.join(ROOT, config['output'])
+		log "Compiled docs will be found under #{output_dir}."
+
+		groups = config['groups'].map do |group|
+			globs = group['sources'].map { |src| File.join(ROOT, src) }
+			entry = {
+				id: group['name'],
+				entries: []
+			}
+
+			Dir.glob(globs).each do |source_file|
+				log "Generating data for #{source_file}."
+
+				md = File.read(source_file)
+
+				id = if group['parse_titles']
+					md.lines[0].sub(/#\s+/, '').strip.gsub(/^`|`$/, '')
+				else
+					File.basename(source_file).sub(/\.md$/, '')
+				end
+
+				entry[:entries] << {
+					id: id,
+					content: md
+				}
+			end
+
+			entry
+		end
+
+		FileUtils.mkdir_p(output_dir)
+
+		File.write(
+			File.join(output_dir, 'database.js'),
+			[
+				"window.CONFIG=#{config.to_json};",
+				"window.DATABASE=#{groups.to_json};"
+			].join("\n")
+		)
+		
+		Dir.glob(config['assets'].map do |file|
+			File.join(ROOT, config['asset_root'], file)
+		end).each do |file|
+			dest_filepath = File.join(output_dir, file.sub(ROOT, '').sub(config['asset_root'], ''))
+			puts "Writing #{dest_filepath}."
+
+			FileUtils.mkdir_p(File.dirname(dest_filepath))
+			FileUtils.cp_r(file, dest_filepath)
+		end
+	end
+
+	protected
+	
+	def log(*msg)
+		puts *msg
+	end
+end
+
+config = YAML.load_file(File.join(Generator::ROOT, 'doc', 'config.yml'))
+
+generator = Generator.new
+generator.run(config)
+
