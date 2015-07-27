@@ -25,14 +25,13 @@ module YARD
         when :root, :module, :constant
           false
         when :method, :class
-          is_api = !object.tags('API').empty?
-          is_internal = !object.tags('internal').empty?
+          return false if object.tags('internal').any?
 
-          if @verbose && !is_api && !is_internal
-            log "Resource #{object} will be ignored as it contains no @API tag."
+          object.tags('API').any?.tap do |is_api|
+            if @verbose
+              log "Resource #{object} will be ignored as it contains no @API tag."
+            end
           end
-
-          is_api && !is_internal
         else
           object.parent.nil? && relevant_object?(object.parent)
         end

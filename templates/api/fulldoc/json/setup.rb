@@ -26,13 +26,13 @@ def serialize_resource(resource, controllers)
 end
 
 def method_details_list(controllers)
-  @meths = controllers.map do |controller|
+  meths = controllers.map do |controller|
     controller.meths(:inherited => false, :included => false)
   end.flatten
 
-  @meths = run_verifier(@meths)
+  meths = run_verifier(meths)
 
-  @meths.map do |object, i|
+  meths.map do |object, i|
     dump_object(object).tap do |object_info|
       object_info[:tags] = dump_object_tags(object)
     end
@@ -94,10 +94,6 @@ def get_route(object)
   route = routes.first
 
   if route.present?
-    # controller_path = "app/controllers/#{route.requirements[:controller]}_controller.rb"
-    # controller_path = nil unless File.file?(Rails.root+controller_path)
-
-    route_path = route.path.spec.to_s.gsub("(.:format)", "")
     verb = if route.verb.source =~ /\^?(\w*)\$/
       $1.upcase
     else
@@ -105,7 +101,7 @@ def get_route(object)
     end
 
     {
-      path: route_path,
+      path: route.path.spec.to_s.gsub("(.:format)", ""),
       verb: verb
     }
   end
