@@ -1,0 +1,63 @@
+body {
+	color: #333;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	line-height: 1.6;
+	font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+}
+
+a, a:active, a:visited {
+	color: #268bd2;
+}
+
+a:active, a.active {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+pre {
+  word-break: normal;
+	font-size: 85%;
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #eaeaea;
+}
+
+code:not([class]) {
+	background: #eaeaea;
+	font-size: 85%;
+}
+
+blockquote {
+	padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+  margin-left: 0;
+}
+
+.yard-api--sidebar {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 210px;
+	overflow: auto;
+	padding: 0 1em;
+}
+
+.yard-api--sidebar_listing {
+	list-style: none;
+	padding: 0 0 0 1em;
+}
+
+.yard-api--sidebar a {
+	font-size: 0.9rem;
+}
+
+.yard-api--content {
+	padding-left: 210px;
+	margin: 0 1em 0 3em;
+}
