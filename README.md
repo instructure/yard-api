@@ -6,7 +6,7 @@ TODO
 
 ## Usage
 
-TODO
+Check out the tag usage pages in [https://amireh.github.io/yard-api].
 
 ### Compatibility options
 

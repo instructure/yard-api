@@ -5,7 +5,6 @@
 [assets]
 *.zip
 /doc/vendor/react-with-addons-0.13.3.js
-/public/doc
 
 [build]
 *.gem
