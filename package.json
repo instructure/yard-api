@@ -1,0 +1,24 @@
+{
+  "name": "yard-api",
+  "version": "1.0.0",
+  "description": "YARD-API documentation generator.",
+  "main": "bin/generate-docs",
+  "devDependencies": {
+    "chokidar": "1.0.5",
+    "glob": "5.0.14",
+    "react-tools": "0.13.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amireh/yard-api.git"
+  },
+  "author": "Ahmad Amireh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amireh/yard-api/issues"
+  },
+  "homepage": "https://github.com/amireh/yard-api#readme"
+}
