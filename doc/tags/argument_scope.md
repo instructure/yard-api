@@ -1,3 +1,3 @@
 # `@argument_scope`
 
-*TODO*
+**DEPRECATED, DO NOT USE**

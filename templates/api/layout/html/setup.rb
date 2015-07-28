@@ -44,9 +44,15 @@ def contents
 end
 
 def index
-  legitimate_objects = @objects.reject {|o| o.root? || !is_class?(o) || !o.meths.find { |m| !m.tags('API').empty? } }
+  legitimate_objects = @objects.reject do |object|
+    object.root? ||
+    !is_class?(object) ||
+    !object.meths.find { |m| !m.tags('API').empty? }
+  end
 
-  @resources = legitimate_objects.sort_by {|o| o.tags('API').first.text }
+  @resources = legitimate_objects.sort_by do |object|
+    object.tags('API').first.text
+  end
 
   erb(:index)
 end

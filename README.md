@@ -40,6 +40,12 @@ Read that file to view all the available options.
 
 ## Changelog
 
+**28/7/2015 [0.2.3]**
+
+- dropped the `@argument_scope` tag
+- JSON is available as an output format now
+- added usage documentation, found at [http://amireh.github.io/yard-api]
+
 **0.1.7**
 
 - new compatibility option `leading_argument_name_fix`

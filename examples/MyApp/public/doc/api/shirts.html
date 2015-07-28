@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="Content-Type" content="text/html;charset=UTF-8">
+<meta charset="UTF-8">
+
+<title>Rails API Project Documentation</title>
+
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/highlight.css" type="text/css" charset="utf-8" />
+
+
+
+  <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+  <script src="js/highlight/highlight.pack.js" type="text/javascript"></script>
+
+
+    
+      <style>
+  body {
+    padding-left: 260px;
+    padding-right: 20px;
+  }
+
+  #sidebar {
+    width: 240px;
+  }
+
+  
+</style>
+    
+  </head>
+
+  <body class="theme-default ">
+    <div id="sidebar">
+      <div>
+  <h1>
+    Rails API Project
+    
+  </h1>
+
+  <h2 class='first'>Pages</h2>
+
+  <nav id="static_pages">
+          <a href="index.html" class="">Home</a>
+
+    
+  </nav>
+
+  <h2>Resources</h2>
+  <nav id="api_resources">
+    
+            <a href="all_resources.html" class="">All Resources</a>
+
+    
+
+    
+            <a href="shirts.html" class="">Shirts</a>
+
+    
+  </nav>
+</div>
+
+    </div>
+
+    
+      <div id="content"><div class="service">
+  
+    <h1>Shirts API</h1>
+  
+
+  <article>
+  
+</article>
+
+
+
+
+<section>
+  <header><strong>Interfaces</strong></header>
+  <ul id="quicklinks">
+  </ul>
+</section>
+
+<div id="Services" class="method_details_list">
+
+  <div class='method-details'>
+  <h2
+    class='api_method_name'
+    name='method.shirts.create'
+    data-subtopic='Shirts'
+  >
+    <a
+      name='method.shirts.create'
+      href='#method.shirts.create'
+    >
+      Create a new shirt
+    </a>
+
+    
+
+    
+  </h2>
+
+  
+  
+
+  <h3 class='endpoint'>
+    <span class="verb post">POST</span>
+    <span ></span>/<span >shirts</span>
+  </h3>
+
+  
+
+
+
+
+
+
+
+
+
+<section class="endpoint-arguments">
+  <h4 class="arguments-header">Parameters:</h4>
+
+  
+    <ul class="argument-listing">
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">shirts[color]</code>
+        <span class="argument-listing__argument-type">String</span>
+
+        
+
+        
+          <span class="argument-listing__argument-required">Required</span>
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>The color of the shirt.</p>
+
+        
+      </div>
+    </li>
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">shirts[size]</code>
+        <span class="argument-listing__argument-type">String</span>
+
+        
+          <span class="argument-listing__argument-values">
+            <span>[ S, M, L, XL ]</span>
+          </span>
+        
+
+        
+          <span class="argument-listing__argument-required">Required</span>
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>The size of shirts you wear.</p>
+
+        
+      </div>
+    </li>
+  
+</ul>
+  
+</section>
+
+
+</div>
+
+
+  <div class='method-details'>
+  <h2
+    class='api_method_name'
+    name='method.shirts.return'
+    data-subtopic='Shirts'
+  >
+    <a
+      name='method.shirts.return'
+      href='#method.shirts.return'
+    >
+      Return a shirt
+    </a>
+
+    
+      <span
+        class="method-details__beta-flag"
+        title="This API endpoint is not finalized, and there could be
+               breaking changes before its final release."
+      >
+        BETA
+      </span>
+    
+
+    
+  </h2>
+
+  
+  
+
+  <h3 class='endpoint'>
+    <span class="verb post">POST</span>
+    <span ></span>/<span >shirts</span>/<span class="id-fragment">:shirt_id</span>/<span >return</span>
+  </h3>
+
+  
+
+
+
+
+
+
+
+
+
+<p>Return a shirt, probably &#39;cause you don&#39;t like it.</p>
+
+<section class="endpoint-arguments">
+  <h4 class="arguments-header">Parameters:</h4>
+
+  
+    <ul class="argument-listing">
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">shirt_id</code>
+        <span class="argument-listing__argument-type">Integer</span>
+
+        
+
+        
+          <span class="argument-listing__argument-required">Required</span>
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>ID of the shirt you want to return.</p>
+
+        
+      </div>
+    </li>
+  
+</ul>
+  
+</section>
+
+
+</div>
+
+
+</div>
+
+</div>
+</div>
+    
+
+    <div id="footer">
+  <p>
+    
+
+    Generated on Tue Jul 28 16:04:21 2015
+  </p>
+
+  
+</div>
+
+    <script type="text/javascript">
+  $('h2.api_method_name').each(function(i, el) {
+    var subtopic = $(el).data('subtopic');
+    var $a = $(el).find('a');
+    var anchorText = $.trim($a[0].innerHTML);
+
+    if (anchorText === '') {
+      return;
+    }
+
+    var $row = $('#quicklinks');
+    var $link = $('<a/>', {
+      href: '#'+$(el).attr('name')
+    }).html(anchorText);
+
+    $('<li>').append($link).appendTo($row);
+  });
+
+  // Highlight the current page in the sidebar
+  $(function() {
+    var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
+    var $page = $('#sidebar [href="' + currentPage + '"]');
+
+    if (!currentPage) {
+      return;
+    }
+
+    // if ($page.length === 0) {
+    //   $page = $('#sidebar a[href=""]');
+    // }
+
+    // $page.addClass('active');
+    console.log('Highlighting current page:', $page, currentPage);
+  });
+
+  $('#content pre').each(function(i, block) {
+    var code;
+    var $block = $(block);
+    var $codeEl = $block.find('> code');
+
+    // RedCarpet markdown renderer will convert fenced code blocks into
+    // <pre><code>...</code></pre> and we want to remove that <code /> el and
+    // use a plain <pre /> instead:
+    if ($block.children().length === 1 && $codeEl.length) {
+      code = $codeEl.text();
+      $codeEl.remove();
+      $block.html(code);
+    }
+
+    hljs.highlightBlock(block);
+  });
+</script>
+
+    
+  </body>
+</html>

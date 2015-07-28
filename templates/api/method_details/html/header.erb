@@ -1,4 +1,4 @@
-<div class='method_details'>
+<div class='method-details'>
   <h2
     class='api_method_name'
     name='<%= @props[:method_link] %>'
@@ -10,6 +10,16 @@
     >
       <%= object.tag('API').text %>
     </a>
+
+    <% if object.has_tag?('beta') && api_options["use_beta_flag"] %>
+      <span
+        class="method-details__beta-flag"
+        title="This API endpoint is not finalized, and there could be
+               breaking changes before its final release."
+      >
+        BETA
+      </span>
+    <% end %>
 
     <% if @props[:path] && !api_options.github_url.to_s.empty? %>
       <span class='defined-in'>
