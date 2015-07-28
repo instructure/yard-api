@@ -9,7 +9,6 @@
 # --------
 
 *.zip
-/doc/compiled
 
 # [build]
 # -------
