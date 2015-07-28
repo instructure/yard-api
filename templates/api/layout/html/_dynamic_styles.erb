@@ -1,16 +1,41 @@
+<%
+  content_width = api_options.content_width.to_i
+  content_width = 720 if content_width <= 0
+  sidebar_width = api_options.sidebar_width.to_i || 240
+  sidebar_width = 240 if sidebar_width <= 0
+%>
+
 <style>
-  body {
-    padding-left: <%= api_options.sidebar_width + api_options.spacer %>px;
-    padding-right: <%= api_options.spacer %>px;
-  }
-
-  #sidebar {
-    width: <%= api_options.sidebar_width %>px;
-  }
-
-  <% if api_options.content_width.to_i > 0 %>
-    #content {
-      max-width: <%= api_options.content_width %>px;
+  <% if api_options.centered %>
+    body {
+      margin: 0 auto;
+      width: <%= content_width %>px;
     }
+ 
+    #sidebar {
+      margin-left: -<%= sidebar_width %>px;
+      width: <%= sidebar_width %>px;
+      left: auto;
+    }
+ 
+    #content {
+      padding-left: 3em;
+    }
+  <% else %> 
+    body {
+      padding-left: <%= sidebar_width + api_options.spacer %>px;
+      padding-right: <%= api_options.spacer %>px;
+    }
+
+    #sidebar {
+      width: <%= sidebar_width %>px;
+    }
+
+    <% if content_width > 0 %>
+      #content {
+        max-width: <%= content_width %>px;
+      }
+    <% end %>
+
   <% end %>
 </style>

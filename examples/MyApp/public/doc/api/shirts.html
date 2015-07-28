@@ -19,16 +19,24 @@
 
 
     
-      <style>
-  body {
-    padding-left: 260px;
-    padding-right: 20px;
-  }
+      
 
-  #sidebar {
-    width: 240px;
-  }
-
+<style>
+  
+    body {
+      margin: 0 auto;
+      width: 720px;
+    }
+ 
+    #sidebar {
+      margin-left: -240px;
+      width: 240px;
+      left: auto;
+    }
+ 
+    #content {
+      padding-left: 3em;
+    }
   
 </style>
     
@@ -42,7 +50,7 @@
     
   </h1>
 
-  <h2 class='first'>Pages</h2>
+  <h2 class="sidebar__heading">Pages</h2>
 
   <nav id="static_pages">
           <a href="index.html" class="">Home</a>
@@ -50,15 +58,16 @@
     
   </nav>
 
-  <h2>Resources</h2>
-  <nav id="api_resources">
+  <h2 class="sidebar__heading">Resources</h2>
+
+  <nav>
     
             <a href="all_resources.html" class="">All Resources</a>
 
     
 
     
-            <a href="shirts.html" class="">Shirts</a>
+            <a href="shirts.html" class="active">Shirts</a>
 
     
   </nav>
@@ -84,6 +93,7 @@
 
   <ul id="quicklinks"></ul>
 </section>
+
 
 <div>
 	
@@ -224,7 +234,7 @@ curl \
   
   <div class="examples example_response">
     
-      <h4>Example Response:</h4>
+      <h4>Example Response</h4>
     
 
     
@@ -343,7 +353,7 @@ curl \
   <p>
     
 
-    Generated on Tue Jul 28 19:12:35 2015
+    Generated on Tue Jul 28 20:45:53 2015
   </p>
 
   
@@ -367,22 +377,22 @@ curl \
     $('<li>').append($link).appendTo($row);
   });
 
-  // Highlight the current page in the sidebar
-  $(function() {
-    var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
-    var $page = $('#sidebar [href="' + currentPage + '"]');
+  // // Highlight the current page in the sidebar
+  // $(function() {
+  //   var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
+  //   var $page = $('#sidebar [href="' + currentPage + '"]');
 
-    if (!currentPage) {
-      return;
-    }
+  //   if (!currentPage) {
+  //     return;
+  //   }
 
-    // if ($page.length === 0) {
-    //   $page = $('#sidebar a[href=""]');
-    // }
+  //   // if ($page.length === 0) {
+  //   //   $page = $('#sidebar a[href=""]');
+  //   // }
 
-    // $page.addClass('active');
-    console.log('Highlighting current page:', $page, currentPage);
-  });
+  //   // $page.addClass('active');
+  //   console.log('Highlighting current page:', $page, currentPage);
+  // });
 
   $('#content pre').each(function(i, block) {
     var code;
@@ -401,9 +411,10 @@ curl \
     hljs.highlightBlock(block);
   });
 
-  var $examples = $('.example-codeblocks__example');
 
   $('.example-codeblocks__tabs').each(function() {
+    var $examples = $(this).siblings('.example-codeblocks__example');
+
     $(this).find('a').each(function(index) {
       var $example = $examples.eq(index);
 
