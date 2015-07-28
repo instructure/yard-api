@@ -15,5 +15,13 @@ module YARD::Templates::Helpers
       controller_path.gsub!(/^\/|_controller$/, '')
       @routes.find_all { |r| matches_controller_and_action?(r, controller_path, action) }
     end
+
+    def self.get_route_path(route)
+      route.path.spec.to_s.gsub("(.:format)", "")
+    end
+
+    def self.get_route_verb(route)
+      route.verb.source =~ /\^?(\w*)\$/ ? $1.upcase : route.verb.source
+    end
   end
 end

@@ -4,12 +4,16 @@ RouteHelper = YARD::Templates::Helpers::RouteHelper
 
 def init
   sections :header, [:method_signature, T('docstring')]
+  
+
+  super
 end
 
 def header
   routes = get_current_routes
+  route = options[:current_route] = routes.first
 
-  unless route = routes.first
+  unless route
     ::YARD::APIPlugin.log(
       "[error] Unable to find route for object: #{object}",
       ::Logger::ERROR
@@ -39,20 +43,11 @@ def header
   end
 
   @props[:routes] = routes.map do |route|
-    {}.tap do |spec|
-      spec[:path] = route.path.spec.to_s.gsub("(.:format)", "")
-      spec[:verb] = route.verb.source =~ /\^?(\w*)\$/ ? $1.upcase : route.verb.source
-    end
+    {
+      path: RouteHelper.get_route_path(route),
+      verb: RouteHelper.get_route_verb(route)
+    }
   end
 
   erb(:header)
-end
-
-def get_current_routes
-  controller_name = object.parent.path.underscore
-  controller_name.sub!("_controller", '') unless controller_name.include?('/')
-
-  action = object.path.sub(/^.*#/, '').sub(/_with_.*$/, '')
-
-  RouteHelper.api_methods_for_controller_and_action(controller_name, action)
 end

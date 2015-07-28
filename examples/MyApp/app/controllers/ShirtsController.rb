@@ -10,6 +10,21 @@ class ShirtsController < ApplicationController
 	#  
 	# @argument [String, ["S","M","L","XL"]] shirts[size]
 	#  The size of shirts you wear.
+	#  
+	# @example_request
+	#  {
+	#    "shirts": [{
+	#      "color": "red",
+	#      "size": "M"
+	#    }]
+	#  }
+	# 
+	# @example_response
+	#  {
+	#    "shirts": [{
+	#      "id": "1"
+	#    }]
+	#  }
 	def create
 	end
 

@@ -6,17 +6,16 @@
     end.join('/')
   %>
 
-  <h3 class='endpoint'>
+  <div class='endpoint__path'>
     <span class="verb <%= route[:verb].downcase %>"><%= route[:verb] %></span>
     <%= formatted_route_path %>
-  </h3>
+  </div>
 
   <% if object.has_tag?('beta') && api_options["use_beta_banner"] %>
-    <h3 class="beta">
+    <p class='endpoint__beta-banner'>
       BETA: This API endpoint is not finalized, and there could be breaking
       changes before its final release.
-    </h3>
+    </p>
   <% end %>
 <% end %>
-
 

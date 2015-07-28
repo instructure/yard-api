@@ -7,6 +7,9 @@ readme: doc/api/README.md
 # as in the layout as the primary heading.
 title: Rails API Project
 
+url_title: my_app
+url_prefix: /api
+
 # The resource index is a mega-index page that contains all the API resources.
 resource_index: true
 

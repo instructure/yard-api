@@ -9,6 +9,7 @@ gem 'rails', '4.1.6'
 # gem 'sdoc', '~> 0.4.0',      group: :doc
 
 gem "yard-api", path: "../../"
+# gem "yard-api-slatelike", path: "../../"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -22,3 +23,4 @@ gem "yard-api", path: "../../"
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'byebug'

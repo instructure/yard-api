@@ -1,13 +1,13 @@
 <% if object.has_tag?(:example_request) %>
   <div class="examples">
     <% if object.tags(:example_request).length > 1 %>
-      <h4>Example Requests:</h4>
+      <h4>Example Requests</h4>
     <% else %>
-      <h4>Example Request:</h4>
+      <h4>Example Request</h4>
     <% end %>
 
     <% object.tags(:example_request).each do |tag| %>
-      <%= tag_partial '_example_code_block', tag %>
+      <%= tag_partial '_example_code_block', tag, { multi_dialect: true } %>
     <% end %>
   </div>
 <% end %>

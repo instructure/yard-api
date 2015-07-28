@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  $('h2.api_method_name').each(function(i, el) {
+  $('.method-details__name').each(function(i, el) {
     var subtopic = $(el).data('subtopic');
     var $a = $(el).find('a');
     var anchorText = $.trim($a[0].innerHTML);
@@ -49,4 +49,24 @@
 
     hljs.highlightBlock(block);
   });
+
+
+  $('.example-codeblocks__tabs').each(function() {
+    var $examples = $(this).siblings('.example-codeblocks__example');
+
+    $(this).find('a').each(function(index) {
+      var $example = $examples.eq(index);
+
+      $(this).on('click', function() {
+        $examples.hide().removeClass('active');
+        $example.show().addClass('active');
+
+        $(this).siblings('a.active').removeClass('active');
+        $(this).addClass('active');
+      });
+    });
+    
+    $(this).find('a:first').click();
+  });
+
 </script>

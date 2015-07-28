@@ -42,30 +42,27 @@ code {
 h1 {
   font-size: 1.6em;
   padding: 0.6em 0;
-  margin: 10px 0;
-}
-#content h1 {
-  border-bottom: 1px solid #ddd;
+  margin: 0.6em 0;
 }
 
 h2 {
-  border-bottom: 1px #ddd solid;
-  padding: 0 0 3px;
+  /*border-bottom: 1px #ddd solid;*/
   font-size: 1.4em;
-  margin-top: 30px;
+  padding: 0.6em 0;
+  margin: 0.6em 0;
 }
 
-h3.beta {
+.endpoint__beta-banner {
   border-left: 5px solid rgba(255,0,0,0.65);
   background-color: #ffc;
-  padding: 1em;
+  padding: 0.6em;
   font-size: 85%;
 }
 
 .method-details__beta-flag {
   color: #CC0000;
   background: #fca;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.6em;
   font-size: 85%;
 }
 
@@ -78,24 +75,27 @@ h3.beta {
   background: #f8f8f8;
   border-right: 1px solid #ddd;
 }
+
 #sidebar h1 {
   margin-bottom: 0;
   border-bottom: 1px solid #ddd;
 }
-#sidebar a,
-#sidebar h2 {
-  display:block;
-  border: none;
-  font-size: 1.1em;
+
+#sidebar a, #sidebar h2 {
+  display: block;
+/*  border: none;
+  font-size: 90%;*/
 }
+
 #sidebar h2 {
-  padding: 10px 0;
-  font-size: 20px;
-  font-weight: normal;
-  text-transform: uppercase;
-  text-shadow: 0 1px 0 white;
-  margin: 0;
+  /*padding: 10px 0;*/
+  /*font-size: 20px;*/
+  /*font-weight: normal;*/
+  /*text-transform: uppercase;*/
+  /*text-shadow: 0 1px 0 white;*/
+  /*margin: 0;*/
 }
+
 #sidebar h2.first {
   border-top:none;
 }
@@ -113,11 +113,8 @@ h3.beta {
 #content a[name^="method."] {
   outline: none;
 }
-.method_details_list h2 {
-}
 
-
-h3.endpoint {
+.endpoint__path {
   font-size: 90%;
   font-weight: normal;
   font-family: Monaco, Consolas, Courier, monospace;
@@ -155,13 +152,15 @@ h2 .defined-in {
 
 pre.code,
 div.syntaxhighlighter {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  font-size: 13px;
-  line-height: 19px;
+  background-color: #f4f4f4;
+  /*border: 1px solid #ddd;*/
+  font-size: 85%;
+  /*font-size: 13px;*/
+  /*line-height: 19px;*/
   overflow: auto;
-  padding: 6px 10px;
-  border-radius: 3px;
+  /*padding: 6px 10px;*/
+  padding: 0.5em 1em;
+  /*border-radius: 3px;*/
   font-family: Monaco, Consolas, Courier, monospace;
 }
 
@@ -196,7 +195,7 @@ table#quicklinks th {
   padding: 12px;
 }
 
-h2.api_method_name a {
+a.method-details__name-link {
   text-decoration: none;
   color: black;
 }
@@ -277,7 +276,7 @@ hr {
 /* --------------------------------------------------------------------------
  * ARGUMENTS
  * -------------------------------------------------------------------------- */
-.arguments-header {
+h4 {
   margin: 2em 0;
   opacity: 0.8;
   padding: 1em 0;
@@ -297,7 +296,8 @@ hr {
 
 .argument-listing__argument-details {
   display: inline-block;
-  min-width: 220px;
+  width: 40%;
+  max-width: 260px;
   text-align: right;
   vertical-align: top;
 }
@@ -323,13 +323,6 @@ code.argument-listing__argument-name {
   opacity: 0.6;
 }
 
-/* but highlight them when we hover */
-.argument-listing__argument:hover .argument-listing__argument-type,
-.argument-listing__argument:hover .argument-listing__argument-values,
-.argument-listing__argument:hover .argument-listing__argument-required {
-  opacity: 1;
-}
-
 .argument-listing__argument-required {
   font-style: normal;
   color: #CC0000;
@@ -344,4 +337,20 @@ code.argument-listing__argument-name {
 
 .argument-listing__argument-text > p {
   margin-top: 0;
+}
+
+.example-codeblocks__tabs {
+  margin-bottom: -0.5em; /* negate the margin of the example block */
+  background: #ffc;
+  padding: 0.5em 1em;
+  font-size: 85%;
+}
+
+.example-codeblocks__tab {
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
+.example-codeblocks__tabs a.active {
+  font-weight: bold;
 }
