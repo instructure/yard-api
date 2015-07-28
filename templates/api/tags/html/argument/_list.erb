@@ -1,21 +1,26 @@
-<ul class="argument">
+<ul class="argument-listing">
   <% @argument_tags.each do |tag| %>
-    <li>
-      <code class="argument-name"><%= h tag.unscoped_name %></code>
-      <span class="argument-type"><%= tag.type %></span>
-      <% if (tag.accepted_values || []).any? %>
-        <span class="argument-values fade">
-          <em>[ <%= tag.accepted_values.join(', ') %> ]</em>
-        </span>
-      <% end %>
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name"><%= h tag.name %></code>
+        <span class="argument-listing__argument-type"><%= tag.type %></span>
 
-      <% if tag.is_required %>
-        <em class="argument-required">Required</em>
-      <% end %>
+        <% if (tag.accepted_values || []).any? %>
+          <span class="argument-listing__argument-values">
+            <span>[ <%= tag.accepted_values.join(', ') %> ]</span>
+          </span>
+        <% end %>
 
-      <% if !tag.text.empty? %>
-        <%= html_markup_markdown(tag.text) %>
-      <% end %>
+        <% if tag.is_required %>
+          <span class="argument-listing__argument-required">Required</span>
+        <% end %>
+      </div>
+
+      <div class="argument-listing__argument-text">
+        <% if !tag.text.empty? %>
+          <%= html_markup_markdown(tag.text) %>
+        <% end %>
+      </div>
     </li>
   <% end %>
 </ul>

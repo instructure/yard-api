@@ -31,6 +31,9 @@ module YARD::APIPlugin
 
     default_attr :leading_argument_name_fix, false
 
+    default_attr :use_beta_flag, true
+    default_attr :use_beta_banner, false
+
     attr_accessor :readme
   end
 end

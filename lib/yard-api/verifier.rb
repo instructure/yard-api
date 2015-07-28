@@ -28,7 +28,7 @@ module YARD
           return false if object.tags('internal').any?
 
           object.tags('API').any?.tap do |is_api|
-            if @verbose
+            if @verbose && !is_api
               log "Resource #{object} will be ignored as it contains no @API tag."
             end
           end

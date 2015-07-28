@@ -47,16 +47,6 @@ module YARD::APIPlugin::Tags
       end
     end
 
-    def unscoped_name
-      scope_tag = @object.tag(:argument_scope)
-
-      if scope_tag && @name =~ /^#{scope_tag.text.gsub(/\[\]/, '')}\[([^\]]+)\]$/
-        $1
-      else
-        @name
-      end
-    end
-
     private
 
     def parse_is_required(types=[])

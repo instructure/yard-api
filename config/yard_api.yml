@@ -101,3 +101,6 @@ spacer: 20
 #
 # But that may not be viable in very large, existing projects.
 leading_argument_name_fix: false
+
+use_beta_flag: true
+use_beta_banner: false

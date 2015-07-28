@@ -15,7 +15,7 @@ def init
     return serialize_onefile_index
   end
 
-  serialize_index
+  serialize_index if File.exists?(api_options['readme'])
   serialize_static_pages
   serialize_resource_index if api_options['resource_index']
 

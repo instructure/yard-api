@@ -14,7 +14,7 @@
   <tbody>
     <% @argument_tags.each do |tag| %>
       <tr>
-        <td><code class="argument-name"><%= h tag.unscoped_name %></code></td>
+        <td><code class="argument-name"><%= h tag.name %></code></td>
         <td><span class="argument-type"><%= tag.type %></span></td>
         
         <% if has_accepted_values %>
