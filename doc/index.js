@@ -27,8 +27,29 @@ function generateSorter(key) {
 function prepareDatabase(database) {
   var sortById = generateSorter('id');
 
+  function inferTitle(file, parseFromContent) {
+    var path;
+
+    if (parseFromContent) {
+      return file.content.split("\n")[0]
+        .replace(/#\s+/, '')
+        .trim()
+        .replace(/^`|`$/g, '')
+      ;
+    }
+    else {
+      path = file.id.split('/');
+      return path[path.length - 1].replace(/\.md$/, '');
+    }
+  }
+
   database.forEach((group) => {
-    group.entries.sort(sortById);
+    group.files.sort(sortById);
+      console.log(group);
+
+    group.files.forEach((file) => {
+      file.title = inferTitle(file, group.config.parse_titles);
+    });
   });
 
   return database;
@@ -46,7 +67,7 @@ function getActiveEntryPath() {
   else {
     return {
       group: 'YARD-API',
-      entry: 'README'
+      entry: 'README.md'
     };
   }
 }
@@ -68,7 +89,7 @@ function getActiveEntryPath() {
           className={isActive ? 'active' : null}
           href={'#' + group + '/' + entry}
         >
-          {entry}
+          {this.props.children}
         </a>
       );
     },
@@ -99,7 +120,7 @@ function getActiveEntryPath() {
           <h2>{group.id}</h2>
 
           <ul className="yard-api--sidebar_listing">
-            {group.entries.map(this.renderEntry.bind(null, group.id))}
+            {group.files.map(this.renderEntry.bind(null, group.id))}
           </ul>
         </div>
       );
@@ -108,7 +129,7 @@ function getActiveEntryPath() {
     renderEntry(groupId, entry) {
       return (
         <li key={entry.id}>
-          <SidebarLink group={groupId} entry={entry.id} />
+          <SidebarLink group={groupId} entry={entry.id}>{entry.title}</SidebarLink>
         </li>
       );
     }
@@ -127,7 +148,7 @@ function getActiveEntryPath() {
 
   var Root = React.createClass({
     componentDidMount() {
-      window.title = this.props.config.title;  
+      document.title = this.props.config.title;
       window.addEventListener('hashchange', () => {
         this.forceUpdate();
       });
@@ -141,7 +162,7 @@ function getActiveEntryPath() {
       })[0];
 
       if (activeGroup) {
-        activeEntry = activeGroup.entries.filter((entry) => {
+        activeEntry = activeGroup.files.filter((entry) => {
           return entry.id === activeEntryPath.entry;
         })[0];
       }

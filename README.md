@@ -2,11 +2,9 @@
 
 [![Build Status](https://travis-ci.org/amireh/yard-api.png)](https://travis-ci.org/amireh/yard-api)
 
-TODO
-
 ## Usage
 
-Check out the tag usage pages in [https://amireh.github.io/yard-api].
+See [https://amireh.github.io/yard-api].
 
 ### Compatibility options
 
@@ -33,6 +31,12 @@ Read that file to view all the available options.
 ## Notes
 
 - can only document classes and class methods; modules, root objects, and constants are ignored
+
+## Generating the docs for YARD-API
+
+1. go to the `gh-pages` branch, check it out if you haven't
+2. run `bin/generate-docs`
+3. browse `index.html`
 
 ## Changelog
 

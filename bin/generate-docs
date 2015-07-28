@@ -1,73 +1,127 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env node
 
-require 'fileutils'
-require 'json'
-require 'yaml'
+// =============================================================================
+// This script generates the documentation database as well as compiles the
+// documentation JavaScript app.
+// 
+// The compiled files will be found under `/doc/compiled/*`.
+// 
+// ---
+// Prerequisites: you need to have the required node packages installed.
+//
+//     npm install
+// 
+// ---
+// Usage:
+// 
+//     $ git checkout gh-pages # make sure you're on the gh-pages branch
+//     $ ./bin/generate-docs
+//     $ [xdg-]open ./index.html
+// 
+// The script can be run in watch mode, where any modified sources will be
+// properly re-compiled.
+//
+//     $ ./bin/generate-docs -w
+//     
+// Have fun.
 
-class Generator
-	ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+var fs = require('fs');
+var path = require('path');
+var chokidar = require('chokidar');
+var reactTools = require('react-tools');
+var glob = require('glob');
+var root = path.resolve(__dirname, '..');
+var execSync = require('child_process').execSync;
+var CONFIG;
 
-	def run(config)
-		output_dir = File.join(ROOT, config['output'])
-		log "Compiled docs will be found under #{output_dir}."
+if (execSync("git rev-parse --abbrev-ref HEAD").toString() !== "gh-pages\n") {
+  throw new Error("You must be on the gh-pages branch to use this script.");
+}
 
-		groups = config['groups'].map do |group|
-			globs = group['sources'].map { |src| File.join(ROOT, src) }
-			entry = {
-				id: group['name'],
-				entries: []
-			}
+// Compile the JSX app found in doc/index.js
+function compileApp() {
+  console.log('Compiling app...');
 
-			Dir.glob(globs).each do |source_file|
-				log "Generating data for #{source_file}."
+  var source = fs.readFileSync(path.resolve(root, 'doc/index.js'), 'utf-8');
+  var compiled = reactTools.transform(source, {
+    harmony: true,
+    stripTypes: true
+  });
 
-				md = File.read(source_file)
+  fs.writeFileSync(path.resolve(root, CONFIG.outputDir, 'index.js'), compiled);
 
-				id = if group['parse_titles']
-					md.lines[0].sub(/#\s+/, '').strip.gsub(/^`|`$/, '')
-				else
-					File.basename(source_file).sub(/\.md$/, '')
-				end
+  console.log('App has been compiled.');
+}
 
-				entry[:entries] << {
-					id: id,
-					content: md
-				}
-			end
+// Compile the doc database from .md files under doc/.
+function compileDocs() {
+  console.log("Generating the database...");
 
-			entry
-		end
+  var database = CONFIG.groups.map(function(group) {
+    return {
+      id: group.name,
+      config: group,
+      files: group.files.reduce(function(entries, filePaths) {
+        glob.sync(filePaths).forEach(function(filePath) {
+          // console.log("Adding", filePath, "to the documentation database.");
 
-		FileUtils.mkdir_p(output_dir)
+          entries.push({
+            id: filePath,
+            content: fs.readFileSync(filePath, 'utf-8')
+          });
+        });
 
-		File.write(
-			File.join(output_dir, 'database.js'),
-			[
-				"window.CONFIG=#{config.to_json};",
-				"window.DATABASE=#{groups.to_json};"
-			].join("\n")
-		)
-		
-		Dir.glob(config['assets'].map do |file|
-			File.join(ROOT, config['asset_root'], file)
-		end).each do |file|
-			dest_filepath = File.join(output_dir, file.sub(ROOT, '').sub(config['asset_root'], ''))
-			puts "Writing #{dest_filepath}."
+        return entries;
+      }, [])
+    };
+  });
 
-			FileUtils.mkdir_p(File.dirname(dest_filepath))
-			FileUtils.cp_r(file, dest_filepath)
-		end
-	end
+  fs.writeFileSync(
+    path.resolve(root, CONFIG.outputDir, 'database.js'),
+    [
+      "window.CONFIG=" + JSON.stringify(CONFIG) + ";",
+      "window.DATABASE=" + JSON.stringify(database) + ";"
+    ].join("\n")
+  );
 
-	protected
-	
-	def log(*msg)
-		puts *msg
-	end
-end
+  console.log("Database compiled.");
+}
 
-config = YAML.load_file(File.join(Generator::ROOT, 'doc', 'config.yml'))
+// Read config and generate everything.
+function main() {
+  CONFIG = JSON.parse(
+    fs.readFileSync(path.resolve(root, 'doc', 'config.json'), 'utf-8')
+  );
 
-generator = Generator.new
-generator.run(config)
+  // Make sure the `doc/compiled` destination directory exists.
+  if (!fs.existsSync(path.resolve(root, CONFIG.outputDir))) {
+    fs.mkdirSync(path.resolve(root, CONFIG.outputDir));
+  }
 
+  compileApp();
+  compileDocs();
+}
+
+if (process.argv.some(function(argv) { return argv.match(/\-w|\-\-watch/); })) {
+  chokidar
+    .watch('doc/index.js', { ignoreInitial: true })
+    .on('all', compileApp)
+  ;
+
+  chokidar
+    .watch('doc/**/*.md', { ignoreInitial: true })
+    .on('all', compileDocs)
+  ;
+
+  chokidar
+    .watch('doc/config.json', { ignoreInitial: true })
+    .on('all', function() {
+      console.log('Configuration changed, re-compiling...');
+      main();
+    })
+  ;
+
+  console.log('Watching for changes...');
+}
+
+main();

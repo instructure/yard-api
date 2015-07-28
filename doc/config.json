@@ -1,0 +1,19 @@
+{
+  "title": "YARD-API Reference",
+  "outputDir": "doc/compiled",
+  "groups": [
+    {
+      "name": "YARD-API",
+      "files": [
+        "README.md"
+      ]
+    },
+    {
+      "name": "Tags",
+      "parse_titles": true,
+      "files": [
+        "doc/tags/*.md"
+      ]
+    }
+  ]
+}

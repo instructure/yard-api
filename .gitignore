@@ -1,10 +1,17 @@
-[env]
+# [env]
+# -----
+
 .yardoc/
 .yardopts
+/node_modules
 
-[assets]
+# [assets]
+# --------
+
 *.zip
-/doc/vendor/react-with-addons-0.13.3.js
+/doc/compiled
 
-[build]
+# [build]
+# -------
+
 *.gem
