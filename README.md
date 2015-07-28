@@ -45,6 +45,9 @@ Read that file to view all the available options.
 - dropped the `@argument_scope` tag
 - JSON is available as an output format now
 - added usage documentation, found at [http://amireh.github.io/yard-api]
+- added an example app
+- various style improvements
+- `@example_request` is now able to output a sample cURL command.
 
 **0.1.7**
 

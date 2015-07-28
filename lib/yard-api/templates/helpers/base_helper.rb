@@ -100,10 +100,25 @@ module YARD::Templates::Helpers::BaseHelper
     appendix
   end
 
-  def tag_partial(name, tag)
+  def tag_partial(name, tag, locals={})
     options[:tag] = tag
+    locals.each_pair { |key, value| options[key] = value }
     out = erb(name)
     options.delete(:tag)
+    locals.keys.each { |key| options.delete(key.to_sym) }
     out
+  end
+
+  def get_current_routes
+    controller_name = object.parent.path.underscore
+    controller_name.sub!("_controller", '') unless controller_name.include?('/')
+
+    action = object.path.sub(/^.*#/, '').sub(/_with_.*$/, '')
+
+    YARD::Templates::Helpers::RouteHelper.api_methods_for_controller_and_action(controller_name, action)
+  end
+
+  def get_current_route
+    get_current_routes.first
   end
 end

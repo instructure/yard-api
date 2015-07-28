@@ -80,22 +80,23 @@
 
 
 <section>
-  <header><strong>Interfaces</strong></header>
-  <ul id="quicklinks">
-  </ul>
+  <h2>Interfaces</h2>
+
+  <ul id="quicklinks"></ul>
 </section>
 
-<div id="Services" class="method_details_list">
-
-  <div class='method-details'>
+<div>
+	
+	  <div class='method-details'>
   <h2
-    class='api_method_name'
+    class='method-details__name'
     name='method.shirts.create'
     data-subtopic='Shirts'
   >
     <a
       name='method.shirts.create'
       href='#method.shirts.create'
+      class='method-details__name-link'
     >
       Create a new shirt
     </a>
@@ -108,10 +109,10 @@
   
   
 
-  <h3 class='endpoint'>
+  <div class='endpoint__path'>
     <span class="verb post">POST</span>
     <span ></span>/<span >shirts</span>
-  </h3>
+  </div>
 
   
 
@@ -122,9 +123,8 @@
 
 
 
-
-<section class="endpoint-arguments">
-  <h4 class="arguments-header">Parameters:</h4>
+<section>
+  <h4 class="arguments-header">Parameters</h4>
 
   
     <ul class="argument-listing">
@@ -178,20 +178,90 @@
 </ul>
   
 </section>
+  <div class="examples">
+    
+      <h4>Example Request</h4>
+    
+
+    
+      
+
+
+
+
+
+
+<div class="example-codeblocks">
+	
+		<div class="example-codeblocks__tabs">
+			<a class="example-codeblocks__tab">JSON</a>
+			<a class="example-codeblocks__tab">cURL</a>
+		</div>
+	
+
+	<pre class="example-codeblocks__example example code js">{
+  &quot;shirts&quot;: [{
+    &quot;color&quot;: &quot;red&quot;,
+    &quot;size&quot;: &quot;M&quot;
+  }]
+}</pre>
+	
+		<pre class="example-codeblocks__example example code shell">
+curl \
+  -X POST \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{"shirts":[{"color":"red","size":"M"}]}' \
+  http://&lt;my_app&gt;/api/shirts
+		</pre>
+	
+</div>
+    
+  </div>
+
+
+  
+  <div class="examples example_response">
+    
+      <h4>Example Response:</h4>
+    
+
+    
+      
+
+
+
+
+
+
+<div class="example-codeblocks">
+	
+
+	<pre class="example-codeblocks__example example code js">{
+  &quot;shirts&quot;: [{
+    &quot;id&quot;: &quot;1&quot;
+  }]
+}</pre>
+	
+</div>
+    
+  </div>
 
 
 </div>
 
-
-  <div class='method-details'>
+	
+	  <div class='method-details'>
   <h2
-    class='api_method_name'
+    class='method-details__name'
     name='method.shirts.return'
     data-subtopic='Shirts'
   >
     <a
       name='method.shirts.return'
       href='#method.shirts.return'
+      class='method-details__name-link'
     >
       Return a shirt
     </a>
@@ -212,10 +282,10 @@
   
   
 
-  <h3 class='endpoint'>
+  <div class='endpoint__path'>
     <span class="verb post">POST</span>
     <span ></span>/<span >shirts</span>/<span class="id-fragment">:shirt_id</span>/<span >return</span>
-  </h3>
+  </div>
 
   
 
@@ -226,11 +296,10 @@
 
 
 
-
 <p>Return a shirt, probably &#39;cause you don&#39;t like it.</p>
 
-<section class="endpoint-arguments">
-  <h4 class="arguments-header">Parameters:</h4>
+<section>
+  <h4 class="arguments-header">Parameters</h4>
 
   
     <ul class="argument-listing">
@@ -263,7 +332,7 @@
 
 </div>
 
-
+	
 </div>
 
 </div>
@@ -274,14 +343,14 @@
   <p>
     
 
-    Generated on Tue Jul 28 16:04:21 2015
+    Generated on Tue Jul 28 19:12:35 2015
   </p>
 
   
 </div>
 
     <script type="text/javascript">
-  $('h2.api_method_name').each(function(i, el) {
+  $('.method-details__name').each(function(i, el) {
     var subtopic = $(el).data('subtopic');
     var $a = $(el).find('a');
     var anchorText = $.trim($a[0].innerHTML);
@@ -331,6 +400,25 @@
 
     hljs.highlightBlock(block);
   });
+
+  var $examples = $('.example-codeblocks__example');
+
+  $('.example-codeblocks__tabs').each(function() {
+    $(this).find('a').each(function(index) {
+      var $example = $examples.eq(index);
+
+      $(this).on('click', function() {
+        $examples.hide().removeClass('active');
+        $example.show().addClass('active');
+
+        $(this).siblings('a.active').removeClass('active');
+        $(this).addClass('active');
+      });
+    });
+    
+    $(this).find('a:first').click();
+  });
+
 </script>
 
     

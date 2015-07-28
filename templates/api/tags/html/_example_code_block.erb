@@ -1,8 +1,51 @@
 <% tag = options[:tag] %>
+<% multi_dialect = options[:multi_dialect] %>
 <% title = tag.name %>
+<%
+	json_blob = begin
+		JSON.parse(tag.text).to_json
+	rescue JSON::ParserError => e
+		puts '*' * 80
+		puts "  Invalid JSON payload in endpoint: #{object.path.to_s}"
+		puts "  Please make sure it is valid JSON."
+		puts '*' * 80
+		
+		if api_options.strict then
+			raise e
+		else
+			return
+		end
+	end
+%>
 
 <% if title && !title.empty? %>
   <header class="example-title"><%= title.strip %></header>
 <% end %>
 
-<pre class="example code js"><%= html_syntax_highlight(tag.text, :plain) %></pre>
+<div class="example-codeblocks">
+	<% if multi_dialect %>
+		<div class="example-codeblocks__tabs">
+			<a class="example-codeblocks__tab">JSON</a>
+			<a class="example-codeblocks__tab">cURL</a>
+		</div>
+	<% end %>
+
+	<pre class="example-codeblocks__example example code js"><%= html_syntax_highlight(tag.text, :plain) %></pre>
+	<% if multi_dialect %>
+		<pre class="example-codeblocks__example example code shell">
+curl \
+  -X <%= YARD::Templates::Helpers::RouteHelper.get_route_verb(options[:current_route]) %> \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '<%= JSON.parse(tag.text).to_json %>' \
+  <%=
+  	[
+			"http://&lt;#{api_options.url_title}&gt;",
+			api_options.url_prefix,
+			YARD::Templates::Helpers::RouteHelper.get_route_path(options[:current_route])
+		].compact.reject(&:empty?).join('')
+  %>
+		</pre>
+	<% end %>
+</div>
