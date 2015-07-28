@@ -4,17 +4,18 @@
     <%= api_options['version'] %>
   </h1>
 
-  <h2 class='first'>Pages</h2>
+  <h2 class="sidebar__heading">API</h2>
 
   <nav id="static_pages">
-    <%= sidebar_link('Home', 'index.html') %>
+    <%= sidebar_link(api_options.readme_page_title, 'index.html') %>
     <% static_pages.each do |page| %>
       <%= sidebar_link(page[:title], page[:filename]) %>
     <% end %>
   </nav>
 
-  <h2>Resources</h2>
-  <nav id="api_resources">
+  <h2 class="sidebar__heading">Resources</h2>
+
+  <nav>
     <% if api_options['resource_index'] %>
       <%= sidebar_link('All Resources', 'all_resources.html') %>
     <% end %>

@@ -98,7 +98,14 @@ module YARD::Templates::Helpers::HtmlHelper
     end
   end
 
+  # TODO: this has to work with the All Resources page.
   def sidebar_link(title, href, options={})
+    options[:class_name] ||= begin
+      if object.is_a?(String) && "#{url_for(topicize(object))}.html" == href
+        options[:class_name] = 'active'
+      end
+    end
+
     options[:class_name] ||= (object == href ? 'active' : nil)
 
     <<-HTML

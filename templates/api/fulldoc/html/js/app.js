@@ -1,4 +1,4 @@
-<script type="text/javascript">
+$(function() {
   $('.method-details__name').each(function(i, el) {
     var subtopic = $(el).data('subtopic');
     var $a = $(el).find('a');
@@ -14,23 +14,6 @@
     }).html(anchorText);
 
     $('<li>').append($link).appendTo($row);
-  });
-
-  // Highlight the current page in the sidebar
-  $(function() {
-    var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
-    var $page = $('#sidebar [href="' + currentPage + '"]');
-
-    if (!currentPage) {
-      return;
-    }
-
-    // if ($page.length === 0) {
-    //   $page = $('#sidebar a[href=""]');
-    // }
-
-    // $page.addClass('active');
-    console.log('Highlighting current page:', $page, currentPage);
   });
 
   $('#content pre').each(function(i, block) {
@@ -50,7 +33,9 @@
     hljs.highlightBlock(block);
   });
 
-
+  // Make it so that clicking one of these "tabs" for every @example_request
+  // dialect switch to that dialect's example. For example: switching between
+  // the generated JSON and cURL examples when those anchors are clicked.
   $('.example-codeblocks__tabs').each(function() {
     var $examples = $(this).siblings('.example-codeblocks__example');
 
@@ -68,5 +53,4 @@
     
     $(this).find('a:first').click();
   });
-
-</script>
+});

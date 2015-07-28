@@ -7,26 +7,20 @@ body {
   color: #333;
 }
 
-a, #sidebar a:visited {
+a {
   color: #4183c4;
 }
-a:visited {
-  color: #8B3377;
+
+a:hover, a:focus {
+  text-decoration: none;
 }
-a:hover,
-a:focus,
-#sidebar a.current,
-#sidebar a:hover,
-#sidebar a:focus {
-  color: #99173C;
+
+a.active {
+  font-weight: bold;
 }
 
 #content {
   margin: 0 auto;
-}
-
-p, h4 {
-  margin: 0.8em 0;
 }
 
 code {
@@ -46,7 +40,6 @@ h1 {
 }
 
 h2 {
-  /*border-bottom: 1px #ddd solid;*/
   font-size: 1.4em;
   padding: 0.6em 0;
   margin: 0.6em 0;
@@ -72,8 +65,6 @@ h2 {
   bottom: 0;
   top: 0;
   left: 1em;
-  background: #f8f8f8;
-  border-right: 1px solid #ddd;
 }
 
 #sidebar h1 {
@@ -81,37 +72,28 @@ h2 {
   border-bottom: 1px solid #ddd;
 }
 
-#sidebar a, #sidebar h2 {
+#sidebar a {
   display: block;
-/*  border: none;
-  font-size: 90%;*/
-}
-
-#sidebar h2 {
-  /*padding: 10px 0;*/
-  /*font-size: 20px;*/
-  /*font-weight: normal;*/
-  /*text-transform: uppercase;*/
-  /*text-shadow: 0 1px 0 white;*/
-  /*margin: 0;*/
-}
-
-#sidebar h2.first {
-  border-top:none;
-}
-#sidebar h2,
-#sidebar a {
-  border-right: 5px solid transparent;
-}
-#sidebar a {
-  padding: 5px 0;
+  color: inherit;
+  padding: 0.35em 0;
   text-decoration: none;
-  font-size: 13px;
-  font-weight: bold;
 }
 
-#content a[name^="method."] {
-  outline: none;
+#sidebar a:hover {
+  text-decoration: underline;
+}
+
+#sidebar a.active {
+  color: #4183c4;
+}
+
+.sidebar__heading {
+  color: #939da3;
+  text-transform: uppercase;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0;
+  margin-top: 1em;
 }
 
 .endpoint__path {
@@ -119,7 +101,7 @@ h2 {
   font-weight: normal;
   font-family: Monaco, Consolas, Courier, monospace;
   padding: 1em;
-  margin-top: 1em 0;
+  margin-top: 1em;
   background: #ffc;
 }
 
@@ -130,7 +112,7 @@ h2 {
   color: #CC0000;
 }
 
-h2 .defined-in {
+.method-details__defined-in {
   float:right;
   font-size:10px;
   padding-top:10px;
@@ -139,34 +121,27 @@ h2 .defined-in {
 
 /* Footer */
 #footer {
-  margin-top: 20px;
-  margin-left: 180px;
-  border-top: 1px solid #ddd;
+  margin: 1em 0;
+  border-top: 1px solid #ccc;
   text-align: center;
-  color: #999;
+  color: #666;
+  font-size: 85%;
 }
 
 #footer a {
-  color: #999;
+  color: #666;
 }
 
-pre.code,
-div.syntaxhighlighter {
-  background-color: #f4f4f4;
-  /*border: 1px solid #ddd;*/
-  font-size: 85%;
-  /*font-size: 13px;*/
-  /*line-height: 19px;*/
-  overflow: auto;
-  /*padding: 6px 10px;*/
-  padding: 0.5em 1em;
-  /*border-radius: 3px;*/
+/* highlight.js overrides */
+pre.code, div.syntaxhighlighter {
   font-family: Monaco, Consolas, Courier, monospace;
+  background-color: #ffd;
+  font-size: 85%;
+  overflow: auto;
+  padding: 0.5em 1em;
 }
 
-.syntaxhighlighter .line code,
-pre.code code,
-.endpoint-errors code {
+.syntaxhighlighter .line code, pre.code code, .endpoint-errors code {
   white-space: nowrap;
   background: none;
   border: none;
@@ -175,6 +150,7 @@ pre.code code,
   padding: 0;
   border-radius: 0;
 }
+
 .syntaxhighlighter {
   overflow: auto;
 }
@@ -197,7 +173,7 @@ table#quicklinks th {
 
 a.method-details__name-link {
   text-decoration: none;
-  color: black;
+  color: inherit;
 }
 
 div.appendix img {
@@ -208,10 +184,6 @@ div.appendix img {
   padding: 5px 0;
   font-size: 11px;
   font-weight: bold;
-  color: #777;
-}
-
-.fade {
   color: #777;
 }
 
@@ -278,9 +250,9 @@ hr {
  * -------------------------------------------------------------------------- */
 h4 {
   margin: 2em 0;
-  opacity: 0.8;
   padding: 1em 0;
   border-bottom: 1px solid #ccc;
+  color: #666;
 }
 
 .argument-listing {
@@ -292,14 +264,17 @@ h4 {
 .argument-listing__argument {
   padding: 0;
   margin: 2em 0;
+  display: block;
+  min-height: 4em;
 }
 
 .argument-listing__argument-details {
-  display: inline-block;
+  /*display: inline-block;*/
   width: 40%;
   max-width: 260px;
   text-align: right;
   vertical-align: top;
+  float: left;
 }
 
 .argument-listing__argument-name,
@@ -313,6 +288,7 @@ code.argument-listing__argument-name {
   border: none;
   padding: 0;
   margin: 0;
+  overflow: auto;
 }
 
 /* fade these out to give more emphasis to the name */
@@ -320,19 +296,21 @@ code.argument-listing__argument-name {
 .argument-listing__argument-values,
 .argument-listing__argument-required {
   font-size: 85%;
-  opacity: 0.6;
+  color: #777;
 }
 
 .argument-listing__argument-required {
   font-style: normal;
   color: #CC0000;
   font-weight: bold;
+  opacity: 0.6;
 }
 
 .argument-listing__argument-text {
-  display: inline-block;
   vertical-align: top;
   margin-left: 1em;
+  margin-left: 260px;
+  padding-left: 1em;
 }
 
 .argument-listing__argument-text > p {

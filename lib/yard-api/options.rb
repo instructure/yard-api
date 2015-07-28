@@ -36,6 +36,9 @@ module YARD::APIPlugin
     default_attr :use_beta_flag, true
     default_attr :use_beta_banner, false
 
+    default_attr :show_footer, true
+    default_attr :readme_page_title, 'Home'
+
     attr_accessor :readme
   end
 end

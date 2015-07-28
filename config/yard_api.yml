@@ -107,3 +107,6 @@ leading_argument_name_fix: false
 
 use_beta_flag: true
 use_beta_banner: false
+
+show_footer: true
+readme_page_title: Home

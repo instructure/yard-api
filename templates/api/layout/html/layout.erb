@@ -29,8 +29,9 @@
       <div id="content"><%= yieldall %></div>
     <% end %>
 
-    <%= erb(:footer) %>
-    <%= erb(:scripts) %>
+    <% if api_options.show_footer %>
+      <%= erb(:footer) %>
+    <% end %>
 
     <% inline_javascripts.each do |script| %>
       <%= erb(script) %>

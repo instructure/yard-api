@@ -23,7 +23,7 @@
     <% end %>
 
     <% if @props[:path] && !api_options.github_url.to_s.empty? %>
-      <span class='defined-in'>
+      <span class='method-details__defined-in'>
         <a href="<%= api_options.github_url %>/blob/<%= api_options.github_branch %>/<%= @props[:path] %>">
           <%= "#{@props[:controller]}Controller\##{@props[:action]}" %>
         </a>

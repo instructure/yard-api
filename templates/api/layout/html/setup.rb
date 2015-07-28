@@ -32,6 +32,7 @@ def javascripts
   %w[
     js/jquery-1.11.1.min.js
     js/highlight/highlight.pack.js
+    js/app.js
   ]
 end
 
