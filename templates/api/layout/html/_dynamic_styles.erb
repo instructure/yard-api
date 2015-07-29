@@ -10,20 +10,21 @@
     body {
       margin: 0 auto;
       width: <%= content_width %>px;
+      padding-left: <%= sidebar_width %>px;
     }
- 
+
     #sidebar {
       margin-left: -<%= sidebar_width %>px;
       width: <%= sidebar_width %>px;
       left: auto;
     }
- 
+
     #content {
       padding-left: 3em;
     }
-  <% else %> 
+  <% else %>
     body {
-      padding-left: <%= sidebar_width + api_options.spacer %>px;
+      padding-left: <%= sidebar_width + (api_options.spacer || 0) %>px;
       padding-right: <%= api_options.spacer %>px;
     }
 

@@ -61,7 +61,7 @@ strict: false
 #
 # Just specify the url to your repository and the branch the documentation has
 # been generated for and things "should work".
-# 
+#
 # Example: https://github.com/amireh/yard-api
 github_url:
 github_branch: master

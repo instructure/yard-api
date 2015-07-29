@@ -24,11 +24,7 @@ a.active {
 }
 
 code {
-  margin: 0 2px;
-  padding: 0px 5px;
-  border: 1px solid #ddd;
-  background-color: #f8f8f8;
-  border-radius: 3px;
+  background-color: #f5f5f5;
   font-family: Consolas, "Liberation Mono", Courier, monospace;
   font-weight: bold;
 }
@@ -47,13 +43,13 @@ h2 {
 
 .endpoint__beta-banner {
   border-left: 5px solid rgba(255,0,0,0.65);
-  background-color: #ffc;
+  background-color: #FFFBE6;
   padding: 0.6em;
   font-size: 85%;
 }
 
 .method-details__beta-flag {
-  color: #CC0000;
+  color: #800;
   background: #fca;
   padding: 0.5em 0.6em;
   font-size: 85%;
@@ -77,6 +73,8 @@ h2 {
   color: inherit;
   padding: 0.35em 0;
   text-decoration: none;
+  font-size: 85%;
+  line-height: 1.2;
 }
 
 #sidebar a:hover {
@@ -88,28 +86,31 @@ h2 {
 }
 
 .sidebar__heading {
-  color: #939da3;
+  color: #aaa;
   text-transform: uppercase;
   font-size: 1em;
   margin-bottom: 0.5em;
   padding-bottom: 0;
   margin-top: 1em;
+  font-weight: normal;
 }
 
 .endpoint__path {
-  font-size: 90%;
+  font-size: 85%;
   font-weight: normal;
   font-family: Monaco, Consolas, Courier, monospace;
-  padding: 1em;
-  margin-top: 1em;
-  background: #ffc;
+  padding: 0.5em;
+  margin: 1em 0;
+  background: #FFFBE6;
 }
 
-.method-details .verb {
+.method-details__verb {
   font-weight: bold;
+  color: #800;
 }
+
 .method-details .id-fragment {
-  color: #CC0000;
+  color: #800;
 }
 
 .method-details__defined-in {
@@ -135,7 +136,7 @@ h2 {
 /* highlight.js overrides */
 pre.code, div.syntaxhighlighter {
   font-family: Monaco, Consolas, Courier, monospace;
-  background-color: #ffd;
+  background-color: #FFFBE6;
   font-size: 85%;
   overflow: auto;
   padding: 0.5em 1em;
@@ -157,18 +158,29 @@ pre.code, div.syntaxhighlighter {
 
 td.code textarea { display: none; }
 
-table#quicklinks {
-  width: 100%;
+.topic__quicklinks {
+  padding: 0;
+  margin: 0;
 }
-table#quicklinks tr {
-  border: 1px solid black;
+
+.topic__quicklinks li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 1em;
+  margin-bottom: 1em;
 }
-table#quicklinks td a {
-  padding: 6px;
+
+.topic__quicklinks li a {
+  display: block;
+  padding: 0.5em 1em;
+  background-color: #f5f5f5;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 85%;
 }
-table#quicklinks th {
-  font-weight: bold;
-  padding: 12px;
+
+.topic__quicklinks li a:hover {
+  background-color: transparent;
 }
 
 a.method-details__name-link {
@@ -285,9 +297,6 @@ h4 {
 }
 
 code.argument-listing__argument-name {
-  border: none;
-  padding: 0;
-  margin: 0;
   overflow: auto;
 }
 
@@ -301,7 +310,7 @@ code.argument-listing__argument-name {
 
 .argument-listing__argument-required {
   font-style: normal;
-  color: #CC0000;
+  color: #800;
   font-weight: bold;
   opacity: 0.6;
 }
@@ -319,7 +328,7 @@ code.argument-listing__argument-name {
 
 .example-codeblocks__tabs {
   margin-bottom: -0.5em; /* negate the margin of the example block */
-  background: #ffc;
+  background: #FFF7CC;
   padding: 0.5em 1em;
   font-size: 85%;
 }
@@ -331,4 +340,44 @@ code.argument-listing__argument-name {
 
 .example-codeblocks__tabs a.active {
   font-weight: bold;
+}
+
+.type-mute {
+  color: #777;
+}
+
+.object-synopsis__header {
+  padding: 1em 0;
+  background: #FFFBE6;
+  position: relative; /* for the toggler btn */
+}
+
+.object-synopsis__header-text {
+  display: block;
+  width: 40%;
+  max-width: 260px;
+  text-align: right;
+}
+
+.object-synopsis__toggler {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  padding: 0;
+
+  background-color: transparent;
+  font-size: small;
+  color: #4183c4;
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  margin-top: -0.5em;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.object-synopsis__toggler:hover {
+  text-decoration: underline;
 }

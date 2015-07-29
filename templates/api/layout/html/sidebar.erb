@@ -21,7 +21,7 @@
     <% end %>
 
     <% options[:resources].each do |resource, controllers| %>
-      <%= sidebar_link resource, "#{topicize(resource)}.html" %>
+      <%= sidebar_link resource, controllers.first %>
     <% end %>
   </nav>
 </div>

@@ -47,10 +47,10 @@ def emits
 end
 
 def argument
-  # generic_tag :argument, :no_types => false, :label => "Request Parameters"
-  @argument_tags = object.tags(:argument)
+  argument_tags = object.tags(:argument)
 
-  if @argument_tags.any?
+  if argument_tags.any?
+    options[:argument_tags] = argument_tags
     erb('argument')
   end
 end
@@ -66,6 +66,11 @@ def returns
     @object_name = response_info.text.strip
     @is_list = false
   end
+
+  # if @object_name =~ /\{(\S+)\}/
+  #   @object_name = $1
+  # end
+
   @resource_name = options[:json_objects_map][@object_name]
   return unless @resource_name
   erb(:returns)

@@ -4,17 +4,18 @@ def init
   sections :header, [:topic_doc, :method_details_list, [T('method_details')]]
   @resource = object
   @beta = options[:controllers].any? { |c| c.tag('beta') }
+  @meths = options[:controllers].map { |c| c.meths(:inherited => false, :included => false) }.flatten
+  @meths = run_verifier(@meths)
 end
 
 def method_details_list
-  @meths = options[:controllers].map { |c| c.meths(:inherited => false, :included => false) }.flatten
-  @meths = run_verifier(@meths)
   erb(:method_details_list)
 end
 
 def topic_doc
   @docstring = options[:controllers].map { |c| c.docstring }.join("\n\n")
   @object = @object.dup
+  @controller = options[:controllers].first
   def @object.source_type; nil; end
   @json_objects = options[:json_objects][@resource] || []
   erb(:topic_doc)
@@ -25,6 +26,21 @@ def properties_of_model(json)
     JSON::parse(json || '')['properties']
   rescue JSON::ParserError
     nil
+  end
+end
+
+def properties_of_model_as_tags(json)
+  props = json.has_key?('properties') ? json['properties'] : json
+  props.reduce([]) do |tags, (id, prop)|
+    is_required = prop.has_key?('required') ? prop['required'] : false
+    is_required_str = is_required ? 'Required' : 'Optional'
+
+    tag = YARD::APIPlugin::Tags::ArgumentTag.new(
+      nil,
+      "[#{is_required_str}, #{prop['type']}] #{id}\n #{prop['description']}"
+    )
+
+    tags << tag
   end
 end
 

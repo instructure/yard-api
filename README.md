@@ -40,6 +40,10 @@ Read that file to view all the available options.
 
 ## Changelog
 
+**29/7/2015 [0.3.0]**
+
+- major rework of the linking logic, much improvements but some stuff is broken now
+
 **28/7/2015 [0.2.3]**
 
 - dropped the `@argument_scope` tag

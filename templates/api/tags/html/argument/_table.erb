@@ -1,4 +1,5 @@
-<% has_accepted_values = @argument_tags.any? { |e| Array(e.accepted_values).any? } %>
+<% argument_tags = options[:argument_tags] %>
+<% has_accepted_values = argument_tags.any? { |e| Array(e.accepted_values).any? } %>
 
 <table>
   <thead>
@@ -12,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% @argument_tags.each do |tag| %>
+    <% argument_tags.each do |tag| %>
       <tr>
         <td><code class="argument-name"><%= h tag.name %></code></td>
         <td><span class="argument-type"><%= tag.type %></span></td>
