@@ -5,8 +5,10 @@
     {
       "name": "YARD-API",
       "files": [
-        "README.md"
-      ]
+        "README.md",
+        "doc/articles/JSON_objects.md"
+      ],
+      "parse_titles": true
     },
     {
       "name": "Tags",

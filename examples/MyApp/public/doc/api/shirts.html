@@ -17,6 +17,8 @@
 
   <script src="js/highlight/highlight.pack.js" type="text/javascript"></script>
 
+  <script src="js/app.js" type="text/javascript"></script>
+
 
     
       
@@ -26,14 +28,15 @@
     body {
       margin: 0 auto;
       width: 720px;
+      padding-left: 240px;
     }
- 
+
     #sidebar {
       margin-left: -240px;
       width: 240px;
       left: auto;
     }
- 
+
     #content {
       padding-left: 3em;
     }
@@ -50,7 +53,7 @@
     
   </h1>
 
-  <h2 class="sidebar__heading">Pages</h2>
+  <h2 class="sidebar__heading">API</h2>
 
   <nav id="static_pages">
           <a href="index.html" class="">Home</a>
@@ -67,7 +70,13 @@
     
 
     
-            <a href="shirts.html" class="active">Shirts</a>
+            <a href="author_slides.html" class="">Author - Slides</a>
+
+    
+            <a href="quizzes.html" class="">Quizzes</a>
+
+    
+            <a href="shirts.html" class="">Shirts</a>
 
     
   </nav>
@@ -91,10 +100,103 @@
 <section>
   <h2>Interfaces</h2>
 
-  <ul id="quicklinks"></ul>
+  
+
+  <ul id="topicQuicklinks" class="topic__quicklinks"></ul>
 </section>
 
 
+  <section>
+    <h2>Object Synopses</h2>
+
+    
+      
+
+      <div class="object-synopsis">
+        <h3 class="object-synopsis__header" id="Shirt-api">
+          <span class="object-synopsis__header-text">Shirt</span>
+          <button class="object-synopsis__toggler"></button>
+        </h3>
+
+        <div class="object-synopsis__content">
+          <div class="object-synopsis__content-description">
+            
+              
+<p>A real T-Shirt.</p>
+
+            
+          </div>
+
+          <ul class="argument-listing">
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">id</code>
+        <span class="argument-listing__argument-type">
+          String
+        </span>
+
+        
+
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          <em class="type-mute">No description provided.</em>
+        
+      </div>
+    </li>
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">color</code>
+        <span class="argument-listing__argument-type">
+          String
+        </span>
+
+        
+
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>Color of the shirt.</p>
+
+        
+      </div>
+    </li>
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">size</code>
+        <span class="argument-listing__argument-type">
+          String
+        </span>
+
+        
+
+        
+          <span class="argument-listing__argument-required">Required</span>
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>Size of the shirt.</p>
+
+        
+      </div>
+    </li>
+  
+</ul>
+        </div>
+      </div>
+    
+  </section>
 <div>
 	
 	  <div class='method-details'>
@@ -120,7 +222,10 @@
   
 
   <div class='endpoint__path'>
-    <span class="verb post">POST</span>
+    <span class="method-details__verb post">
+      POST
+    </span>
+
     <span ></span>/<span >shirts</span>
   </div>
 
@@ -141,29 +246,10 @@
   
     <li class="argument-listing__argument">
       <div class="argument-listing__argument-details">
-        <code class="argument-listing__argument-name">shirts[color]</code>
-        <span class="argument-listing__argument-type">String</span>
-
-        
-
-        
-          <span class="argument-listing__argument-required">Required</span>
-        
-      </div>
-
-      <div class="argument-listing__argument-text">
-        
-          
-<p>The color of the shirt.</p>
-
-        
-      </div>
-    </li>
-  
-    <li class="argument-listing__argument">
-      <div class="argument-listing__argument-details">
         <code class="argument-listing__argument-name">shirts[size]</code>
-        <span class="argument-listing__argument-type">String</span>
+        <span class="argument-listing__argument-type">
+          String
+        </span>
 
         
           <span class="argument-listing__argument-values">
@@ -185,12 +271,33 @@
       </div>
     </li>
   
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">shirts[color]</code>
+        <span class="argument-listing__argument-type">
+          String
+        </span>
+
+        
+
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>The color of the shirt.</p>
+
+        
+      </div>
+    </li>
+  
 </ul>
   
 </section>
   <div class="examples">
     
-      <h4>Example Request</h4>
+      <h4>Example Requests</h4>
     
 
     
@@ -223,6 +330,41 @@ curl \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{"shirts":[{"color":"red","size":"M"}]}' \
+  http://&lt;my_app&gt;/api/shirts
+		</pre>
+	
+</div>
+    
+      
+
+
+
+
+
+  <header class="example-title">Order a randomly colored shirt!</header>
+
+
+<div class="example-codeblocks">
+	
+		<div class="example-codeblocks__tabs">
+			<a class="example-codeblocks__tab">JSON</a>
+			<a class="example-codeblocks__tab">cURL</a>
+		</div>
+	
+
+	<pre class="example-codeblocks__example example code js">{
+  &quot;shirts&quot;: [{
+    &quot;size&quot;: &quot;XL&quot;
+  }]
+}</pre>
+	
+		<pre class="example-codeblocks__example example code shell">
+curl \
+  -X POST \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{"shirts":[{"size":"XL"}]}' \
   http://&lt;my_app&gt;/api/shirts
 		</pre>
 	
@@ -293,7 +435,10 @@ curl \
   
 
   <div class='endpoint__path'>
-    <span class="verb post">POST</span>
+    <span class="method-details__verb post">
+      POST
+    </span>
+
     <span ></span>/<span >shirts</span>/<span class="id-fragment">:shirt_id</span>/<span >return</span>
   </div>
 
@@ -306,7 +451,8 @@ curl \
 
 
 
-<p>Return a shirt, probably &#39;cause you don&#39;t like it.</p>
+<p>Return a shirt, probably &#39;cause you don&#39;t like it. See
+<span class='object_link'><a href="author_slides.html#SlideAttributes-api" title="Author - Slides::SlideAttributes (api)">Author - Slides::SlideAttributes</a></span>.</p>
 
 <section>
   <h4 class="arguments-header">Parameters</h4>
@@ -317,7 +463,9 @@ curl \
     <li class="argument-listing__argument">
       <div class="argument-listing__argument-details">
         <code class="argument-listing__argument-name">shirt_id</code>
-        <span class="argument-listing__argument-type">Integer</span>
+        <span class="argument-listing__argument-type">
+          Integer
+        </span>
 
         
 
@@ -330,6 +478,29 @@ curl \
         
           
 <p>ID of the shirt you want to return.</p>
+
+        
+      </div>
+    </li>
+  
+    <li class="argument-listing__argument">
+      <div class="argument-listing__argument-details">
+        <code class="argument-listing__argument-name">test</code>
+        <span class="argument-listing__argument-type">
+          <span class='object_link'><a href="author_slides.html#SlideAttributes-api" title="Author - Slides::SlideAttributes (api)">SlideAttributes</a></span>
+        </span>
+
+        
+
+        
+          <span class="argument-listing__argument-required">Required</span>
+        
+      </div>
+
+      <div class="argument-listing__argument-text">
+        
+          
+<p>Foobar.</p>
 
         
       </div>
@@ -349,88 +520,18 @@ curl \
 </div>
     
 
-    <div id="footer">
+    
+      <div id="footer">
   <p>
     
 
-    Generated on Tue Jul 28 20:45:53 2015
+    Generated on Wed Jul 29 19:26:01 2015
   </p>
 
   
 </div>
 
-    <script type="text/javascript">
-  $('.method-details__name').each(function(i, el) {
-    var subtopic = $(el).data('subtopic');
-    var $a = $(el).find('a');
-    var anchorText = $.trim($a[0].innerHTML);
-
-    if (anchorText === '') {
-      return;
-    }
-
-    var $row = $('#quicklinks');
-    var $link = $('<a/>', {
-      href: '#'+$(el).attr('name')
-    }).html(anchorText);
-
-    $('<li>').append($link).appendTo($row);
-  });
-
-  // // Highlight the current page in the sidebar
-  // $(function() {
-  //   var currentPage = location.pathname.match(/\/([^\/]+)$/)[1];
-  //   var $page = $('#sidebar [href="' + currentPage + '"]');
-
-  //   if (!currentPage) {
-  //     return;
-  //   }
-
-  //   // if ($page.length === 0) {
-  //   //   $page = $('#sidebar a[href=""]');
-  //   // }
-
-  //   // $page.addClass('active');
-  //   console.log('Highlighting current page:', $page, currentPage);
-  // });
-
-  $('#content pre').each(function(i, block) {
-    var code;
-    var $block = $(block);
-    var $codeEl = $block.find('> code');
-
-    // RedCarpet markdown renderer will convert fenced code blocks into
-    // <pre><code>...</code></pre> and we want to remove that <code /> el and
-    // use a plain <pre /> instead:
-    if ($block.children().length === 1 && $codeEl.length) {
-      code = $codeEl.text();
-      $codeEl.remove();
-      $block.html(code);
-    }
-
-    hljs.highlightBlock(block);
-  });
-
-
-  $('.example-codeblocks__tabs').each(function() {
-    var $examples = $(this).siblings('.example-codeblocks__example');
-
-    $(this).find('a').each(function(index) {
-      var $example = $examples.eq(index);
-
-      $(this).on('click', function() {
-        $examples.hide().removeClass('active');
-        $example.show().addClass('active');
-
-        $(this).siblings('a.active').removeClass('active');
-        $(this).addClass('active');
-      });
-    });
     
-    $(this).find('a:first').click();
-  });
-
-</script>
 
     
   </body>

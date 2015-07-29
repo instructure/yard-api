@@ -2,7 +2,7 @@
 
 This is an endpoint-only tag. This tag lets you write the (usually JSON) payload that the endpoint accepts. YARD-API will generate example requests that use this payload and hit this endpoint that the user can use (or at least, start with.)
 
-## Synopsis
+## Syntax
 
 ```ruby
 # @example_request [optional brief title]

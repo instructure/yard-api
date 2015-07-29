@@ -2,7 +2,7 @@ require 'yard/templates/helpers/html_helper'
 
 module YARD::Templates::Helpers::HtmlHelper
   def topicize(str)
-    str.split("\n")[0].gsub(' ', '_').underscore
+    ::YARD::APIPlugin::Serializer.topicize(str)
   end
 
   def url_for_file(filename, anchor = nil)
@@ -10,6 +10,10 @@ module YARD::Templates::Helpers::HtmlHelper
     link += (anchor ? '#' + urlencode(anchor) : '')
     link
   end
+
+  # def url_for_api_object(name, object)
+  #   "#{object.parent.path}::#{name}"
+  # end
 
   def static_pages()
     @@static_pages ||= begin
@@ -132,5 +136,23 @@ module YARD::Templates::Helpers::HtmlHelper
     end
     html = resolve_links(html)
     html
+  end
+
+  def htmlify_tag_type(tag)
+    co = if tag.type =~ /API::(?:(\S+)::)?(\S+)\b/
+      # discard [] at the end denoting array of objects
+      P(tag.type.gsub(/\[\]$/, ''))
+    end
+
+    if co && !co.is_a?(YARD::CodeObjects::Proxy)
+      begin
+        linkify(co, tag.type.split(YARD::CodeObjects::NSEP)[1..-1].join(YARD::CodeObjects::NSEP))
+      rescue Exception => e
+        YARD::APIPlugin.logger.warn e
+        ""
+      end
+    else
+      tag.type
+    end
   end
 end

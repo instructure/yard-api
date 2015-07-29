@@ -24,6 +24,8 @@ module YARD
         case object.type
         when :root, :module, :constant
           false
+        when :api
+          true
         when :method, :class
           return false if object.tags('internal').any?
 

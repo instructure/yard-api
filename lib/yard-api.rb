@@ -37,6 +37,10 @@ module YARD
       log.enter_level(level) { log.puts(message) }
     end
 
+    def self.logger
+      YARD::Logger.instance
+    end
+
     def self.on_error(message)
       if self.options.strict
         raise message
@@ -48,8 +52,11 @@ module YARD
 
   require 'yard-api/version'
   require 'yard-api/options'
+  require 'yard-api/registry'
   require 'yard-api/tags'
   require 'yard-api/verifier'
+  require 'yard-api/serializer'
+  require 'yard-api/code_objects/api_object'
   require 'yard-api/templates/helpers/base_helper'
   require 'yard-api/templates/helpers/html_helper'
   require 'yard-api/templates/helpers/route_helper'
@@ -63,6 +70,16 @@ module YARD
     class YardocOptions < Templates::TemplateOptions
       default_attr :resources, []
       default_attr :json_objects, []
+      default_attr :controllers, []
+      default_attr :current_route, nil
+      default_attr :inline_file, nil
+      default_attr :all_resources, nil
+      default_attr :tag, nil
+      default_attr :locale, nil
+      default_attr :multi_dialect, false
+      default_attr :argument_tags, []
+      default_attr :output, nil
+      default_attr :json_objects_map, {}
     end
   end
 end

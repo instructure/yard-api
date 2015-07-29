@@ -1,16 +1,11 @@
 # [env]
-# -----
-
+/tmp
 .yardoc/
 .yardopts
 /node_modules
 
 # [assets]
-# --------
-
 *.zip
 
 # [build]
-# -------
-
 *.gem

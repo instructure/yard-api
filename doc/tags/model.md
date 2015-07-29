@@ -1,3 +1,3 @@
 # `@model`
 
-The `@model` tag allows you to describe an API data model.
+**DEPRECATED**: please use [`@object`](#Tags/doc/tags/object.md) instead.

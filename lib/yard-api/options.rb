@@ -4,6 +4,8 @@ module YARD::APIPlugin
     default_attr :format, 'html'
     default_attr :no_save, false
 
+    default_attr :output, 'compiled/doc/api'
+
     default_attr :title, 'Rails API Project'
     default_attr :url_title, 'my_app'
     default_attr :url_prefix, '/api'
@@ -20,8 +22,8 @@ module YARD::APIPlugin
 
     default_attr :one_file, false
     default_attr :strict, false
-    default_attr :verbose, false
-    default_attr :debug, false
+    default_attr :verbose, ENV['VERBOSE'] || false
+    default_attr :debug, ENV['DEBUG'] || false
     default_attr :theme, 'default'
 
     default_attr :tabular_arguments, false
@@ -38,6 +40,9 @@ module YARD::APIPlugin
 
     default_attr :show_footer, true
     default_attr :readme_page_title, 'Home'
+
+    default_attr :resource_index, false
+    default_attr :centered, true
 
     attr_accessor :readme
   end
