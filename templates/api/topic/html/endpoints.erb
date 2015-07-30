@@ -1,0 +1,17 @@
+<section>
+  <h2>Interfaces</h2>
+
+  <% if @endpoints.empty? %>
+    <p>
+      <em class="type-mute">This API currently has no endpoints available.</em>
+    </p>
+  <% else %>
+    <ul class="topic__quicklinks">
+      <% @endpoints.each do |endpoint| %>
+        <li>
+          <%= link_url '#' + anchor_for(endpoint), endpoint.tag(:API).text %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</section>

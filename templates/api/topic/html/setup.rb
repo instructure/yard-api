@@ -2,10 +2,9 @@ require 'json'
 
 def init
   sections :header, [:topic_doc, :method_details_list, [T('method_details')]]
-  @resource = object
-  @beta = options[:controllers].any? { |c| c.tag('beta') }
-  @meths = options[:controllers].map { |c| c.meths(:inherited => false, :included => false) }.flatten
-  @meths = run_verifier(@meths)
+  @endpoints = options[:endpoints][object]
+
+  super
 end
 
 def method_details_list
@@ -14,10 +13,7 @@ end
 
 def topic_doc
   @docstring = options[:controllers].map { |c| c.docstring }.join("\n\n")
-  @object = @object.dup
-  @controller = options[:controllers].first
-  def @object.source_type; nil; end
-  @json_objects = options[:json_objects][@resource] || []
+  @json_objects = options[:json_objects][object] || []
   erb(:topic_doc)
 end
 

@@ -21,6 +21,9 @@
           <% end %>
         <% end %>
 
+        <% @endpoints = options[:endpoints].values.flatten %>
+        <%= erb "../../topic/html/endpoints" %>
+
         <% options[:resources].each do |resource, controllers| %>
           <%= yieldall object: resource, controllers: controllers %>
         <% end %>

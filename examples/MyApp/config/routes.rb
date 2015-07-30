@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   	get :shirts
   end
 
-  resources :author_slides do
-  end
+  resources :author_slides
+
+  resources :accounts
 end

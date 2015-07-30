@@ -5,86 +5,45 @@ include YARD::Templates::Helpers::ModuleHelper
 include YARD::Templates::Helpers::FilterHelper
 
 def init
-  YARD::APIPlugin.logger.info "YARD-API: starting."
+  logger.info "YARD-API: starting."
 
   options.serializer = YARD::APIPlugin::Serializer.new
   options.serializer.basepath = api_options.output
 
-  options.objects.each do |object|
-    object[:api_id] = object.tag('API').text.lines.first
-  end
-
-  options[:resources] = options[:objects].
+  options[:resources] = options.objects.
     group_by { |o| o[:api_id] }.
-    sort_by  { |o| o.first }
+    sort_by { |o| o.first }
 
-  build_json_objects_map
+  generate_endpoint_list(options[:resources])
+  generate_code_objects(options[:resources])
+  generate_json_object_map
   generate_assets
 
   if api_options.one_file
-    return serialize_onefile_index
-  end
+    serialize_onefile_index
+  else
+    serialize_index if File.exists?(api_options['readme'] || '')
+    serialize_static_pages
+    serialize_resource_index if api_options['resource_index']
 
-  serialize_index if File.exists?(api_options['readme'] || '')
-  serialize_static_pages
-  serialize_resource_index if api_options['resource_index']
-
-  options.delete(:objects)
-
-  options[:resources].each do |resource, controllers|
-    controllers.each do |controller|
-      if controller.is_a?(YARD::CodeObjects::NamespaceObject)
-        co = YARD::CodeObjects::ClassObject.new(
-          YARD::APIPlugin::Registry.root,
-          controller[:api_id]
-        )
-
-        YARD::Registry.register co
-
-        (controller.tags(:object) + controller.tags(:model)).each do |tag|
-          tag_co = YARD::CodeObjects::APIObject.new(co, tag.text.lines[0].strip)
-          tag_co.object = tag.object
-
-          # Make an alias on the global API namespace, for convenience.
-          # Now an object called "Bar" under the "Foo" controller can be
-          # referenced using [API::Bar] as well as [API::Foo::Bar] which will
-          # never face any conflicts.
-          shortcut_tag_co = YARD::CodeObjects::APIObject.new(YARD::APIPlugin::Registry.root, tag.text.lines[0].strip)
-          shortcut_tag_co.object = tag.object
-
-          # We need to override #namespace because #url_for() uses it to
-          # generate the url, which has to be done usign #object and not
-          # #namespace (which points to P("API") and we want
-          # P("API::#{tag.object.path}")).
-          shortcut_tag_co.namespace = tag.object
-
-          YARD::Registry.register(tag_co)
-          YARD::Registry.register(shortcut_tag_co)
-        end
-      end
+    options[:resources].each do |resource, controllers|
+      serialize_resource(resource, controllers)
     end
-
-    # debugger
-
-    if controllers.length > 1
-      debugger
-    end
-
-    serialize_resource(resource, controllers)
   end
 end
 
 def serialize(object)
   options[:object] = object
+
   Templates::Engine.with_serializer(object, options[:serializer]) do
     T('layout').run(options)
   end
+
+  options.delete(:object)
 end
 
 def serialize_resource(resource, controllers)
-  YARD::APIPlugin.logger.info('=' * 80)
-  YARD::APIPlugin.logger.info ">>> #{resource} <<< (#{controllers})"
-  YARD::APIPlugin.logger.info('-' * 80)
+  logger.debug "[=- #{resource} (#{controllers}) -=]"
 
   options[:object] = resource
   options[:controllers] = controllers
@@ -95,13 +54,17 @@ def serialize_resource(resource, controllers)
     end
   end
 
+  options.delete(:object)
   options.delete(:controllers)
-  YARD::APIPlugin.logger.info('-' * 80)
+
+  logger.info('-' * 80)
 end
 
 def serialize_index
   options[:file] = api_options['readme']
+
   serialize('index.html')
+
   options.delete(:file)
 end
 
@@ -117,23 +80,21 @@ end
 
 def serialize_resource_index
   options[:all_resources] = true
+  options[:object] = 'all_resources.html'
 
   Templates::Engine.with_serializer("all_resources.html", options[:serializer]) do
     T('layout').run(options)
   end
 
+  options.delete(:object)
   options.delete(:all_resources)
-end
-
-def asset(path, content)
-  options[:serializer].serialize(path, content) if options[:serializer]
 end
 
 def generate_assets
   layout = Object.new.extend(T('layout'))
 
-  [].concat(layout.stylesheets).concat(layout.javascripts).uniq.each do |file|
-    asset(file, file(file, true))
+  (layout.stylesheets + layout.javascripts).uniq.each do |file|
+    options.serializer.serialize(file, file(file, true))
   end
 end
 
@@ -145,7 +106,57 @@ def serialize_static_pages
   end
 end
 
-def build_json_objects_map
+def generate_code_objects(resources)
+  resources.each do |resource, controllers|
+    controllers.each do |controller|
+      if controller.is_a?(YARD::CodeObjects::NamespaceObject)
+        co = YARD::CodeObjects::ClassObject.new(
+          YARD::APIPlugin::Registry.root,
+          controller[:api_id]
+        )
+
+        YARD::Registry.register co
+
+        (controller.tags(:object) + controller.tags(:model)).each do |tag|
+          id = YARD::CodeObjects::APIObject.sanitize_id(tag.text.lines[0].strip)
+          tag_co = YARD::CodeObjects::APIObject.new(co, id)
+          tag_co.object = tag.object
+
+          # Make an alias on the global API namespace, for convenience.
+          # Now an object called "Bar" under the "Foo" controller can be
+          # referenced using [API::Bar] as well as [API::Foo::Bar] which will
+          # never face any conflicts.
+          shortcut_tag_co = YARD::CodeObjects::APIObject.new(YARD::APIPlugin::Registry.root, id)
+          shortcut_tag_co.object = tag.object
+
+          # We need to override #namespace because #url_for() uses it to
+          # generate the url, which has to be done usign #object and not
+          # #namespace (which points to P("API") and we want
+          # P("API::#{tag.object.path}")).
+          shortcut_tag_co.namespace = tag.object
+
+          YARD::Registry.register(tag_co)
+          YARD::Registry.register(shortcut_tag_co)
+        end
+      end
+    end
+  end
+end
+
+def generate_endpoint_list(resources)
+  options[:endpoints] ||= begin
+    resources.reduce({}) do |hsh, (resource, controllers)|
+      meths = controllers.map do |controller|
+        controller.meths(:inherited => false, :included => false)
+      end
+
+      hsh[resource] = run_verifier(meths.flatten)
+      hsh
+    end
+  end
+end
+
+def generate_json_object_map
   options[:json_objects_map] = {}
   options[:json_objects] = {}
   options[:resources].each do |r,cs|

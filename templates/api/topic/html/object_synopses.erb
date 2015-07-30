@@ -1,0 +1,26 @@
+<section>
+  <h2>Object Synopses</h2>
+
+  <% @json_objects.each do |name, json| %>
+    <div class="object-synopsis">
+      <h3 class="object-synopsis__header" id="<%= name %>-api">
+        <span class="object-synopsis__header-text"><%= name %></span>
+        <button class="object-synopsis__toggler"></button>
+      </h3>
+
+      <div class="object-synopsis__content">
+        <div class="object-synopsis__content-description">
+          <% if schema_is_model?(json) && !json['description'].empty? %>
+            <%= htmlify json['description'] %>
+          <% end %>
+        </div>
+
+        <%=
+          tag_partial("../../tags/html/argument/_list", nil, {
+            argument_tags: properties_of_model_as_tags(json)
+          })
+        %>
+      </div>
+    </div>
+  <% end %>
+</section>

@@ -57,6 +57,7 @@ module YARD
   require 'yard-api/verifier'
   require 'yard-api/serializer'
   require 'yard-api/code_objects/api_object'
+  require 'yard-api/code_objects/class_object'
   require 'yard-api/templates/helpers/base_helper'
   require 'yard-api/templates/helpers/html_helper'
   require 'yard-api/templates/helpers/route_helper'
@@ -80,6 +81,8 @@ module YARD
       default_attr :argument_tags, []
       default_attr :output, nil
       default_attr :json_objects_map, {}
+      default_attr :endpoints, nil
+      default_attr :resource_name, nil
     end
   end
 end

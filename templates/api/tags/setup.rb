@@ -67,10 +67,6 @@ def returns
     @is_list = false
   end
 
-  # if @object_name =~ /\{(\S+)\}/
-  #   @object_name = $1
-  # end
-
   @resource_name = options[:json_objects_map][@object_name]
   return unless @resource_name
   erb(:returns)

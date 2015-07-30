@@ -68,6 +68,7 @@ class ShirtsController < ApplicationController
 	# @argument [API::SlideAttributes] test
 	# 	Foobar.
 	#
+	# @returns [API::SlideAttributes]
 	def return
 	end
 end

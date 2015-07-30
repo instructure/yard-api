@@ -4,7 +4,6 @@ RouteHelper = YARD::Templates::Helpers::RouteHelper
 
 def init
   sections :header, [:method_signature, T('docstring')]
-  
 
   super
 end
@@ -23,11 +22,7 @@ def header
   end
 
   @props = {}
-  @props[:method_link] = [
-    'method',
-    route.requirements[:controller],
-    route.requirements[:action]
-  ].join('.')
+  @props[:method_link] = url_for(object)
 
   @props[:subtopic] = (object.parent.tag('subtopic') || object.parent.tag('API')).text
 
@@ -35,7 +30,7 @@ def header
 
   # TODO: can't we just test using object.file instead of relying on Rails ?
   controller_path = nil unless File.file?(Rails.root+controller_path)
-  
+
   if controller_path
     @props[:path] = controller_path
     @props[:controller] = route.requirements[:controller].camelize

@@ -1,12 +1,8 @@
 <div class='method-details'>
-  <h2
-    class='method-details__name'
-    name='<%= @props[:method_link] %>'
-    data-subtopic='<%= @props[:subtopic] %>'
-  >
+  <h2 class='method-details__name' data-subtopic='<%= @props[:subtopic] %>'>
     <a
-      name='<%= @props[:method_link] %>'
-      href='#<%= @props[:method_link] %>'
+      name='<%= anchor_for(object) %>'
+      href='<%= url_for(object) %>'
       class='method-details__name-link'
     >
       <%= object.tag('API').text %>

@@ -5,15 +5,11 @@ module YARD::Templates::Helpers::HtmlHelper
     ::YARD::APIPlugin::Serializer.topicize(str)
   end
 
-  def url_for_file(filename, anchor = nil)
-    link = filename.filename
+  def url_for_file(file, anchor = nil)
+    link = file.filename
     link += (anchor ? '#' + urlencode(anchor) : '')
     link
   end
-
-  # def url_for_api_object(name, object)
-  #   "#{object.parent.path}::#{name}"
-  # end
 
   def static_pages()
     @@static_pages ||= begin
@@ -61,9 +57,7 @@ module YARD::Templates::Helpers::HtmlHelper
           .capitalize
       )
 
-      if options.verbose
-        puts "Serializing static page #{page} (#{title})"
-      end
+      logger.debug "Serializing static page #{page} (#{title})"
 
       {
         src: page,
@@ -76,10 +70,11 @@ module YARD::Templates::Helpers::HtmlHelper
 
   # override yard-appendix link_appendix
   def link_appendix(ref)
-    puts "Linking appendix: #{ref}" if api_options.verbose
+    logger.debug "Linking appendix: #{ref}"
 
     unless appendix = lookup_appendix(ref.to_s)
-      raise "Unable to locate referenced appendix '#{ref}'"
+      YARD::APIPlugin.on_error "Unable to locate referenced appendix '#{ref}'"
+      return ref
     end
 
     html_file = if options[:all_resources] && api_options.one_file
@@ -87,39 +82,23 @@ module YARD::Templates::Helpers::HtmlHelper
     elsif options[:all_resources]
       'all_resources.html'
     else
-      topic, controller = *lookup_topic(appendix.namespace.to_s)
-
-      unless topic
-        raise "Unable to locate topic for appendix: #{ref}"
-      end
-
-      "#{topicize(topic.first)}.html"
+      url_for(appendix.namespace)
     end
 
     bookmark = "#{appendix.name.to_s.gsub(' ', '+')}-appendix"
     link_url("#{html_file}##{bookmark}", appendix.title).tap do |link|
-      puts "\tAppendix link: #{link}" if api_options.verbose
+      logger.debug "\tAppendix link: #{link}"
     end
   end
 
-  # TODO: this has to work with the All Resources page.
-  def sidebar_link(title, href, options={})
-    options[:class_name] ||= begin
-      if object.is_a?(String) && "#{url_for(topicize(object))}.html" == href
-        options[:class_name] = 'active'
-      end
-    end
-
-    options[:class_name] ||= (object == href ? 'active' : nil)
-
-    <<-HTML
-      <a href="#{url_for(href)}" class="#{options[:class_name]}">#{title}</a>
-    HTML
+  def sidebar_link(href, title, is_active)
+    link_url(href, title, { class: is_active ? 'active' : '' })
   end
 
   # Turns text into HTML using +markup+ style formatting.
   #
   # @override Syntax highlighting is not performed on the HTML block.
+  #
   # @param [String] text the text to format
   # @param [Symbol] markup examples are +:markdown+, +:textile+, +:rdoc+.
   #   To add a custom markup type, see {MarkupHelper}
@@ -154,5 +133,24 @@ module YARD::Templates::Helpers::HtmlHelper
     else
       tag.type
     end
+  end
+
+  # @override
+  #
+  # Because we want the endpoints' URLs (an anchor part) to show up as
+  # "-endpoint" as opposed to "-instance_method"
+  def anchor_for_with_api(object)
+    case object
+    when YARD::CodeObjects::MethodObject
+      "#{object.name}-endpoint"
+    else
+      anchor_for_without_api(object)
+    end
+  end
+  alias_method :anchor_for_without_api, :anchor_for
+  alias_method :anchor_for, :anchor_for_with_api
+
+  def logger
+    YARD::APIPlugin.logger
   end
 end
