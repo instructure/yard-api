@@ -1,19 +1,17 @@
-require 'yard/code_objects/class_object'
+require 'yard/code_objects/method_object'
 
 module YARD::CodeObjects
 	class APIObject < Base
+		def self.sanitize_id(text)
+			text.gsub(/\s/, '')
+		end
+
 		def path
-			super().gsub(/\s/, '')
+			self.class.sanitize_id(super)
 		end
 
 		def title
-			[ object.title, name ].join('::')
-		end
-	end
-
-	class ClassObject < NamespaceObject
-		def title
-			self[:api_id] || super
+			[ object.title, name ].join(NSEP)
 		end
 	end
 end

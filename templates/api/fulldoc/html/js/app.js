@@ -29,22 +29,6 @@ function makeObjectSynopsisBlocksTogglable() {
 }
 
 $(function() {
-  $('.method-details__name').each(function(i, el) {
-    var $a = $(el).find('a');
-    var anchorText = $.trim($a[0].innerHTML);
-
-    if (anchorText === '') {
-      return;
-    }
-
-    var $row = $('#topicQuicklinks');
-    var $link = $('<a/>', {
-      href: '#' + $(el).attr('name')
-    }).html(anchorText);
-
-    $('<li>').append($link).appendTo($row);
-  });
-
   $('#content pre').each(function(i, block) {
     var code;
     var $block = $(block);

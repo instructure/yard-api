@@ -7,9 +7,18 @@
   <h2 class="sidebar__heading">API</h2>
 
   <nav id="static_pages">
-    <%= sidebar_link(api_options.readme_page_title, 'index.html') %>
+    <%=
+      sidebar_link(
+        'index.html',
+        api_options.readme_page_title,
+        options[:file] == api_options['readme']
+      )
+    %>
+
     <% static_pages.each do |page| %>
-      <%= sidebar_link(page[:title], page[:filename]) %>
+      <%=
+        sidebar_link(page[:filename], page[:title], object == page[:filename])
+      %>
     <% end %>
   </nav>
 
@@ -17,11 +26,19 @@
 
   <nav>
     <% if api_options['resource_index'] %>
-      <%= sidebar_link('All Resources', 'all_resources.html') %>
+      <%=
+        sidebar_link(
+          'all_resources.html',
+          'All Resources',
+          !!options[:all_resources]
+        )
+      %>
     <% end %>
 
     <% options[:resources].each do |resource, controllers| %>
-      <%= sidebar_link resource, controllers.first %>
+      <%=
+        sidebar_link(url_for(controllers[0]), resource.dup, resource == object)
+      %>
     <% end %>
   </nav>
 </div>

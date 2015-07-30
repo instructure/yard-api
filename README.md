@@ -40,6 +40,11 @@ Read that file to view all the available options.
 
 ## Changelog
 
+**30/7/2015 [0.3.1]**
+
+- Fixed a bug that was listing all the endpoints of a certain controller even if they do not have a route defined. Now, YARD-API will warn about endpoints that have an `@API` tag but could not be routed.
+- Greatly improved the performance of generating the Quicklinks table.
+
 **29/7/2015 [0.3.0]**
 
 - major rework of the linking logic, much improvements but some stuff is broken now

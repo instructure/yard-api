@@ -1,6 +1,8 @@
 <div class="service">
-  <% if @resource %>
-    <h1><%= @resource %> API</h1>
+  <% if object %>
+    <h1><%= object.to_s %> API</h1>
+  <% elsif options[:all_resources] %>
+    <h1>All Resources</h1>
   <% end %>
 
   <%= yieldall %>

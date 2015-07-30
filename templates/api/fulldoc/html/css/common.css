@@ -294,6 +294,7 @@ h4 {
 .argument-listing__argument-values,
 .argument-listing__argument-required {
   display: block;
+  word-wrap: break-word;
 }
 
 code.argument-listing__argument-name {

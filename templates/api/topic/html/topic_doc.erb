@@ -1,62 +1,21 @@
-<article>
-  <%= htmlify(@docstring) %>
-</article>
+<div class="api-resource">
+  <article>
+    <%= htmlify(@docstring) %>
+  </article>
 
-<% c = options[:controllers].detect { |c| c.has_tag?(:note) } %>
-<% c && c.tags(:note).each do |tag| %>
-  <blockquote class="note">
-    <p><strong>Note</strong></p>
-    <%= htmlify tag.text %>
-  </blockquote>
-<% end %>
-
-<section>
-  <h2>Interfaces</h2>
-
-  <% if @meths.empty? %>
-    <p>
-      <em class="type-mute">This API currently has no endpoints available.</em>
-    </p>
+  <% c = options[:controllers].detect { |c| c.has_tag?(:note) } %>
+  <% c && c.tags(:note).each do |tag| %>
+    <blockquote class="note">
+      <p><strong>Note</strong></p>
+      <%= htmlify tag.text %>
+    </blockquote>
   <% end %>
 
-  <ul id="topicQuicklinks" class="topic__quicklinks"></ul>
-</section>
+  <% unless options.all_resources %>
+    <%= erb "endpoints" %>
+  <% end %>
 
-<% if @json_objects.any? %>
-  <section>
-    <h2>Object Synopses</h2>
-
-    <% @json_objects.each do |name, json| %>
-      <% if false %>
-        <% properties = render_properties(json) %>
-        <div class='object-synopsis'>
-          <h3>
-            <a name="<%= name %>"></a><%= name %> object synopsis:
-          </h3>
-          <pre class="example code"><%= html_syntax_highlight(properties ? properties : json, :plain) %></pre>
-        </div>
-      <% end %>
-
-      <div class="object-synopsis">
-        <h3 class="object-synopsis__header" id="<%= name %>-api">
-          <span class="object-synopsis__header-text"><%= name %></span>
-          <button class="object-synopsis__toggler"></button>
-        </h3>
-
-        <div class="object-synopsis__content">
-          <div class="object-synopsis__content-description">
-            <% if schema_is_model?(json) && !json['description'].empty? %>
-              <%= htmlify json['description'] %>
-            <% end %>
-          </div>
-
-          <%=
-            tag_partial("../../tags/html/argument/_list", nil, {
-              argument_tags: properties_of_model_as_tags(json)
-            })
-          %>
-        </div>
-      </div>
-    <% end %>
-  </section>
-<% end %>
+  <% if @json_objects.any? %>
+    <%= erb "object_synopses" %>
+  <% end %>
+</div>
