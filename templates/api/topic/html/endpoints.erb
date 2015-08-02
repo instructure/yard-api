@@ -1,4 +1,8 @@
 <section>
+  <% if options[:all_resources] %>
+    <h1>All Resources</h1>
+  <% end %>
+
   <h2>Interfaces</h2>
 
   <% if @endpoints.empty? %>

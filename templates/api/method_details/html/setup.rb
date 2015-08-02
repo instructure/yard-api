@@ -24,8 +24,6 @@ def header
   @props = {}
   @props[:method_link] = url_for(object)
 
-  @props[:subtopic] = (object.parent.tag('subtopic') || object.parent.tag('API')).text
-
   controller_path = "app/controllers/#{route.requirements[:controller]}_controller.rb"
 
   # TODO: can't we just test using object.file instead of relying on Rails ?
