@@ -1,46 +1,50 @@
+<% has_code = false %>
+
 <h4>Possible Errors:</h4>
 <p>
-  Your request may be rejected with a <code>400 Bad Request</code> HTTP status
-  code and an error from the following set:
+  Your request may be rejected with an HTTP status code and an error message
+  from the following set:
 </p>
 
 <table class="endpoint-errors">
   <thead>
     <tr>
-      <!-- <th>Error</th> -->
-      <th>Code</th>
-      <th>Message</th>
+      <th>Response Code</th>
+      <th>Details</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @error_tags.each do |tag| %>
+    <% object.tags(:throws).each do |tag| %>
       <%
-        tag.text ||= ''
-        error = {}
-        buf = tag.text.strip.sub(/^\[([^\]]+)\]/, '').strip
-        error[:status] = $1
-        buf = buf.sub(/"\[([^\]]+)\]([^"]+)"/, '').strip
-        error[:code] = $1.strip
-        error[:message] = $2
-        error[:cause] = buf.strip
+        error = JSON.parse(tag.text)
+        error[:reason] = error['reason'] || ''
+        error[:message] = error['message'] || ''
+        error[:status] = tag.type
       %>
+
       <tr>
-        <% if false %>
+        <td>
+          <%= error[:status] %>
+          <%= Rack::Utils::HTTP_STATUS_CODES[error[:status].to_i] %>
+        </td>
+
+        <% if has_code %>
           <td>
-            <%= error[:status] %>
-            <%= Rack::Utils::HTTP_STATUS_CODES[error[:status].to_i] %>
+            <code><%= error[:code] %></code>
           </td>
         <% end %>
+
         <td>
-          <code><%= error[:code] %></code>
-        </td>
-        <td>
-          <%= error[:message] %>
-          <% unless error[:cause].empty? %>
-            <hr />
-            <strong>Cause:</strong>
-            <%= error[:cause].sub(/^because /i, '').capitalize %>
+          <code>"<%= error[:message] %>"</code>
+
+          <% unless error[:reason].empty? %>
+            <p class="type-mute">
+              <em>
+                <!-- <p><strong>Reason:</strong></p> -->
+                <%= linkify error[:reason] %>
+              </em>
+            </p>
           <% end %>
         </td>
       </tr>

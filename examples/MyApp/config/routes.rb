@@ -11,4 +11,13 @@ Rails.application.routes.draw do
   resources :author_slides
 
   resources :accounts
+  resources :tags do
+    [
+      :throws,
+      :note,
+      :warning
+    ].each do |endpoint|
+      get endpoint
+    end
+  end
 end

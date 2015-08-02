@@ -11,5 +11,3 @@ Just like [`@example_request`](#Tags/doc/tags/example_request.md), this tag can 
 
 Where `[PAYLOAD]` is a [valid JSON object](#/API/JSON_objects.md).
 
-## Example
-
