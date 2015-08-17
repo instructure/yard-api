@@ -23,7 +23,7 @@ module YARD::APIPlugin
       config['debug'] ||= ENV['DEBUG']
       config['verbose'] ||= ENV['VERBOSE']
 
-      config['output'].sub!('$format', config['format'])
+      config['output'].sub!('$format', api_options.format)
 
       set_option('template', 'api')
       set_option('no-yardopts')
@@ -44,7 +44,7 @@ module YARD::APIPlugin
       set_option('debug') if config['debug']
 
       set_option('no-save') if config['no_save']
-      set_option('format', config['format'] || 'html')
+      set_option('format', api_options.format)
 
       get_assets(config).each_pair do |asset_id, rpath|
         asset_path = rpath

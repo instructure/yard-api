@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'yard-appendix'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'gem-release'
-  s.add_development_dependency 'byebug'
+  s.add_development_dependency 'byebug' if RUBY_VERSION > "1.9.3"
 end
