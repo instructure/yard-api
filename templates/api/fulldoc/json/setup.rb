@@ -5,6 +5,7 @@ include YARD::Templates::Helpers::FilterHelper
 include YARD::Templates::Helpers::HtmlHelper
 
 RouteHelper = YARD::Templates::Helpers::RouteHelper
+ArgumentTag = YARD::APIPlugin::Tags::ArgumentTag
 
 def init
   resources = options[:objects]
@@ -15,17 +16,17 @@ end
 
 def serialize_resource(resource, controllers)
   Templates::Engine.with_serializer("#{topicize resource}.json", options[:serializer]) do
-    JSON.pretty_generate({
-      object: resource,
-      api_objects: controllers.map do |controller|
-        dump_api_objects(controller)
-      end.flatten,
-      methods: method_details_list(controllers)
-    })
+    {
+      id: topicize(resource),
+      title: resource,
+      text: controllers.map { |c| c.docstring }.join("\n\n"),
+      objects: controllers.map { |c| dump_controller_objects(c) }.flatten,
+      endpoints: dump_resource_endpoints(controllers)
+    }.to_json
   end
 end
 
-def method_details_list(controllers)
+def dump_resource_endpoints(controllers)
   meths = controllers.map do |controller|
     controller.meths(:inherited => false, :included => false)
   end.flatten
@@ -33,40 +34,58 @@ def method_details_list(controllers)
   meths = run_verifier(meths)
 
   meths.map do |object, i|
-    dump_object(object).tap do |object_info|
+    dump_endpoint(object).tap do |object_info|
       object_info[:tags] = dump_object_tags(object)
     end
   end
 end
 
-def dump_api_objects(controller)
+def dump_controller_objects(controller)
   (controller.tags(:object) + controller.tags(:model)).map do |obj|
-    name, schema = obj.text.split(%r{\n+}, 2).map(&:strip)
-
-    {
-      controller: controller.name,
-      name: name,
-      schema: schema
-    }
+    dump_object(obj)
   end
 end
 
-def dump_object(object)
+def dump_object(obj)
+  title, spec = obj.text.split(%r{\n+}, 2).map(&:strip)
+  spec = JSON.parse(spec)
+  schema = spec.has_key?('properties') ? spec['properties'] : spec
+
+  schema_tags = schema.map do |(prop_name, prop)|
+    is_required = prop.has_key?('required') ? prop['required'] : false
+    is_required_str = is_required ? 'Required' : 'Optional'
+
+    ArgumentTag.new(nil, "[#{is_required_str}, #{prop['type']}] #{prop_name}\n #{prop['description']}")
+  end
+
   {
-    name: object.name,
-    route: get_route(object),
-    title: object.title,
-    type: object.type,
-    path: object.path,
-    namespace: object.namespace.path,
-    source: object.source,
-    source_type: object.source_type,
-    signature: object.signature,
-    files: object.files,
-    docstring: object.base_docstring,
-    dynamic: object.dynamic,
-    group: object.group,
-    visibility: object.visibility
+    id: topicize("#{obj.object.path}::#{title}"),
+    scoped_id: topicize(title),
+    title: title,
+    text: spec['description'] || '',
+    controller: obj.object.path,
+    schema: schema_tags.as_json.map { |e| e.delete('tag_name'); e }
+  }
+end
+
+def dump_endpoint(endpoint)
+  title = endpoint.tag(:API).text
+
+  {
+    id: topicize(endpoint.path),
+    scoped_id: topicize(title),
+    title: title,
+    text: endpoint.base_docstring,
+    controller: endpoint.namespace.path,
+    route: get_route(endpoint),
+    type: endpoint.type,
+    source: endpoint.source,
+    source_type: endpoint.source_type,
+    signature: endpoint.signature,
+    files: endpoint.files,
+    dynamic: endpoint.dynamic,
+    group: endpoint.group,
+    visibility: endpoint.visibility
   }
 end
 

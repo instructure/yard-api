@@ -23,6 +23,8 @@ module YARD::APIPlugin
       config['debug'] ||= ENV['DEBUG']
       config['verbose'] ||= ENV['VERBOSE']
 
+      config['output'].sub!('$format', config['format'])
+
       set_option('template', 'api')
       set_option('no-yardopts')
       set_option('no-document')
