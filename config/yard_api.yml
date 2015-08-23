@@ -3,32 +3,14 @@
 output: public/doc/api
 readme: doc/api/README.md
 
-# Title of the project. This will be displayed in the browser title bar as well
-# as in the layout as the primary heading.
-title: Rails API Project
-
 url_title: my_app
 url_prefix: /api
-
-# The resource index is a mega-index page that contains all the API resources.
-resource_index: true
 
 # Generate a single page that contains all the static pages and API resources.
 # The output will be a single file.
 #
 # Implies "resource_index" is true.
 one_file: false
-
-# YARD options passed as-is.
-#
-# If you want to use github-flavored markdown, use "redcparet" as a markup
-# provider, and "markdown" as a markup and add the following gems to your
-# Gemfile *before* yard-api:
-#
-#   - "github-markup"
-#   - "redcarpet"
-markup:
-markup_provider:
 
 # The API files to extract the docs from.
 files:
@@ -56,19 +38,6 @@ debug: false
 # Don't tolerate any errors such as bad asset paths, invalid tag properties, etc.
 strict: false
 
-# Each API endpoint details can provide a link to the source code of the
-# controller method if it's available on GitHub.
-#
-# Just specify the url to your repository and the branch the documentation has
-# been generated for and things "should work".
-#
-# Example: https://github.com/amireh/yard-api
-github_url:
-github_branch: master
-
-# Set to true if you want @argument tags to show up in a table instead of a list.
-tabular_arguments: false
-
 # When this option is set, all @argument tags that do not explicitly specify
 # whether they are required or optional will be marked as required. Examples:
 #
@@ -79,17 +48,6 @@ tabular_arguments: false
 # Conversely, leaving this to false marks all arguments with no specifier as
 # optional.
 strict_arguments: true
-
-# Width of the sidebar, in pixels.
-sidebar_width: 240
-
-# Width of the content box in pixels, or "fluid" for maximum screen space.
-#
-# Content will never overlap with the sidebar.
-content_width: "fluid"
-
-# Whitespace between the Sidebar and the content, in pixels.
-spacer: 20
 
 # Compatibility option.
 #
@@ -105,8 +63,82 @@ spacer: 20
 # But that may not be viable in very large, existing projects.
 leading_argument_name_fix: false
 
+# ------------------------------------------------------------------------------
+# HTML-only options.
+# ------------------------------------------------------------------------------
+
+# Title of the project. This will be displayed in the browser title bar as well
+# as in the layout's sidebar as the primary heading.
+title: Rails API Project
+
+# If this is set, it will override @title in the browser's page title, but not
+# the link in the sidebar.
+window_title:
+
+# The resource index is a mega-index page that contains all the API resources.
+resource_index: true
+
+# YARD options passed as-is.
+#
+# If you want to use github-flavored markdown, use "redcparet" as a markup
+# provider, and "markdown" as a markup and add the following gems to your
+# Gemfile *before* yard-api:
+#
+#   - "github-markup"
+#   - "redcarpet"
+markup:
+markup_provider:
+
+# Each API endpoint details can provide a link to the source code of the
+# controller method if it's available on GitHub.
+#
+# Just specify the url to your repository and the branch the documentation has
+# been generated for and things "should work".
+#
+# Example: https://github.com/amireh/yard-api
+github_url:
+github_branch: master
+
+# Set to true if you want @argument tags to show up in a table instead of a list.
+tabular_arguments: false
+
+# Width of the content box in pixels, or "fluid" for maximum screen space.
+#
+# Content will never overlap with the sidebar.
+content_width: "fluid"
+
+# Width of the sidebar, in pixels.
+sidebar_width: 240
+
+# Whether the content box should be centered. This has no effect if
+# `content_width` is set to `"fluid"`.
+centered: true
+
+# Whitespace between the Sidebar and the content, in pixels.
+spacer: 20
+
+# A small "BETA" label that will show up next to a beta endpoint's title.
 use_beta_flag: true
+
+# A blocky "BETA" banner that will be displayed before a beta endpoint's
+# description body. This may attract more attention than the beta "flag"
+# setting.
 use_beta_banner: false
 
+# Whether the footer should be displayed.
 show_footer: true
+
+# A copyright message to display in the top part of the footer.
+footer_copyright:
+
+# A footer message. This will be displayed below the copyright notice and the
+# generation timestamp.
+footer_note:
+
+# The text to use for the link to the docs home page in the sidebar.
 readme_page_title: Home
+
+# The UI theme to use. The stock gem provides only a "Default" theme, but other
+# plugins may provide more themes in which case you can tune this variable to
+# activate them.
+theme: Default

@@ -40,6 +40,15 @@ Read that file to view all the available options.
 
 ## Changelog
 
+**23/8/2015 [0.3.4]**
+
+- Fixed an issue that prevented overriding the Rake task's options at runtime.
+- Updated `config/yard_api.yml` to reflect the recently added options.
+
+**17/8/2015 [0.3.3]**
+
+- Improved the JSON format's output to be more concise and consistent.
+
 **30/7/2015 [0.3.1]**
 
 - Fixed a bug that was listing all the endpoints of a certain controller even if they do not have a route defined. Now, YARD-API will warn about endpoints that have an `@API` tag but could not be routed.

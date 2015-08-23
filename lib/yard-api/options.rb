@@ -7,9 +7,9 @@ module YARD::APIPlugin
     default_attr :output, 'compiled/doc/api'
 
     default_attr :title, 'Rails API Project'
+    default_attr :window_title, 'Rails API Project'
     default_attr :url_title, 'my_app'
     default_attr :url_prefix, '/api'
-    default_attr :window_title, 'Rails API Project Documentation'
     default_attr :version, ''
     default_attr :static, []
     default_attr :files, []

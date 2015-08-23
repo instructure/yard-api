@@ -5,20 +5,22 @@ module YARD::APIPlugin
     attr_reader :config
 
     def initialize(name=:yard_api)
-      super(name, &:run)
+      super(name) do |t|
+        yield t if block_given?
+        t.run
+      end
     end
 
     def run
       YARD::APIPlugin.options.reset_defaults
 
-      @config = load_config
-      t = self
+      @config = api_options = YARD::APIPlugin.options.update(load_config)
 
-      api_options = YARD::APIPlugin.options.update(@config)
+      puts "Config: #{api_options.to_json}"
 
-      t.verifier = YARD::APIPlugin::Verifier.new(config['verbose'])
-      t.before = proc { FileUtils.rm_rf(config['output']) }
-      t.files = config['files']
+      self.verifier = YARD::APIPlugin::Verifier.new(config['verbose'])
+      self.before = proc { FileUtils.rm_rf(config['output']) }
+      self.files = config['files']
 
       config['debug'] ||= ENV['DEBUG']
       config['verbose'] ||= ENV['VERBOSE']
@@ -64,6 +66,10 @@ module YARD::APIPlugin
       end
     end
 
+    def configure(runtime_config)
+      @runtime_config = runtime_config
+    end
+
     private
 
     def load_config
@@ -72,6 +78,8 @@ module YARD::APIPlugin
       # load defaults
       config = YAML.load_file(File.join(YARD::APIPlugin::CONFIG_PATH, 'yard_api.yml'))
       config.merge!(YAML.load_file(path)) if File.exists?(path)
+      config.merge! @runtime_config if @runtime_config
+
       config
     end
 
