@@ -9,4 +9,4 @@ before_script:
   - "bundle install"
 script:
   - "bundle exec rspec"
-bundler_args: --without development
+bundler_args: --without local
