@@ -36,10 +36,6 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
-    byebug (3.5.1)
-      columnize (~> 0.8)
-      debugger-linecache (~> 1.2)
-      slop (~> 3.6)
     columnize (0.8.9)
     debugger-linecache (1.2.0)
     erubis (2.7.0)
@@ -87,6 +83,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   rails (= 4.1.6)
   yard-api!
