@@ -4,7 +4,20 @@ module YARD::APIPlugin
     FSSEP = '/'
 
     def self.topicize(str)
-      str.lines.first.gsub(/\W+/, '_').downcase
+      self.str_underscore(str.lines.first.gsub(/\W+/, '_'))
+    end
+
+    # Stolen from rails 4.2, see:
+    #
+    # http://apidock.com/rails/v4.2.1/ActiveSupport/Inflector/underscore
+    def self.str_underscore(camel_cased_word)
+      return camel_cased_word unless camel_cased_word =~ /[A-Z-]|::/
+      word = camel_cased_word.to_s.gsub(/::/, '/')
+      word.gsub!(/([A-Z\d]+)([A-Z][a-z])/,'\1_\2')
+      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+      word.tr!("-", "_")
+      word.downcase!
+      word
     end
 
     def serialize(object, data)

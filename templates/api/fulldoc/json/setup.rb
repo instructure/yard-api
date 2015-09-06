@@ -74,6 +74,7 @@ def dump_endpoint(endpoint)
   {
     id: topicize(endpoint.path),
     scoped_id: topicize(title),
+    name: endpoint.name,
     title: title,
     text: endpoint.base_docstring,
     controller: endpoint.namespace.path,

@@ -40,6 +40,12 @@ Read that file to view all the available options.
 
 ## Changelog
 
+**6/9/2015 [0.3.5]**
+
+- In JSON format, an API resource endpoint now contains the name as well.
+- Changed the `topicize()` helper in a way that makes the IDs (and URLs of
+  some sections) much more readable
+
 **23/8/2015 [0.3.4]**
 
 - Fixed an issue that prevented overriding the Rake task's options at runtime.
