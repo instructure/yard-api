@@ -13,7 +13,7 @@ module YARD::Templates::Helpers::HtmlHelper
 
   def static_pages()
     @@static_pages ||= begin
-      all_static_pages.reject { |page| page[:exclude] }
+      all_static_pages.reject { |page| page[:exclude_from_sidebar] }
     end
   end
 
@@ -36,7 +36,7 @@ module YARD::Templates::Helpers::HtmlHelper
         end
 
         title_overrides[entry['path']] = entry['title']
-        excludes[entry['path']] = true if entry['exclude']
+        excludes[entry['path']] = true if entry['exclude_from_sidebar']
 
         entry['path']
       elsif entry.is_a?(Array)
@@ -71,7 +71,7 @@ module YARD::Templates::Helpers::HtmlHelper
         src: page,
         filename: filename,
         title: title,
-        exclude: !!excludes[page]
+        exclude_from_sidebar: !!excludes[page]
       }
     end.sort_by { |page| page[:title] }
   end
