@@ -11,14 +11,14 @@ module YARD::Templates::Helpers::HtmlHelper
     link
   end
 
-  def static_pages()
-    @@static_pages ||= begin
-      all_static_pages.reject { |page| page[:exclude_from_sidebar] }
+  def visible_static_pages()
+    @@visible_static_pages ||= begin
+      static_pages.reject { |page| page[:exclude_from_sidebar] }
     end
   end
 
-  def all_static_pages()
-    @@all_static_pages ||= begin
+  def static_pages()
+    @@static_pages ||= begin
       locate_static_pages(YARD::APIPlugin.options)
     end
   end

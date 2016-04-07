@@ -4,7 +4,7 @@
   </h1>
 
   <nav id="static_pages">
-    <% static_pages.each do |page| %>
+    <% visible_static_pages.each do |page| %>
       <%= sidebar_link(page[:title], page[:filename]) %>
     <% end %>
 
