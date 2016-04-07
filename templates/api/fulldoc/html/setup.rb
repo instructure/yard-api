@@ -99,7 +99,7 @@ def generate_assets
 end
 
 def serialize_static_pages
-  static_pages.each do |page|
+  all_static_pages.each do |page|
     options[:file] = page[:src]
     serialize(page[:filename])
     options.delete(:file)

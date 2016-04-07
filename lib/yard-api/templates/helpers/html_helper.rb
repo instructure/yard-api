@@ -13,12 +13,19 @@ module YARD::Templates::Helpers::HtmlHelper
 
   def static_pages()
     @@static_pages ||= begin
+      all_static_pages.reject { |page| page[:exclude] }
+    end
+  end
+
+  def all_static_pages()
+    @@all_static_pages ||= begin
       locate_static_pages(YARD::APIPlugin.options)
     end
   end
 
   def locate_static_pages(options)
     title_overrides = {}
+    excludes = {}
 
     paths = Array(options.static).map do |entry|
       pages = if entry.is_a?(Hash)
@@ -29,6 +36,7 @@ module YARD::Templates::Helpers::HtmlHelper
         end
 
         title_overrides[entry['path']] = entry['title']
+        excludes[entry['path']] = true if entry['exclude']
 
         entry['path']
       elsif entry.is_a?(Array)
@@ -62,7 +70,8 @@ module YARD::Templates::Helpers::HtmlHelper
       {
         src: page,
         filename: filename,
-        title: title
+        title: title,
+        exclude: !!excludes[page]
       }
     end.sort_by { |page| page[:title] }
   end
