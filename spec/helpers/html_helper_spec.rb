@@ -2,12 +2,13 @@ require 'spec_helper'
 require 'tempfile'
 
 describe YARD::Templates::Helpers::HtmlHelper do
-  let(:html) { Class.new { extend YARD::Templates::Helpers::HtmlHelper } }
+  let(:html) { Class.new { include YARD::Templates::Helpers::HtmlHelper }.new }
   let(:included) { Tempfile.new('included') }
   let(:excluded) { Tempfile.new('excluded') }
 
   before do
-    Registry.clear
+    html.singleton_class.class_variable_set(:@@static_pages, nil)
+    html.singleton_class.class_variable_set(:@@visible_static_pages, nil)
     set_option('static', [
       {'path' => included.path, 'title' => 'Included'},
       {'path' => excluded.path, 'title' => 'Excluded', 'exclude_from_sidebar' => true}
