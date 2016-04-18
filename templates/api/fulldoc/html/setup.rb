@@ -118,7 +118,7 @@ def generate_code_objects(resources)
         YARD::Registry.register co
 
         (controller.tags(:object) + controller.tags(:model)).each do |tag|
-          id = YARD::CodeObjects::APIObject.sanitize_id(tag.text.lines[0].strip)
+          id = YARD::CodeObjects::APIObject.sanitize_id(tag.text.lines.first.strip)
           tag_co = YARD::CodeObjects::APIObject.new(co, id)
           tag_co.object = tag.object
 
