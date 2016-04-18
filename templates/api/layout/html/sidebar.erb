@@ -15,7 +15,7 @@
       )
     %>
 
-    <% static_pages.each do |page| %>
+    <% visible_static_pages.each do |page| %>
       <%=
         sidebar_link(page[:filename], page[:title], object == page[:filename])
       %>

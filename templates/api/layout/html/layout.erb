@@ -16,7 +16,7 @@
     <% if options[:all_resources] %>
       <div id="content">
         <% if api_options.one_file %>
-          <% static_pages.each do |page| %>
+          <% visible_static_pages.each do |page| %>
             <%= diskfile page[:src] %>
           <% end %>
         <% end %>

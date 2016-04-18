@@ -1,5 +1,9 @@
 centered: true
+readme: doc/index.md
 static:
+  - title: Secret Page
+    path: doc/secret.md
+    exclude_from_sidebar: true
   - doc/*.md
 files:
   - app/controllers/**/*.rb
