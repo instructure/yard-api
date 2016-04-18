@@ -8,7 +8,6 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    byebug (6.0.2)
     diff-lcs (1.2.5)
     gem-release (0.7.3)
     rspec (3.3.0)
@@ -32,7 +31,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   gem-release
   rspec
   yard-api!
+
+BUNDLED WITH
+   1.11.2
