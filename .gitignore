@@ -9,5 +9,5 @@
 
 # [build]
 *.gem
-/examples/MyApp/doc
 /examples/MyApp/public
+/examples/MyApp/gemfiles
