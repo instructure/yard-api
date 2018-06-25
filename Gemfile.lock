@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    yard-api (0.3.6)
+    yard-api (0.3.7)
       yard (= 0.8.7)
-      yard-appendix
+      yard-appendix (~> 0.1.8)
 
 GEM
   remote: https://rubygems.org/
@@ -32,8 +32,8 @@ PLATFORMS
 
 DEPENDENCIES
   gem-release
-  rspec
+  rspec (~> 3.3)
   yard-api!
 
 BUNDLED WITH
-   1.11.2
+   1.16.2
