@@ -7,5 +7,3 @@ static:
   - doc/*.md
 files:
   - app/controllers/**/*.rb
-  # - app/controllers/ShirtsController*.rb
-# debug: true

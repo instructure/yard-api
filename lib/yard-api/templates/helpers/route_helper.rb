@@ -31,7 +31,16 @@ module YARD::Templates::Helpers
       end
 
       def get_route_verb(route)
-        route.verb.source =~ /\^?(\w*)\$/ ? $1.upcase : route.verb.source
+        verb = route.verb
+
+        case verb
+        when Regexp
+          verb.source =~ /\^?(\w*)\$/ ? $1.upcase : verb.source
+        when String
+          verb
+        else
+          "???"
+        end
       end
     end
   end
