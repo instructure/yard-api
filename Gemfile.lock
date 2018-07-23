@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    yard-api (0.3.7)
-      yard (= 0.8.7)
+    yard-api (1.0.0)
+      yard (~> 0.9.15)
       yard-appendix (~> 0.1.8)
 
 GEM
@@ -23,7 +23,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
-    yard (0.8.7)
+    yard (0.9.15)
     yard-appendix (0.1.8)
       yard (>= 0.8.0)
 

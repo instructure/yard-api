@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.3.8
+## 1.0.0
 
+- update to YARD 0.9.15 up from 0.8.7
 - JSON serializer now produces a new property "accepted_values" for `@object`
   structures with a value found in any of the following keys:
   - `accepted values`

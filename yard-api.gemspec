@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
                   ['LICENSE', 'README.md', '.rspec', __FILE__]
   s.has_rdoc    = 'yard'
   s.license     = 'AGPL-3.0'
-  s.add_dependency 'yard', '0.8.7'
+  s.add_dependency 'yard', '~> 0.9.15'
   s.add_dependency 'yard-appendix', '~> 0.1.8'
   s.add_development_dependency 'rspec', '~> 3.3'
 end

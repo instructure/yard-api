@@ -1,5 +1,5 @@
 module YARD
   module APIPlugin
-    VERSION = "0.3.7"
+    VERSION = "1.0.0"
   end
 end
