@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Fixed an issue YARD 0.9 was having with a symlinked CSS file
+
 ## 1.0.0
 
 - update to YARD 0.9.15 up from 0.8.7
