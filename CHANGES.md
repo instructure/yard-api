@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.8
+
+- JSON serializer now produces a new property "accepted_values" for `@object`
+  structures with a value found in any of the following keys:
+  - `accepted values`
+  - `accepted_values`
+  - `accepts`
+  - `accepted`
+  - `acceptable values`
+
 ## 0.3.7
 
 - Corrected LICENSE file to include the AGPL 3.0 copy.

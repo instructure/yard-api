@@ -55,7 +55,22 @@ def dump_object(obj)
     is_required = prop.has_key?('required') ? prop['required'] : false
     is_required_str = is_required ? 'Required' : 'Optional'
 
-    ArgumentTag.new(nil, "[#{is_required_str}, #{prop['type']}] #{prop_name}\n #{prop['description']}")
+    {
+      "name" => prop_name,
+      "types" => Array(prop["type"]),
+      "is_required" => !!prop["required"],
+      "text" => prop.fetch('description', ''),
+      "example" => prop['example'],
+      "accepted_values" => Array(
+        first_in([
+          "accepted values",
+          "accepted_values",
+          "accepts",
+          "accepted",
+          "acceptable values",
+        ], prop)
+      )
+    }
   end
 
   {
@@ -64,7 +79,7 @@ def dump_object(obj)
     title: title,
     text: spec['description'] || '',
     controller: obj.object.path,
-    schema: schema_tags.as_json.map { |e| e.delete('tag_name'); e }
+    schema: schema_tags
   }
 end
 
@@ -125,4 +140,8 @@ def get_route(object)
       verb: verb
     }
   end
+end
+
+def first_in(keys, obj)
+  obj[keys.detect { |k| obj.key?(k) }]
 end
