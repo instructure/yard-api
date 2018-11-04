@@ -17,7 +17,7 @@ module YARD::APIPlugin::Markup
     }.freeze
 
     RendererOptions = {
-    }.freeze
+    }
 
     def initialize(text, extensions_and_options=nil)
       @renderer = Redcarpet::Render::HTML.new(RendererOptions)
