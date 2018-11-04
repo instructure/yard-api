@@ -100,7 +100,7 @@ module YARD::Templates::Helpers::HtmlHelper
     end
   end
 
-  def sidebar_link(href, title, is_active)
+  def sidebar_link(href, title, is_active=false)
     link_url(href, title, { class: is_active ? 'active' : '' })
   end
 
