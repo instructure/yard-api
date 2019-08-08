@@ -22,13 +22,14 @@ module YARD
       end
 
       def relevant_object?(object)
+        doc_include_internal = !!YARD::APIPlugin.options[:include_internal]
         case object.type
         when :root, :module, :constant
           false
         when :api
           true
         when :method
-          return false if object.has_tag?(:internal) || !object.has_tag?(:API)
+          return false if object.has_tag?(:internal) && !doc_include_internal || !object.has_tag?(:API)
           routes = @routes[object.object_id]
           routes ||= begin
             @routes[object.object_id] = YARD::Templates::Helpers::RouteHelper.routes_for_yard_object(object)
@@ -43,7 +44,7 @@ module YARD
 
           routes.any?
         when :class
-          return false if object.has_tag?(:internal) || !object.has_tag?(:API)
+          return false if object.has_tag?(:internal) && !doc_include_internal || !object.has_tag?(:API)
           true
         else
           object.parent.nil? && relevant_object?(object.parent)
