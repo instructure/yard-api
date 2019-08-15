@@ -129,15 +129,9 @@ def get_route(object)
   route = routes.first
 
   if route.present?
-    verb = if route.verb.source =~ /\^?(\w*)\$/
-      $1.upcase
-    else
-      route.verb.source
-    end
-
     {
-      path: route.path.spec.to_s.gsub("(.:format)", ""),
-      verb: verb
+      path: RouteHelper.get_route_path(route),
+      verb: RouteHelper.get_route_verb(route)
     }
   end
 end
