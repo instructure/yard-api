@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+
+- Fixed an issue in the JSON serializer when the route verb reported by Rails
+  was not a Regex but a String. Thanks to @CalKrug!
+- Added a new option "include_internal: Boolean" to allow the generation of
+  entities tagged as @internal. Thanks to @cvkline!
+
 ## 1.0.1
 
 - Fixed an issue YARD 0.9 was having with a symlinked CSS file
