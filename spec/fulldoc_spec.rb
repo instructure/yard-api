@@ -1,25 +1,5 @@
 require 'spec_helper'
 
-module YARD
-  module Serializers
-    # A serializer that writes data to standard output.
-    class SpecSerializer < Base
-      # Creates a serializer to print text to stdout
-      #
-      # @param [Fixnum, nil] wrap if wrap is a number, wraps text to +wrap+
-      #   columns, otherwise no wrapping is done.
-      def initialize(buffer)
-        @buffer = buffer
-      end
-
-      # Overrides serialize behaviour to write data to standard output
-      def serialize(object, data)
-        @buffer << data
-      end
-    end
-  end
-end
-
 describe YARD::Templates::Engine.template(:api, :fulldoc) do
   before do
     Registry.clear

@@ -21,6 +21,7 @@ module YARD::APIPlugin
     default_attr :footer_note, ''
 
     default_attr :one_file, false
+    default_attr :include_internal, false
     default_attr :strict, false
     default_attr :verbose, ENV['VERBOSE'] || false
     default_attr :debug, ENV['DEBUG'] || false

@@ -1,9 +1,9 @@
 PATH
   remote: ../..
   specs:
-    yard-api (0.3.6)
-      yard (= 0.8.7)
-      yard-appendix
+    yard-api (1.0.1)
+      yard (~> 0.9.15)
+      yard-appendix (~> 0.1.8)
 
 GEM
   remote: https://rubygems.org/
@@ -14,7 +14,7 @@ GEM
       thor (>= 0.14.0)
     rake (12.3.1)
     thor (0.20.0)
-    yard (0.8.7)
+    yard (0.9.20)
     yard-appendix (0.1.8)
       yard (>= 0.8.0)
 
@@ -26,4 +26,4 @@ DEPENDENCIES
   yard-api!
 
 BUNDLED WITH
-   1.16.2
+   1.17.3
