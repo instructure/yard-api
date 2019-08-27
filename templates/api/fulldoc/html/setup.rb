@@ -7,7 +7,7 @@ include YARD::Templates::Helpers::FilterHelper
 def init
   logger.info "YARD-API: starting."
 
-  options.serializer ||= YARD::APIPlugin::Serializer.new
+  options.serializer = YARD::APIPlugin::Serializer.new
   options.serializer.basepath = api_options.output
 
   options[:resources] = options.objects.
