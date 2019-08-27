@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1
+
+- Fixed a bug introduced in the previous release that broke the generation of
+  the individual resource pages. Great many thanks to @CalKrug for the
+  contribution!
+
 ## 1.1.0
 
 - Fixed an issue in the JSON serializer when the route verb reported by Rails

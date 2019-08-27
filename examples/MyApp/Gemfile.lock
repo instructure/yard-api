@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    yard-api (1.0.1)
+    yard-api (1.1.1)
       yard (~> 0.9.15)
       yard-appendix (~> 0.1.8)
 
