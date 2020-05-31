@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- Fixed an issue caused when using Redcarpet >= 3.4.0 (thanks to @alessio-signorini)
+
 ## 1.1.1
 
 - Fixed a bug introduced in the previous release that broke the generation of
